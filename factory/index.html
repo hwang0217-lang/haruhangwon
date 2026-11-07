@@ -1,0 +1,741 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style><script>
+/* 독립 사이트용 연결부: Claude 앱 안의 window.claude 대신, 내 서버(/api)를 통해 AI를 부르고 파일은 브라우저로 바로 저장 */
+(function(){
+  var PW_KEY="ebookfactory.pw";
+  function getPw(){try{return localStorage.getItem(PW_KEY)||""}catch(e){return ""}}
+  function setPw(v){try{v?localStorage.setItem(PW_KEY,v):localStorage.removeItem(PW_KEY)}catch(e){}}
+  var unlocked=null; // Promise<boolean>
+  function login(pw){return fetch("/api/factory/login",{method:"POST",headers:{"x-app-password":pw}}).then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})}
+  function showGate(msg){
+    return new Promise(function(resolve){
+      var g=document.createElement("div");g.id="gate";
+      g.innerHTML='<form id="gateForm"><div class="gt">전자책 공장</div><p>비밀번호를 입력하세요.</p><input id="gatePw" type="password" autocomplete="current-password" aria-label="비밀번호"><button type="submit">들어가기</button><p id="gateMsg" role="alert"></p></form>';
+      document.body.appendChild(g);
+      var m=g.querySelector("#gateMsg");if(msg)m.textContent=msg;
+      var i=g.querySelector("#gatePw");setTimeout(function(){i.focus()},50);
+      g.querySelector("#gateForm").onsubmit=function(e){e.preventDefault();m.textContent="확인 중…";
+        login(i.value).then(function(res){
+          if(res.ok){setPw(i.value);g.remove();resolve(true);}
+          else m.textContent=(res.j&&res.j.message)||"들어갈 수 없어요.";
+        }).catch(function(){m.textContent="서버에 연결하지 못했어요. 인터넷 연결을 확인하세요."});};
+    });
+  }
+  function ensure(){
+    if(!unlocked){unlocked=new Promise(function(resolve){
+      var go=function(){var pw=getPw();
+        if(!pw){showGate().then(resolve);return;}
+        login(pw).then(function(res){if(res.ok)resolve(true);else{setPw("");showGate("다시 로그인해 주세요.").then(resolve);}}).catch(function(){showGate("서버에 연결하지 못했어요.").then(resolve);});};
+      document.readyState==="loading"?document.addEventListener("DOMContentLoaded",go):go();
+    });}
+    return unlocked;
+  }
+  ensure();
+  function sample(input,opts){opts=opts||{};
+    var prompt=typeof input==="string"?input:input.map(function(m){return (m.role==="assistant"?"[이전 답변]\n":"")+m.content}).join("\n\n");
+    return ensure().then(function(){return fetch("/api/factory/claude",{method:"POST",signal:opts.signal,headers:{"content-type":"application/json","x-app-password":getPw()},body:JSON.stringify({prompt:prompt,tier:opts.modelTier==="quick"?"quick":"default"})});})
+    .then(function(r){
+      if(!r.ok)return r.json().catch(function(){return{}}).then(function(j){if(r.status===401){setPw("");unlocked=null;}throw{code:j.code||"upstream_error",message:j.message||("서버 오류 "+r.status)}});
+      var reader=r.body.getReader(),dec=new TextDecoder(),text="";
+      function pump(){return reader.read().then(function(x){
+        if(x.done){
+          var k=text.indexOf("\u0000ERR:");
+          if(k>=0){var code=text.slice(k+5).trim();text=text.slice(0,k).replace(/\n$/,"");
+            if(code==="truncated")return{text:text,truncated:true};
+            throw{code:code,message:code==="bad_api_key"?"API 키가 잘못됐어요. Vercel 설정의 ANTHROPIC_API_KEY를 확인하세요.":code,text:text};}
+          return{text:text,truncated:false};}
+        var d=dec.decode(x.value,{stream:true});if(d){text+=d;if(opts.onText&&text.indexOf("\u0000")<0)try{opts.onText({text:text,delta:d})}catch(e){}}
+        return pump();});}
+      return pump();
+    }).catch(function(e){if(e&&e.name==="AbortError")throw{code:"cancelled",message:"중지했어요."};if(e&&e.code)throw e;throw{code:"upstream_error",message:"서버에 연결하지 못했어요."};});
+  }
+  sample.json=function(input,opts){return sample(input,Object.assign({},opts,{onText:null})).then(function(r){
+    var t=r.text.trim(),m=t.match(/```(?:json)?\s*([\s\S]*?)```/);if(m)t=m[1];
+    try{return JSON.parse(t)}catch(e){}
+    var a=Math.min.apply(null,[t.indexOf("{"),t.indexOf("[")].filter(function(n){return n>=0}));var b=Math.max(t.lastIndexOf("}"),t.lastIndexOf("]"));
+    try{if(a>=0&&b>a)return JSON.parse(t.slice(a,b+1))}catch(e){}
+    throw{code:"invalid_json",message:"AI 답변 형식이 어긋났어요.",text:r.text};});};
+  var downloads={save:function(o){var blob=o.data instanceof Blob?o.data:new Blob([o.data]);var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download=o.filename;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},4000);return Promise.resolve();}};
+  window.claude={use:function(name){return Promise.resolve(name==="sample"?sample:name==="downloads"?downloads:null)}};
+  window.ebookLogout=function(){setPw("");location.reload();};
+})();
+</script>
+<style>
+#gate{position:fixed;inset:0;z-index:100;background:var(--paper,#F5F4EE);display:grid;place-items:center;padding:16px}
+#gate form{width:100%;max-width:340px;display:flex;flex-direction:column;gap:12px;background:var(--sheet,#fff);border:1px solid var(--line,#ddd);border-radius:8px;padding:28px}
+#gate .gt{font-family:"Black Han Sans",sans-serif;font-size:28px}
+#gate p{margin:0;color:var(--muted,#5E6A72);font-size:14px}
+#gate input{padding:11px 12px;border:1px solid var(--line,#ddd);border-radius:6px;font-size:16px;background:var(--sheet,#fff);color:var(--ink,#1A222B)}
+#gate button{padding:11px;border:0;border-radius:6px;background:var(--cloth,#1F6B52);color:var(--cloth-ink,#fff);font-weight:700;font-size:15px;cursor:pointer}
+#gateMsg{color:var(--warn,#B4441F)!important;min-height:1.2em}
+</style>
+</head><body>
+<title>전자책 공장</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Black+Han+Sans&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: a production line — station rail on the left (top strip on phones), one workbench on the right */
+:root{
+  --paper:#F5F4EE; --sheet:#FFFFFF; --ink:#1A222B; --muted:#5E6A72; --line:#DCDCD2;
+  --cloth:#1F6B52; --cloth-ink:#FFFFFF; --cloth-soft:#E3EFE9; --gold:#C98A0E; --warn:#B4441F; --ok:#2C7A4B;
+  --f-display:"Black Han Sans","IBM Plex Sans KR",sans-serif;
+  --f-book:"Gowun Batang","Nanum Myeongjo",serif;
+  --f-ui:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#12171C; --sheet:#1A2128; --ink:#E9EAE4; --muted:#9AA6AD; --line:#2C363F;
+  --cloth:#47A783; --cloth-ink:#0D1A14; --cloth-soft:#1C3229; --gold:#E2AC3C; --warn:#E37A55; --ok:#5DBB83; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#12171C; --sheet:#1A2128; --ink:#E9EAE4; --muted:#9AA6AD; --line:#2C363F;
+  --cloth:#47A783; --cloth-ink:#0D1A14; --cloth-soft:#1C3229; --gold:#E2AC3C; --warn:#E37A55; --ok:#5DBB83; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{min-height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.6}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px;
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.brand{font-family:var(--f-display);font-size:22px;letter-spacing:.5px;display:flex;align-items:center;gap:8px;margin-right:auto}
+.brand i{display:inline-block;width:12px;height:22px;background:var(--cloth);border-radius:2px;box-shadow:5px 0 0 var(--gold)}
+.chip{font-size:12px;padding:3px 9px;border-radius:99px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip.on{border-color:var(--cloth);color:var(--cloth)}
+.chip.bad{border-color:var(--warn);color:var(--warn)}
+select.book{max-width:220px;padding:6px 8px;border:1px solid var(--line);border-radius:var(--r);background:var(--sheet)}
+.btn{border:1px solid var(--line);background:var(--sheet);padding:7px 13px;border-radius:var(--r);cursor:pointer;font-weight:500;white-space:nowrap}
+.btn:hover{border-color:var(--ink)}
+.btn.pri{background:var(--cloth);color:var(--cloth-ink);border-color:var(--cloth)}
+.btn.pri:hover{filter:brightness(1.08)}
+.btn.gold{background:var(--gold);color:#1A1406;border-color:var(--gold);font-weight:700}
+.btn.ghost{background:transparent}
+.btn.sm{padding:4px 9px;font-size:13px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:0;min-height:calc(100vh - 60px)}
+.rail{border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:4px;
+  padding-left:max(12px,env(safe-area-inset-left,0px))}
+.rail .lbl{font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin:0 8px 8px}
+.st{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:center;padding:9px 8px;border-radius:var(--r);cursor:pointer;border:1px solid transparent;background:none;text-align:left}
+.st:hover{background:var(--sheet)}
+.st.cur{background:var(--sheet);border-color:var(--line)}
+.st b{font-weight:600;display:block;font-size:14px}
+.st small{color:var(--muted);font-size:12px;display:block;line-height:1.3}
+.dot{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.st.done .dot{background:var(--cloth);border-color:var(--cloth);color:var(--cloth-ink)}
+.st.busy .dot{border-color:var(--gold);color:var(--gold);animation:spin 1.2s linear infinite;border-style:dashed}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.st.busy .dot{animation:none}}
+.rail .meter{margin:18px 8px 0;font-size:12px;color:var(--muted)}
+.rail .meter .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:6px}
+.rail .meter .bar span{display:block;height:100%;background:var(--cloth);width:0}
+main{padding-block:24px 60px;padding-left:max(16px,min(4vw,40px));padding-right:max(16px,env(safe-area-inset-right,0px));min-width:0}
+.bench{max-width:980px}
+h1.sh{font-family:var(--f-display);font-weight:400;font-size:30px;margin:0 0 4px;text-wrap:balance;letter-spacing:.3px}
+.lead{color:var(--muted);margin:0 0 22px;max-width:62ch}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.f{display:flex;flex-direction:column;gap:5px;min-width:0}
+.f label{font-size:13px;font-weight:600}
+.f .hint{font-size:12px;color:var(--muted)}
+.in,textarea.in,select.in{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:var(--r);background:var(--sheet)}
+textarea.in{resize:vertical;min-height:80px;line-height:1.6}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.stack{display:flex;flex-direction:column;gap:14px}
+.sep{height:1px;background:var(--line);margin:6px 0}
+.plabel{font-size:13px;font-weight:600;color:var(--muted)}
+.pchips{display:flex;flex-wrap:wrap;gap:6px}
+.pc{padding:7px 13px;border:1px solid var(--line);border-radius:99px;background:var(--sheet);cursor:pointer;font-size:14px}
+.pc:hover{border-color:var(--cloth)}
+.pc.sel{background:var(--cloth);border-color:var(--cloth);color:var(--cloth-ink);font-weight:600}
+.titles{display:flex;flex-direction:column;gap:8px}
+.tpick{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r);cursor:pointer;background:var(--sheet);text-align:left;width:100%}
+.tpick:hover{border-color:var(--cloth)}
+.tpick.sel{border-color:var(--cloth);background:var(--cloth-soft)}
+.tpick b{font-family:var(--f-book);font-size:17px}
+.tpick span{display:block;font-size:13px;color:var(--muted)}
+.toc{display:flex;flex-direction:column;gap:8px;counter-reset:ch}
+.tocrow{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:start;padding:10px;border:1px solid var(--line);border-radius:var(--r);background:var(--sheet)}
+.tocrow .n{font-family:var(--f-mono);font-size:13px;color:var(--muted);padding-top:9px;text-align:right}
+.tocrow .acts{display:flex;gap:4px;padding-top:4px}
+.ib{width:30px;height:30px;border:1px solid var(--line);border-radius:var(--r);background:none;cursor:pointer;color:var(--muted)}
+.ib:hover{color:var(--ink);border-color:var(--ink)}
+.writer{display:grid;grid-template-columns:240px minmax(0,1fr);gap:14px}
+.chlist{display:flex;flex-direction:column;gap:4px;max-height:70vh;overflow:auto}
+.chi{display:grid;grid-template-columns:auto 1fr;gap:8px;padding:8px 10px;border-radius:var(--r);border:1px solid transparent;background:none;cursor:pointer;text-align:left;font-size:14px}
+.chi:hover{background:var(--sheet)}
+.chi.cur{background:var(--sheet);border-color:var(--line)}
+.chi .s{width:9px;height:9px;border-radius:50%;margin-top:7px;background:var(--line)}
+.chi.done .s{background:var(--ok)}
+.chi.busy .s{background:var(--gold)}
+.chi small{display:block;color:var(--muted);font-size:12px;font-family:var(--f-mono)}
+.manu{font-family:var(--f-book);font-size:16.5px;line-height:1.85;min-height:52vh}
+.prev{font-family:var(--f-book);font-size:16.5px;line-height:1.9;max-width:66ch}
+.prev h2,.prev h3{font-family:var(--f-ui);line-height:1.35;text-wrap:balance}
+.prev blockquote{margin:1em 0;padding:.4em 1em;border-left:3px solid var(--cloth);color:var(--muted)}
+.cvwrap{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:22px;align-items:start}
+.cvbox{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;place-items:center}
+#cv{width:100%;max-width:280px;aspect-ratio:1/1.6;height:auto;box-shadow:0 10px 30px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.05)}
+.tpls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.tpl{padding:10px 6px;border:1px solid var(--line);border-radius:var(--r);background:var(--sheet);cursor:pointer;font-size:13px}
+.tpl.sel{border-color:var(--cloth);background:var(--cloth-soft);font-weight:600}
+.sw{display:flex;gap:8px;flex-wrap:wrap}
+.sw button{width:30px;height:30px;border-radius:50%;border:2px solid var(--sheet);box-shadow:0 0 0 1px var(--line);cursor:pointer}
+.sw button.sel{box-shadow:0 0 0 2px var(--ink)}
+.kw{display:flex;gap:6px;flex-wrap:wrap}
+.kw span{background:var(--cloth-soft);color:var(--ink);padding:3px 10px;border-radius:99px;font-size:13px}
+.chan{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.chan div{padding:12px;border:1px solid var(--line);border-radius:var(--r);background:var(--sheet);font-size:13px}
+.chan b{display:block;font-size:14px}
+.checks{display:flex;flex-direction:column;gap:6px;font-size:14px}
+.checks div{display:flex;gap:8px;align-items:center}
+.checks .y{color:var(--ok);font-weight:700}
+.checks .x{color:var(--warn);font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stat{padding:12px;border:1px solid var(--line);border-radius:var(--r);background:var(--sheet)}
+.stat b{display:block;font-family:var(--f-mono);font-size:22px;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted)}
+.exp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.exp button{text-align:left;padding:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--sheet);cursor:pointer}
+.exp button:hover{border-color:var(--cloth)}
+.exp button b{display:block}
+.exp button span{font-size:13px;color:var(--muted)}
+.exp button.main{border-color:var(--cloth);background:var(--cloth-soft)}
+.note{font-size:13px;color:var(--muted)}
+.banner{padding:10px 14px;border-radius:var(--r);border:1px dashed var(--gold);font-size:13px;margin-bottom:16px;color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:var(--r);font-size:14px;z-index:20;max-width:calc(100% - 32px)}
+.runbar{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:15;background:var(--sheet);border:1px solid var(--gold);border-radius:var(--r);padding:10px 12px;display:flex;gap:10px;align-items:center;box-shadow:0 6px 24px rgba(0,0,0,.15);max-width:calc(100% - 32px)}
+.runbar span{font-size:13px}
+.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--warn)}
+@media (max-width:820px){
+  .wrap{grid-template-columns:1fr}
+  .rail{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:8px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px));gap:2px}
+  .rail .lbl,.rail .meter{display:none}
+  .st{grid-template-columns:24px auto;flex:0 0 auto}
+  .st small{display:none}
+  .dot{width:24px;height:24px}
+  main{padding-left:max(16px,env(safe-area-inset-left,0px))}
+  .grid2,.grid3,.cvwrap,.writer,.chan,.exp{grid-template-columns:minmax(0,1fr)}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .chlist{max-height:none;flex-direction:row;overflow-x:auto}
+  .chi{flex:0 0 auto;max-width:200px}
+  .brand{font-size:19px}
+}
+</style>
+
+<header class="top">
+  <div class="brand"><i aria-hidden="true"></i>전자책 공장</div>
+  <span id="aiChip" class="chip">AI 연결 확인 중</span>
+  <select id="bookSel" class="book" aria-label="작업 중인 책"></select>
+  <button class="btn sm" id="newBook">새 책</button>
+  <button class="btn gold" id="autoRun">원클릭 자동 생산</button>
+  <button class="btn sm ghost" onclick="ebookLogout()">로그아웃</button>
+</header>
+
+<div class="wrap">
+  <nav class="rail" id="rail" aria-label="생산 단계">
+    <div class="lbl">생산 라인</div>
+  </nav>
+  <main><div class="bench" id="bench"></div></main>
+</div>
+<div id="runbar" class="runbar" hidden><span id="runMsg">작업 중</span><button class="btn sm" id="stopBtn">중지</button></div>
+<div id="toast" class="toast" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36);
+const KEY="ebookfactory.v1";
+
+/* ---------- 예시 책 (처음 열었을 때 보여줄 견본) ---------- */
+function exampleBook(){return{
+  id:"example",example:true,idea:"직장인이 퇴근 후 시간으로 전자책을 써서 부수입을 만드는 방법",
+  audience:"부업을 찾는 30~40대 직장인",tone:"친근하고 실전적인",chapterCount:6,chars:3000,withIntro:true,
+  title:"퇴근 후 2시간, 전자책 한 권",subtitle:"주제 고르기부터 판매까지, 직장인 전자책 부업 로드맵",author:"홍길동",
+  concept:"경험 하나를 상품으로 바꾸는 가장 빠른 길",titleOptions:[],
+  chapters:[
+    {title:"들어가며: 왜 지금 전자책인가",summary:"전자책 부업이 직장인에게 맞는 이유",body:"## 하루 2시간이면 충분하다\n\n대부분의 부업은 시간을 판다. 전자책은 다르다. **한 번 써 두면** 잠자는 동안에도 팔린다.\n\n- 초기 비용이 거의 없다\n- 회사 일과 겹치지 않는다\n- 내 경험이 곧 재료다\n\n> 이 책은 예시 원고입니다. 직접 만들려면 상단의 ‘새 책’을 누르세요."},
+    {title:"1장. 팔리는 주제 찾기",summary:"검색 수요와 내 경험이 겹치는 지점 찾기",body:""},
+    {title:"2장. 목차가 책의 80%다",summary:"독자의 문제 순서대로 목차 짜는 법",body:""},
+    {title:"3장. AI와 함께 초고 쓰기",summary:"AI로 초고를 만들고 내 목소리로 다듬기",body:""},
+    {title:"4장. 표지와 상세페이지",summary:"클릭을 부르는 표지와 판매 문구",body:""},
+    {title:"마치며: 두 번째 책은 더 쉽다",summary:"시리즈로 확장하는 전략",body:""}],
+  cover:{tpl:"classic",color:"#1F4E79"},sales:null,aiNote:true,updatedAt:Date.now()};}
+
+/* ---------- 저장소 ---------- */
+let lib=[],cur=null,station="plan",curCh=0,previewMode=false;
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY)||"null");if(d&&Array.isArray(d.books)&&d.books.length){lib=d.books;return d.cur}}catch(e){}lib=[exampleBook()];return "example";}
+let saveT;function save(){clearTimeout(saveT);saveT=setTimeout(()=>{try{cur.updatedAt=Date.now();localStorage.setItem(KEY,JSON.stringify({books:lib,cur:cur.id}))}catch(e){}},300);}
+function blank(){return{id:uid(),idea:"",audience:"",tone:"친근하고 실전적인",chapterCount:8,chars:3500,withIntro:true,title:"",subtitle:"",author:"",concept:"",titleOptions:[],chapters:[],cover:{tpl:"classic",color:"#1F6B52"},sales:null,aiNote:true,updatedAt:Date.now()};}
+
+/* ---------- AI (Claude) ---------- */
+let samplePromise=null,aiState="wait";
+function getSample(){if(!samplePromise){samplePromise=(window.claude&&window.claude.use)?window.claude.use("sample").catch(()=>null):Promise.resolve(null);}return samplePromise;}
+getSample().then(s=>{aiState=s?"ok":"none";paintChip();if(!s)render();});
+function paintChip(){const c=$("#aiChip");c.className="chip"+(aiState==="ok"?" on":aiState==="none"||aiState==="denied"?" bad":"");
+  c.textContent=aiState==="ok"?"AI 연결됨":aiState==="none"?"AI 사용 불가 (수동 모드)":aiState==="denied"?"AI 사용이 거절됨":"AI 연결 확인 중";}
+const ERR={not_granted:"AI 사용이 허용되지 않았어요. 다시 열고 ‘허용’을 눌러 주세요.",rate_limited:"요청이 많아요. 1분 뒤 다시 눌러 주세요.",invalid_json:"AI 답변 형식이 어긋났어요. 한 번 더 눌러 주세요.",cancelled:"중지했어요.",prompt_too_large:"내용이 너무 길어요. 분량을 줄여 주세요.",refused:"AI가 이 주제는 쓰지 않겠다고 답했어요. 주제를 바꿔 주세요.",unavailable:"이 화면에서는 AI를 쓸 수 없어요. 직접 입력해서 만들 수 있어요."};
+const errMsg=e=>ERR[e&&e.code]||("문제가 생겼어요: "+((e&&e.message)||"알 수 없는 오류"));
+let ctl=null;
+async function ask(prompt,{json=false,onText,tier="default"}={}){
+  const s=await getSample();if(!s)throw{code:"unavailable"};
+  ctl=new AbortController();
+  try{return json?await s.json(prompt,{signal:ctl.signal,modelTier:tier,onText}):await s(prompt,{signal:ctl.signal,modelTier:tier,onText});}
+  catch(e){if(e&&e.code==="not_granted"){aiState="denied";paintChip();}throw e;}
+}
+let busy=null; // {what, ch}
+function setBusy(b,msg){busy=b;$("#runbar").hidden=!b;if(msg)$("#runMsg").textContent=msg;$("#autoRun").disabled=!!b;paintRail();}
+$("#stopBtn").onclick=()=>{stopAll=true;ctl&&ctl.abort();};
+let stopAll=false;
+
+function bookBrief(b){return `[책 정보]\n- 제목: ${b.title||"(미정)"}\n- 부제: ${b.subtitle||""}\n- 분야: ${b.category||""}\n- 주제: ${b.idea}\n- 독자: ${b.audience}\n- 문체: ${b.tone}\n- 콘셉트: ${b.concept||""}`;}
+
+async function genPlan(){
+  const b=cur;if(!b.idea.trim()){toast("먼저 ‘책 주제’를 적어 주세요.");return false;}
+  setBusy({what:"plan"},"제목과 콘셉트를 뽑는 중");
+  try{
+    const r=await ask(`당신은 한국 전자책 시장(크몽, 리디, 교보, 유페이퍼, 아마존 KDP)에 밝은 기획 편집자입니다.\n아래 주제로 잘 팔릴 전자책을 기획하세요.\n주제: ${b.idea}\n독자: ${b.audience||"알아서 정하기"}\n문체: ${b.tone}\n\n오직 JSON 하나로 답하세요. 형식:\n{"audience":"구체적인 핵심 독자 한 줄","concept":"책의 핵심 약속 한 문장","titles":[{"title":"제목","subtitle":"부제"}, ... 5개]}\n제목은 짧고 구체적이며 숫자나 결과를 담은 것과 감성적인 것을 섞으세요.`,{json:true});
+    if(!r||!Array.isArray(r.titles))throw{code:"invalid_json"};
+    b.titleOptions=r.titles.filter(t=>t&&t.title).slice(0,6);
+    if(!b.audience)b.audience=r.audience||"";b.concept=r.concept||b.concept;
+    if(!b.title&&b.titleOptions[0]){b.title=b.titleOptions[0].title;b.subtitle=b.titleOptions[0].subtitle||"";}
+    save();return true;
+  }catch(e){toast(errMsg(e));return false;}finally{setBusy(null);render();}
+}
+async function genOutline(){
+  const b=cur;if(!b.idea.trim()){toast("먼저 ‘책 주제’를 적어 주세요.");return false;}
+  setBusy({what:"toc"},"목차를 짜는 중");
+  try{
+    const n=Math.max(3,Math.min(20,+b.chapterCount||8));
+    const r=await ask(`당신은 베스트셀러 실용서 편집자입니다. 아래 책의 목차를 짜세요.\n${bookBrief(b)}\n\n규칙:\n- 본문 장은 정확히 ${n}개. 제목 앞에 "1장. " 같은 번호를 붙이세요.\n- ${b.withIntro?'맨 앞에 "들어가며: …", 맨 뒤에 "마치며: …" 를 추가하세요(번호 없음).':"들어가며/마치며는 넣지 마세요."}\n- 독자의 문제를 해결하는 순서로, 장마다 구체적인 결과가 보이게.\n- summary는 그 장에서 다룰 내용 한 문장, points는 소제목 3~4개.\n\n오직 JSON으로: {"chapters":[{"title":"","summary":"","points":["",""]}]}`,{json:true});
+    if(!r||!Array.isArray(r.chapters)||!r.chapters.length)throw{code:"invalid_json"};
+    b.chapters=r.chapters.map(c=>({title:String(c.title||"제목 없음"),summary:String(c.summary||""),points:Array.isArray(c.points)?c.points.map(String):[],body:""}));
+    curCh=0;save();return true;
+  }catch(e){toast(errMsg(e));return false;}finally{setBusy(null);render();}
+}
+async function genChapter(i,extra){
+  const b=cur,c=b.chapters[i];if(!c)return false;
+  setBusy({what:"write",ch:i},`원고 쓰는 중: ${c.title}`);
+  const toc=b.chapters.map((x,j)=>`${j===i?"▶ ":""}${x.title} — ${x.summary}`).join("\n");
+  const prev=i>0&&b.chapters[i-1].body?b.chapters[i-1].body.slice(-600):"";
+  const old=extra&&c.body?`\n\n[기존 원고]\n${c.body.slice(0,9000)}\n\n[수정 요청]\n${extra}\n위 요청대로 기존 원고를 고쳐 쓴 전체 원고를 주세요.`:"";
+  const prompt=`당신은 이 책의 저자입니다. 아래 한 장의 원고를 한국어로 쓰세요.\n${bookBrief(b)}\n\n[전체 목차]\n${toc}\n\n[이번에 쓸 장]\n제목: ${c.title}\n내용: ${c.summary}\n소제목 후보: ${(c.points||[]).join(", ")}\n${prev?`\n[앞 장의 끝부분 — 자연스럽게 이어지게]\n${prev}\n`:""}\n규칙:\n- 분량: 공백 포함 약 ${b.chars}자.\n- 형식: 마크다운. 장 제목은 쓰지 말고 바로 본문 시작. 소제목은 "## ", 하위는 "### ".\n- 구체적인 예시, 단계, 체크리스트를 넣고 뻔한 일반론은 피하세요.\n- 확인할 수 없는 통계나 실명 사례를 지어내지 마세요.\n- 장 끝에 "## 이 장의 핵심" 으로 3줄 요약.\n- 원고 외의 말(인사, 설명)은 쓰지 마세요.${old}`;
+  try{
+    const r=await ask(prompt,{onText:({text})=>{c.body=text;liveUpdate(i);}});
+    c.body=r.text.trim();save();return true;
+  }catch(e){if(e&&e.text)c.body=e.text;save();if(e.code!=="cancelled")toast(errMsg(e));return false;}
+  finally{setBusy(null);render();}
+}
+async function genSales(){
+  const b=cur;setBusy({what:"sales"},"판매 문구를 쓰는 중");
+  try{
+    const toc=b.chapters.map(c=>c.title).join("\n");
+    const r=await ask(`당신은 크몽·리디·교보 전자책 상세페이지를 쓰는 카피라이터입니다.\n${bookBrief(b)}\n[목차]\n${toc}\n\n오직 JSON으로 답하세요:\n{"hook":"썸네일/광고용 한 줄 카피(25자 이내)","detail":"상세페이지 본문(마크다운, 공감→문제→해결→목차 미리보기→이런 분께 추천→구매 후 얻는 것 순서, 과장·허위 효능 금지)","keywords":["검색 키워드 8개"],"price":"추천 판매가와 이유 한 줄","blurb":"서점 등록용 책 소개 300자"}`,{json:true});
+    if(!r||!r.detail)throw{code:"invalid_json"};
+    b.sales={hook:String(r.hook||""),detail:String(r.detail||""),keywords:(r.keywords||[]).map(String),price:String(r.price||""),blurb:String(r.blurb||"")};
+    save();return true;
+  }catch(e){toast(errMsg(e));return false;}finally{setBusy(null);render();}
+}
+async function autoRun(){
+  if(cur.example){toast("예시 책은 자동 생산할 수 없어요. ‘새 책’을 눌러 주세요.");return;}
+  if(!cur.idea.trim()){station="plan";render();toast("‘책 주제’ 한 줄만 적으면 나머지는 자동으로 만들어요.");$("#idea")&&$("#idea").focus();return;}
+  stopAll=false;
+  if(!cur.title){station="plan";render();if(!await genPlan()||stopAll)return;}
+  if(!cur.chapters.length){station="toc";render();if(!await genOutline()||stopAll)return;}
+  station="write";
+  for(let i=0;i<cur.chapters.length;i++){
+    if(cur.chapters[i].body.trim())continue;
+    curCh=i;render();if(!await genChapter(i)||stopAll)return;
+  }
+  station="sales";render();if(!cur.sales){if(!await genSales()||stopAll)return;}
+  station="ship";render();toast("책 한 권이 완성됐어요. ‘EPUB 내려받기’를 누르세요.");
+}
+
+/* ---------- 상태 계산 ---------- */
+const doneCh=b=>b.chapters.filter(c=>c.body.trim().length>200).length;
+const totalChars=b=>b.chapters.reduce((s,c)=>s+c.body.length,0);
+function stationState(k){const b=cur;
+  if(busy&&({plan:"plan",toc:"toc",write:"write",sales:"sales"})[k]===busy.what)return"busy";
+  if(k==="plan")return b.title&&b.idea?"done":"";
+  if(k==="toc")return b.chapters.length?"done":"";
+  if(k==="write")return b.chapters.length&&doneCh(b)===b.chapters.length?"done":"";
+  if(k==="cover")return b.title?"done":"";
+  if(k==="sales")return b.sales?"done":"";
+  if(k==="ship")return b.shipped?"done":"";return"";}
+const STATIONS=[["plan","기획","주제·독자·제목"],["toc","목차","장 구성"],["write","집필","장별 원고"],["cover","표지","자동 디자인"],["sales","판매","상세페이지·키워드"],["ship","출고","EPUB·원고 파일"]];
+function paintRail(){
+  const r=$("#rail");const pct=cur.chapters.length?Math.round(doneCh(cur)/cur.chapters.length*100):0;
+  r.innerHTML='<div class="lbl">생산 라인</div>'+STATIONS.map(([k,t,s],i)=>`<button class="st ${station===k?"cur":""} ${stationState(k)}" data-st="${k}"><span class="dot">${stationState(k)==="done"?"✓":i+1}</span><span><b>${t}</b><small>${s}</small></span></button>`).join("")+
+  `<div class="meter">원고 진행 ${doneCh(cur)}/${cur.chapters.length}장 · ${totalChars(cur).toLocaleString()}자<div class="bar"><span style="width:${pct}%"></span></div></div>`;
+  r.querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>{station=b.dataset.st;render();window.scrollTo(0,0);});
+}
+function paintBookSel(){
+  const s=$("#bookSel");s.innerHTML=lib.slice().sort((a,b)=>b.updatedAt-a.updatedAt).map(b=>`<option value="${b.id}" ${b.id===cur.id?"selected":""}>${esc((b.example?"[예시] ":"")+(b.title||"제목 미정"))}</option>`).join("");
+}
+$("#bookSel").onchange=e=>{if(busy)return;cur=lib.find(b=>b.id===e.target.value);pickCat=pickSub=null;curCh=0;station="plan";save();render();};
+$("#newBook").onclick=()=>{if(busy)return;pickCat=pickSub=null;const b=blank();lib.push(b);cur=b;curCh=0;station="plan";save();render();setTimeout(()=>$("#idea")&&$("#idea").focus(),50);};
+$("#autoRun").onclick=autoRun;
+
+/* ---------- 화면 ---------- */
+function render(){paintRail();paintBookSel();const B=$("#bench");B.innerHTML=({plan:vPlan,toc:vToc,write:vWrite,cover:vCover,sales:vSales,ship:vShip})[station]();bind[station]&&bind[station]();}
+const exBanner=()=>cur.example?`<div class="banner">지금 보는 책은 <b>예시</b>예요. 내 책을 만들려면 상단의 <b>새 책</b> 버튼을 누르세요.</div>`:"";
+const aiOff=()=>aiState==="none"||aiState==="denied";
+const aiNote=()=>aiOff()?`<div class="banner">AI를 쓸 수 없는 환경이에요. 칸을 직접 채워도 표지·EPUB 출고는 그대로 됩니다.</div>`:"";
+
+/* ---------- 주제 카테고리 (대분류 → 하위분류 → 추천 주제 "주제|독자") ---------- */
+const CATS=[
+ {k:"부업·창업",tone:"친근하고 실전적인",subs:{
+  "스마트스토어":["스마트스토어 첫 달 매출 100만원 만들기|부업을 시작하려는 직장인","위탁판매로 재고 없이 온라인 쇼핑몰 시작하기|소자본 창업 준비생","상세페이지 하나로 전환율 2배 올리기|매출이 정체된 초보 셀러"],
+  "블로그 수익화":["네이버 블로그 애드포스트로 월 30만원 벌기|블로그를 막 시작한 사람","체험단·협찬으로 생활비 아끼는 블로그 운영법|살림하는 3040","구글 애드센스 승인부터 첫 수익까지|글쓰기를 좋아하는 직장인"],
+  "유튜브·숏폼":["얼굴 없이 시작하는 유튜브 채널 운영법|카메라가 부담스러운 초보","쇼츠·릴스로 3개월 만에 구독자 1만 만들기|숏폼을 시작하려는 사람","AI로 영상 대본과 편집을 반자동화하기|시간이 부족한 직장인 크리에이터"],
+  "전자책·지식창업":["내 경험을 전자책으로 만들어 크몽에 파는 법|노하우가 있는 직장인","강의 하나로 시작하는 1인 지식창업|전문성이 있는 프리랜서","AI로 한 달에 전자책 10권 출간하기|전자책 부업 입문자"],
+  "1인 창업":["퇴사 전에 준비하는 1인 창업 체크리스트|창업을 고민하는 직장인","무자본으로 시작하는 서비스업 창업|사업 아이디어가 있는 2030","공유오피스 없이 집에서 1인 사업 운영하기|프리랜서·1인 대표"]}},
+ {k:"재테크·투자",tone:"전문적이고 단정한",subs:{
+  "주식":["월급쟁이를 위한 미국 배당주 투자 입문|주식이 처음인 직장인","ETF 하나로 끝내는 장기 투자 전략|투자 공부할 시간 없는 사람","재무제표 10분 만에 읽는 법|종목을 직접 고르고 싶은 초보"],
+  "부동산":["사회초년생 첫 집 마련 로드맵|내 집 마련을 꿈꾸는 2030","청약 가점 낮아도 당첨되는 전략|무주택 실수요자","소액으로 시작하는 부동산 경매 입문|부동산 투자를 고민하는 직장인"],
+  "절약·가계부":["한 달 생활비 30% 줄이는 가계부 습관|저축이 안 되는 맞벌이 부부","통장 쪼개기로 1년에 1000만원 모으기|사회초년생","무지출 챌린지 30일 실전 가이드|소비 습관을 바꾸고 싶은 사람"],
+  "연금·노후":["40대부터 시작하는 노후 준비 체크리스트|노후가 막막한 4050","연금저축·IRP로 세금 돌려받는 법|연말정산이 아쉬운 직장인","은퇴 후 월 300만원 현금흐름 만들기|은퇴를 앞둔 5060"]}},
+ {k:"AI·IT 활용",tone:"친근하고 실전적인",subs:{
+  "AI 업무 활용":["ChatGPT·Claude로 업무 시간 절반 줄이기|사무직 직장인","프롬프트 하나로 보고서 쓰는 법|보고서가 부담스러운 직장인","AI로 기획서·제안서 10분 만에 만들기|기획·영업 담당자"],
+  "업무 자동화":["코딩 없이 만드는 업무 자동화|반복 업무에 지친 직장인","엑셀 자동화로 야근 없애기|엑셀을 매일 쓰는 실무자","AI 에이전트로 1인 회사 운영하기|1인 사업자"],
+  "노코드·앱 만들기":["코딩 몰라도 AI로 앱 만들기|아이디어만 있는 사람","노코드로 하루 만에 홈페이지 만들기|소상공인","AI로 나만의 업무 도구 만들기|효율을 중시하는 실무자"],
+  "디지털 기초":["5060을 위한 스마트폰 200% 활용법|디지털이 어려운 중장년","엑셀 함수 30개로 끝내는 실무|엑셀 초보 직장인","개인정보 지키는 디지털 생활 습관|온라인 사기가 걱정되는 사람"]}},
+ {k:"마케팅·브랜딩",tone:"친근하고 실전적인",subs:{
+  "인스타그램":["팔로워 1천 명부터 시작하는 인스타 수익화|인스타를 키우고 싶은 개인","소상공인을 위한 인스타그램 홍보 전략|가게 사장님","릴스로 매장 손님 늘리는 법|오프라인 매장 운영자"],
+  "퍼스널 브랜딩":["평범한 직장인의 퍼스널 브랜딩|이직·부업을 준비하는 직장인","나를 한 문장으로 소개하는 법|브랜딩이 막막한 프리랜서","SNS 하나로 강의·협업 제안 받는 법|전문성을 알리고 싶은 사람"],
+  "카피라이팅":["팔리는 문장 공식 30가지|판매 글을 쓰는 사람","상세페이지 카피 쓰는 법|온라인 셀러","클릭을 부르는 제목 짓기|블로거·마케터"],
+  "지역 마케팅":["네이버 플레이스 상위 노출 전략|동네 가게 사장님","리뷰가 쌓이는 가게 만들기|자영업자","당근마켓·지역 커뮤니티 홍보법|동네 장사하는 사람"]}},
+ {k:"자기계발",tone:"따뜻한 에세이체",subs:{
+  "시간관리":["하루 2시간을 만드는 시간관리법|늘 바쁜 직장인","미라클 모닝 30일 실천기|아침형 인간이 되고 싶은 사람","할 일 목록 대신 쓰는 하루 설계법|미루는 습관이 있는 사람"],
+  "습관":["작은 습관으로 1년 만에 달라지기|변화를 원하는 사람","작심삼일을 끝내는 습관 설계법|의지가 약하다고 느끼는 사람","디지털 디톡스 21일|스마트폰 중독이 걱정되는 사람"],
+  "독서·글쓰기":["1년에 100권 읽는 독서법|책을 읽고 싶은 바쁜 사람","매일 15분 글쓰기 습관|글을 잘 쓰고 싶은 사람","읽은 책을 내 것으로 만드는 메모법|독서 후 남는 게 없는 사람"],
+  "말하기":["떨지 않고 발표하는 법|발표가 두려운 직장인","말 잘하는 사람의 대화 구조|말이 서툰 사람","3분 안에 설득하는 스피치|영업·리더"]}},
+ {k:"커리어·취업",tone:"전문적이고 단정한",subs:{
+  "이직":["연봉 올려 이직하는 전략|이직을 고민하는 3~7년차","경력기술서 쓰는 법|이직 준비 중인 직장인","헤드헌터가 먼저 연락하게 만드는 법|경력직"],
+  "취업 준비":["서류 합격률 높이는 자기소개서|취업 준비생","면접 질문 50개와 모범 답변|면접을 앞둔 구직자","비전공자 IT 취업 로드맵|진로를 바꾸려는 사람"],
+  "직장생활":["신입사원 생존 매뉴얼|입사 1년 차","일 잘하는 사람의 보고법|보고가 어려운 실무자","처음 팀장이 된 사람을 위한 리더십|신임 관리자"],
+  "자격증·시험":["직장인 자격증 독학 합격 전략|자격증을 따려는 직장인","공무원 시험 1년 합격 플랜|공시생","한국사능력검정 단기 합격법|시험을 앞둔 수험생"]}},
+ {k:"건강·다이어트",tone:"친근하고 실전적인",subs:{
+  "다이어트":["굶지 않고 3개월 10kg 빼기|다이어트에 여러 번 실패한 사람","직장인 도시락 다이어트 식단|바쁜 직장인","40대 이후 뱃살 빼는 법|중년"],
+  "홈트·운동":["하루 15분 홈트레이닝|헬스장 갈 시간 없는 사람","러닝 초보 10km 완주 가이드|달리기를 시작하려는 사람","거북목·허리 통증 잡는 스트레칭|앉아서 일하는 직장인"],
+  "수면·회복":["잠 못 드는 밤을 끝내는 수면 습관|불면이 있는 사람","번아웃에서 회복하는 법|지친 직장인","아침 피로를 없애는 생활 리듬|늘 피곤한 사람"],
+  "식단·요리":["혈당 걱정 없는 집밥 레시피|건강을 챙기는 4050","단백질 챙기는 간단 식단|운동하는 사람","1주일 밀프렙 가이드|요리할 시간이 없는 1인 가구"]}},
+ {k:"육아·교육",tone:"따뜻한 에세이체",subs:{
+  "영유아":["첫 아이 0~12개월 육아 가이드|초보 엄마·아빠","떼쓰는 아이와 싸우지 않는 대화법|3~6세 부모","아이 수면 교육 실전기|잠 때문에 힘든 부모"],
+  "초등 공부":["초등 자기주도 학습 습관 만들기|초등 학부모","초등 독서 습관 잡기|책을 안 읽는 아이의 부모","사교육 없이 초등 수학 잡기|교육비가 고민인 부모"],
+  "영어 교육":["엄마표 영어 3년 로드맵|영어 교육을 시작하는 부모","영어 그림책 100권 활용법|유아 부모","초등 영어 회화 집에서 하기|초등 학부모"],
+  "부모 마음":["화내지 않는 부모 되기|육아에 지친 부모","워킹맘의 죄책감 내려놓기|일하는 엄마","아빠 육아 첫걸음|육아에 참여하고 싶은 아빠"]}},
+ {k:"취미·라이프",tone:"따뜻한 에세이체",subs:{
+  "여행":["직장인 연차로 떠나는 해외여행 가이드|짧게 여행하는 직장인","혼자 떠나는 국내 여행 코스|혼행족","항공권·숙소 싸게 예약하는 법|여행 경비를 아끼고 싶은 사람"],
+  "반려동물":["첫 강아지 입양 가이드|반려견을 처음 키우는 사람","고양이 행동 이해하기|집사 초보","반려동물 건강 관리 기본|반려인"],
+  "정리·인테리어":["10평 집 넓게 쓰는 정리법|좁은 집에 사는 사람","원룸 셀프 인테리어|자취생","미니멀 라이프 30일|물건이 많은 사람"],
+  "캠핑·아웃도어":["초보 캠핑 장비 고르는 법|캠핑 입문자","차박 여행 가이드|차박을 시작하려는 사람","가족 캠핑 레시피|아이와 캠핑하는 가족"]}},
+ {k:"관계·심리",tone:"따뜻한 에세이체",subs:{
+  "대화법":["상처 주지 않고 거절하는 법|거절이 어려운 사람","갈등을 줄이는 대화 기술|관계가 피곤한 사람","처음 만난 사람과 편하게 말하는 법|낯가림이 심한 사람"],
+  "마음챙김":["불안을 다루는 하루 10분 명상|불안이 많은 사람","자존감 회복 연습|자신감이 낮은 사람","감정 일기 쓰는 법|마음 정리가 필요한 사람"],
+  "연애·결혼":["오래 가는 연애의 대화법|연애 중인 2030","결혼 준비 체크리스트|예비부부","신혼부부 돈 관리 합의법|신혼부부"]}},
+ {k:"외국어",tone:"친근하고 실전적인",subs:{
+  "영어":["하루 10분 영어회화 패턴 100|영어 말하기가 막히는 사람","해외여행 영어 한 권으로 끝내기|여행을 앞둔 사람","직장인 비즈니스 영어 이메일|영어로 일하는 직장인"],
+  "일본어":["일본 여행 회화 200문장|일본 여행자","일본어 왕초보 30일 독학|일본어 입문자","JLPT N3 독학 전략|일본어 시험 준비생"],
+  "중국어":["중국어 성조부터 회화까지 입문|중국어 입문자","HSK 4급 단기 합격|시험 준비생","비즈니스 중국어 필수 표현|중국 거래처와 일하는 사람"]}},
+ {k:"동화·소설·에세이",tone:"동화처럼 쉬운",subs:{
+  "어린이 동화":["용기를 배우는 작은 토끼 이야기|5~7세 어린이","친구와 사이좋게 지내는 법을 알려주는 동화|유치원생","잠자리에서 읽는 짧은 동화 10편|아이를 재우는 부모"],
+  "짧은 소설":["퇴근길에 읽는 짧은 소설 모음|출퇴근하는 직장인","가까운 미래의 AI와 사람 이야기|SF를 좋아하는 독자","작은 동네 빵집에서 벌어지는 이야기|힐링 소설 독자"],
+  "에세이":["서른 다섯, 다시 시작하는 마음|새 출발을 앞둔 사람","회사 밖에서 찾은 나의 일|퇴사를 고민하는 직장인","혼자 사는 즐거움에 대하여|1인 가구"]}}
+];
+let pickCat=null,pickSub=null;const aiTopics={};
+function pickerHtml(){
+  if(!pickCat&&cur.category){const[a,c]=cur.category.split(" > ");if(CATS.some(x=>x.k===a)){pickCat=a;pickSub=c||null;}}
+  const cat=CATS.find(c=>c.k===pickCat);const subs=cat?Object.keys(cat.subs):[];
+  const topics=cat&&pickSub?[...(cat.subs[pickSub]||[]),...(aiTopics[pickCat+"/"+pickSub]||[])]:[];
+  return `<div class="card stack" id="picker">
+  <div class="row" style="justify-content:space-between"><b>주제 고르기</b><span class="note">분야 → 세부 분야 → 주제 순서로 누르세요</span></div>
+  <div class="f"><span class="plabel">① 분야</span><div class="pchips">${CATS.map(c=>`<button class="pc ${c.k===pickCat?"sel":""}" data-cat="${esc(c.k)}">${esc(c.k)}</button>`).join("")}</div></div>
+  ${cat?`<div class="f"><span class="plabel">② 세부 분야</span><div class="pchips">${subs.map(s=>`<button class="pc ${s===pickSub?"sel":""}" data-sub="${esc(s)}">${esc(s)}</button>`).join("")}</div></div>`:""}
+  ${pickSub?`<div class="f"><span class="plabel">③ 주제</span><div class="titles">${topics.map((t,i)=>{const[ti,au]=t.split("|");return `<button class="tpick ${cur.idea===ti?"sel":""}" data-topic="${i}"><div><b style="font-size:16px">${esc(ti)}</b><span>독자: ${esc(au||"")}</span></div></button>`;}).join("")}</div>
+  <div class="row"><button class="btn sm" id="moreTopics" ${aiOff()||busy?"disabled":""}>AI에게 주제 6개 더 받기</button></div></div>`:""}
+</div>`;}
+async function moreTopics(){const key=pickCat+"/"+pickSub,have=[...CATS.find(c=>c.k===pickCat).subs[pickSub],...(aiTopics[key]||[])].map(t=>t.split("|")[0]);
+  setBusy({what:"plan"},"주제를 더 찾는 중");
+  try{const r=await ask(`한국 전자책 시장(크몽, 리디, 교보, 유페이퍼)에서 잘 팔릴 전자책 주제를 추천하세요.\n분야: ${pickCat} > ${pickSub}\n이미 있는 주제(겹치지 않게): ${have.join(" / ")}\n\n구체적인 결과나 대상이 드러나는 주제 6개. 오직 JSON으로: [{"topic":"주제","audience":"핵심 독자"}]`,{json:true,tier:"quick"});
+    if(!Array.isArray(r))throw{code:"invalid_json"};aiTopics[key]=[...(aiTopics[key]||[]),...r.filter(x=>x&&x.topic).map(x=>`${x.topic}|${x.audience||""}`)];
+  }catch(e){toast(errMsg(e));}finally{setBusy(null);render();}}
+function bindPicker(){const b=cur;
+  document.querySelectorAll("[data-cat]").forEach(x=>x.onclick=()=>{pickCat=x.dataset.cat;pickSub=null;render();});
+  document.querySelectorAll("[data-sub]").forEach(x=>x.onclick=()=>{pickSub=x.dataset.sub;render();});
+  document.querySelectorAll("[data-topic]").forEach(x=>x.onclick=()=>{const cat=CATS.find(c=>c.k===pickCat);const list=[...cat.subs[pickSub],...(aiTopics[pickCat+"/"+pickSub]||[])];const[ti,au]=list[+x.dataset.topic].split("|");
+    if(b.example){const nb=blank();lib.push(nb);cur=nb;}
+    const c=cur;const changed=c.idea!==ti;c.idea=ti;c.audience=au||"";c.tone=cat.tone||c.tone;c.category=pickCat+" > "+pickSub;
+    if(changed&&!c.chapters.length){c.title="";c.subtitle="";c.titleOptions=[];c.concept="";}
+    save();render();toast("주제를 골랐어요. ‘원클릭 자동 생산’을 누르면 책 한 권이 만들어져요.");});
+  const m=$("#moreTopics");if(m)m.onclick=moreTopics;}
+
+function vPlan(){const b=cur;return `${exBanner()}${aiNote()}
+<h1 class="sh">기획</h1><p class="lead">분야와 주제를 고르기만 하면 됩니다. 직접 쓰고 싶으면 아래 ‘책 주제’ 칸에 적으세요.</p>
+<div class="stack">
+${pickerHtml()}
+<div class="card stack">
+  ${b.category?`<span class="note">분야: ${esc(b.category)}</span>`:""}
+  <div class="f"><label for="idea">책 주제 (직접 입력도 가능)</label><textarea class="in" id="idea" rows="2" placeholder="예: 40대 직장인이 퇴근 후 스마트스토어로 월 50만원 버는 법">${esc(b.idea)}</textarea></div>
+  <div class="grid3">
+    <div class="f"><label for="aud">핵심 독자</label><input class="in" id="aud" value="${esc(b.audience)}" placeholder="비우면 AI가 정해요"></div>
+    <div class="f"><label for="tone">문체</label><select class="in" id="tone">${["친근하고 실전적인","전문적이고 단정한","따뜻한 에세이체","유머러스하고 가벼운","동화처럼 쉬운"].map(t=>`<option ${t===b.tone?"selected":""}>${t}</option>`).join("")}</select></div>
+    <div class="f"><label for="author">저자명</label><input class="in" id="author" value="${esc(b.author)}" placeholder="필명도 좋아요"></div>
+  </div>
+  <div class="grid3">
+    <div class="f"><label for="cc">본문 장 수</label><input class="in" type="number" min="3" max="20" id="cc" value="${b.chapterCount}"></div>
+    <div class="f"><label for="chars">장당 글자 수</label><select class="in" id="chars">${[[1500,"1,500자 (짧게)"],[3000,"3,000자 (보통)"],[3500,"3,500자"],[5000,"5,000자 (길게)"],[7000,"7,000자 (아주 길게)"]].map(([v,t])=>`<option value="${v}" ${+b.chars===v?"selected":""}>${t}</option>`).join("")}</select></div>
+    <div class="f"><label>&nbsp;</label><label class="row" style="font-weight:400"><input type="checkbox" id="intro" ${b.withIntro?"checked":""}> 들어가며·마치며 넣기</label></div>
+  </div>
+  <div class="row"><button class="btn pri" id="gPlan" ${aiOff()?"disabled":""}>제목 5개 추천받기</button><span class="note">예상 분량: 약 ${((+b.chapterCount+(b.withIntro?2:0))*b.chars).toLocaleString()}자 · A5 기준 ${Math.round((+b.chapterCount+(b.withIntro?2:0))*b.chars/650)}쪽</span></div>
+</div>
+${b.titleOptions&&b.titleOptions.length?`<div class="card stack"><b>제목 후보</b><div class="titles">${b.titleOptions.map((t,i)=>`<button class="tpick ${t.title===b.title?"sel":""}" data-ti="${i}"><div><b>${esc(t.title)}</b><span>${esc(t.subtitle||"")}</span></div></button>`).join("")}</div>${b.concept?`<p class="note" style="margin:0">핵심 약속: ${esc(b.concept)}</p>`:""}</div>`:""}
+<div class="card grid2">
+  <div class="f"><label for="title">확정 제목</label><input class="in" id="title" value="${esc(b.title)}" placeholder="직접 적어도 돼요"></div>
+  <div class="f"><label for="sub">부제</label><input class="in" id="sub" value="${esc(b.subtitle)}"></div>
+</div>
+<div class="row"><button class="btn pri" id="goToc">다음: 목차 →</button></div>
+</div>`;}
+const bind={};
+bind.plan=()=>{const b=cur;bindPicker();
+  const map={idea:"idea",aud:"audience",author:"author",title:"title",sub:"subtitle"};
+  for(const[id,k]of Object.entries(map))$("#"+id).oninput=e=>{b[k]=e.target.value;save();if(k==="title")paintBookSel(),paintRail();};
+  $("#tone").onchange=e=>{b.tone=e.target.value;save();};
+  $("#cc").onchange=e=>{b.chapterCount=Math.max(3,Math.min(20,+e.target.value||8));save();render();};
+  $("#chars").onchange=e=>{b.chars=+e.target.value;save();render();};
+  $("#intro").onchange=e=>{b.withIntro=e.target.checked;save();render();};
+  $("#gPlan").onclick=genPlan;
+  document.querySelectorAll("[data-ti]").forEach(x=>x.onclick=()=>{const t=b.titleOptions[+x.dataset.ti];b.title=t.title;b.subtitle=t.subtitle||"";save();render();});
+  $("#goToc").onclick=()=>{station="toc";render();window.scrollTo(0,0);};
+};
+
+function vToc(){const b=cur;return `${exBanner()}${aiNote()}
+<h1 class="sh">목차</h1><p class="lead">목차가 책의 뼈대예요. AI가 짠 뒤에 제목·내용을 고치거나 순서를 바꿀 수 있어요.</p>
+<div class="stack">
+<div class="row"><button class="btn pri" id="gToc" ${aiOff()?"disabled":""}>${b.chapters.length?"목차 다시 짜기":"목차 자동 생성"}</button><button class="btn" id="addCh">장 추가</button><span id="tocConfirm"></span></div>
+${b.chapters.length?`<div class="toc">${b.chapters.map((c,i)=>`<div class="tocrow"><div class="n">${String(i+1).padStart(2,"0")}</div><div class="stack" style="gap:6px;min-width:0"><input class="in" data-ct="${i}" value="${esc(c.title)}" aria-label="장 제목"><input class="in" data-cs="${i}" value="${esc(c.summary)}" aria-label="장 내용" placeholder="이 장에서 다룰 내용"></div><div class="acts"><button class="ib" data-up="${i}" title="위로" aria-label="위로">↑</button><button class="ib" data-dn="${i}" title="아래로" aria-label="아래로">↓</button><button class="ib" data-del="${i}" title="삭제" aria-label="삭제">✕</button></div></div>`).join("")}</div>`:`<div class="card note">아직 목차가 없어요. ‘목차 자동 생성’을 누르거나 ‘장 추가’로 직접 만드세요.</div>`}
+<div class="row"><button class="btn" id="back">← 기획</button><button class="btn pri" id="next">다음: 집필 →</button></div>
+</div>`;}
+bind.toc=()=>{const b=cur;
+  $("#gToc").onclick=()=>{if(b.chapters.some(c=>c.body.trim())){$("#tocConfirm").innerHTML=`<span class="confirm">쓴 원고가 지워져요. <button class="btn sm" id="tocYes">다시 짜기</button><button class="btn sm ghost" id="tocNo">취소</button></span>`;$("#tocYes").onclick=genOutline;$("#tocNo").onclick=()=>$("#tocConfirm").innerHTML="";}else genOutline();};
+  $("#addCh").onclick=()=>{b.chapters.push({title:`${b.chapters.length+1}장. 새 장`,summary:"",points:[],body:""});save();render();};
+  document.querySelectorAll("[data-ct]").forEach(x=>x.oninput=e=>{b.chapters[+x.dataset.ct].title=e.target.value;save();});
+  document.querySelectorAll("[data-cs]").forEach(x=>x.oninput=e=>{b.chapters[+x.dataset.cs].summary=e.target.value;save();});
+  const mv=(i,d)=>{const j=i+d;if(j<0||j>=b.chapters.length)return;[b.chapters[i],b.chapters[j]]=[b.chapters[j],b.chapters[i]];save();render();};
+  document.querySelectorAll("[data-up]").forEach(x=>x.onclick=()=>mv(+x.dataset.up,-1));
+  document.querySelectorAll("[data-dn]").forEach(x=>x.onclick=()=>mv(+x.dataset.dn,1));
+  document.querySelectorAll("[data-del]").forEach(x=>x.onclick=()=>{b.chapters.splice(+x.dataset.del,1);save();render();});
+  $("#back").onclick=()=>{station="plan";render();};$("#next").onclick=()=>{station="write";render();window.scrollTo(0,0);};
+};
+
+function vWrite(){const b=cur;if(!b.chapters.length)return `<h1 class="sh">집필</h1><div class="card note">목차부터 만들어 주세요.</div><div class="row" style="margin-top:14px"><button class="btn pri" id="toToc">목차로 가기</button></div>`;
+  if(curCh>=b.chapters.length)curCh=0;const c=b.chapters[curCh];const isBusy=busy&&busy.what==="write";
+  return `${exBanner()}${aiNote()}
+<h1 class="sh">집필</h1><p class="lead">장을 골라 ‘이 장 쓰기’를 누르거나, ‘남은 장 모두 쓰기’로 한 번에 끝내세요. 원고는 직접 고칠 수 있어요.</p>
+<div class="row" style="margin-bottom:14px"><button class="btn gold" id="allW" ${aiOff()||isBusy?"disabled":""}>남은 장 모두 쓰기 (${b.chapters.length-b.chapters.filter(x=>x.body.trim()).length}장)</button><span class="note">진행 ${doneCh(b)}/${b.chapters.length}장 · ${totalChars(b).toLocaleString()}자</span></div>
+<div class="writer">
+  <div class="chlist">${b.chapters.map((x,i)=>`<button class="chi ${i===curCh?"cur":""} ${busy&&busy.ch===i?"busy":x.body.trim().length>200?"done":""}" data-ch="${i}"><span class="s"></span><span>${esc(x.title)}<small>${x.body.length.toLocaleString()}자</small></span></button>`).join("")}</div>
+  <div class="stack" style="min-width:0">
+    <div class="card stack">
+      <div class="row" style="justify-content:space-between"><b style="font-family:var(--f-book);font-size:19px">${esc(c.title)}</b><span class="note" id="cnt">${c.body.length.toLocaleString()}자 / 목표 ${(+b.chars).toLocaleString()}자</span></div>
+      <div class="row"><button class="btn pri sm" id="w1" ${aiOff()||isBusy?"disabled":""}>${c.body.trim()?"처음부터 다시 쓰기":"이 장 쓰기"}</button><button class="btn sm" id="pv">${previewMode?"편집 화면":"미리보기"}</button></div>
+      ${c.body.trim()&&!aiOff()?`<div class="row"><input class="in" id="fix" placeholder="수정 요청 (예: 사례를 하나 더 넣고 더 짧게)" style="flex:1;min-width:200px"><button class="btn sm" id="fixBtn" ${isBusy?"disabled":""}>고쳐 쓰기</button></div>`:""}
+      ${previewMode?`<div class="prev" id="manuPrev">${md2html(c.body)||'<p class="note">아직 원고가 없어요.</p>'}</div>`:`<textarea class="in manu" id="manu" placeholder="‘이 장 쓰기’를 누르면 AI가 여기에 원고를 씁니다. 직접 써도 돼요.">${esc(c.body)}</textarea>`}
+    </div>
+    <div class="row"><button class="btn" id="prevCh" ${curCh===0?"disabled":""}>← 이전 장</button><button class="btn" id="nextCh">${curCh===b.chapters.length-1?"다음: 표지 →":"다음 장 →"}</button></div>
+  </div>
+</div>`;}
+function liveUpdate(i){if(station!=="write"||i!==curCh){paintRail();return;}const c=cur.chapters[i];const t=$("#manu");if(t){t.value=c.body;t.scrollTop=t.scrollHeight;}const p=$("#manuPrev");if(p)p.innerHTML=md2html(c.body);const n=$("#cnt");if(n)n.textContent=`${c.body.length.toLocaleString()}자 / 목표 ${(+cur.chars).toLocaleString()}자`;}
+bind.write=()=>{const b=cur;if(!b.chapters.length){$("#toToc").onclick=()=>{station="toc";render();};return;}
+  document.querySelectorAll("[data-ch]").forEach(x=>x.onclick=()=>{curCh=+x.dataset.ch;render();});
+  const m=$("#manu");if(m)m.oninput=e=>{b.chapters[curCh].body=e.target.value;save();$("#cnt").textContent=`${e.target.value.length.toLocaleString()}자 / 목표 ${(+b.chars).toLocaleString()}자`;};
+  $("#w1").onclick=()=>{stopAll=false;genChapter(curCh);};
+  $("#pv").onclick=()=>{previewMode=!previewMode;render();};
+  const fb=$("#fixBtn");if(fb)fb.onclick=()=>{const v=$("#fix").value.trim();if(!v){toast("어떻게 고칠지 적어 주세요.");return;}stopAll=false;genChapter(curCh,v);};
+  $("#allW").onclick=async()=>{stopAll=false;for(let i=0;i<b.chapters.length;i++){if(b.chapters[i].body.trim())continue;curCh=i;render();if(!await genChapter(i)||stopAll)break;}};
+  $("#prevCh").onclick=()=>{curCh--;render();};
+  $("#nextCh").onclick=()=>{if(curCh===b.chapters.length-1){station="cover";}else curCh++;render();window.scrollTo(0,0);};
+};
+
+/* ---------- 표지 ---------- */
+const COLORS=["#1F4E79","#1F6B52","#7A1F2B","#2B2B2B","#C98A0E","#5B3F8C","#0E7C86","#E9E4D8"];
+const TPLS=[["classic","클래식"],["block","블록"],["type","타이포"],["shapes","도형"]];
+function vCover(){const b=cur;return `${exBanner()}
+<h1 class="sh">표지</h1><p class="lead">제목과 저자명으로 표지를 바로 그려요. 크기는 1600×2560 픽셀로, 리디·교보·아마존 KDP 권장 비율(1:1.6)에 맞췄어요.</p>
+<div class="cvwrap">
+  <div class="cvbox"><canvas id="cv" width="1600" height="2560" role="img" aria-label="표지 미리보기"></canvas></div>
+  <div class="stack">
+    <div class="card stack"><b>스타일</b><div class="tpls">${TPLS.map(([k,t])=>`<button class="tpl ${b.cover.tpl===k?"sel":""}" data-tpl="${k}">${t}</button>`).join("")}</div>
+    <b>바탕색</b><div class="sw">${COLORS.map(c=>`<button style="background:${c}" class="${b.cover.color===c?"sel":""}" data-col="${c}" aria-label="색 ${c}"></button>`).join("")}<input type="color" id="colPick" value="${b.cover.color}" aria-label="직접 고르기" style="width:34px;height:30px;border:0;background:none;padding:0"></div></div>
+    <div class="card grid2">
+      <div class="f"><label for="cvT">표지 제목</label><input class="in" id="cvT" value="${esc(b.title)}"></div>
+      <div class="f"><label for="cvA">저자명</label><input class="in" id="cvA" value="${esc(b.author)}"></div>
+      <div class="f" style="grid-column:1/-1"><label for="cvS">부제</label><input class="in" id="cvS" value="${esc(b.subtitle)}"></div>
+    </div>
+    <div class="row"><button class="btn" id="dlCover">표지 이미지 내려받기 (JPG)</button><button class="btn pri" id="toSales">다음: 판매 →</button></div>
+  </div>
+</div>`;}
+bind.cover=()=>{const b=cur;drawCover($("#cv"));
+  document.querySelectorAll("[data-tpl]").forEach(x=>x.onclick=()=>{b.cover.tpl=x.dataset.tpl;save();render();});
+  document.querySelectorAll("[data-col]").forEach(x=>x.onclick=()=>{b.cover.color=x.dataset.col;save();render();});
+  $("#colPick").oninput=e=>{b.cover.color=e.target.value;save();drawCover($("#cv"));};
+  $("#cvT").oninput=e=>{b.title=e.target.value;save();drawCover($("#cv"));};
+  $("#cvA").oninput=e=>{b.author=e.target.value;save();drawCover($("#cv"));};
+  $("#cvS").oninput=e=>{b.subtitle=e.target.value;save();drawCover($("#cv"));};
+  $("#dlCover").onclick=async()=>{const blob=await coverBlob();offer(fname("표지","jpg"),blob);};
+  $("#toSales").onclick=()=>{station="sales";render();window.scrollTo(0,0);};
+};
+function lum(hex){const n=parseInt(hex.slice(1),16),r=(n>>16)&255,g=(n>>8)&255,b=n&255;return(0.299*r+0.587*g+0.114*b)/255;}
+function shade(hex,k){const n=parseInt(hex.slice(1),16);let r=(n>>16)&255,g=(n>>8)&255,b=n&255;const f=v=>Math.max(0,Math.min(255,Math.round(k<0?v*(1+k):v+(255-v)*k)));return`rgb(${f(r)},${f(g)},${f(b)})`;}
+function wrapText(ctx,text,maxW){const words=String(text).split(/\s+/).filter(Boolean),lines=[];let line="";
+  const push=w=>{const t=line?line+" "+w:w;if(ctx.measureText(t).width<=maxW){line=t;return;}if(line)lines.push(line);
+    if(ctx.measureText(w).width<=maxW){line=w;return;}let part="";for(const ch of w){if(ctx.measureText(part+ch).width>maxW){lines.push(part);part=ch;}else part+=ch;}line=part;};
+  words.forEach(push);if(line)lines.push(line);return lines;}
+function fitTitle(ctx,text,font,maxW,maxLines,start,min){let s=start,lines;do{ctx.font=`${s}px ${font}`;lines=wrapText(ctx,text,maxW);if(lines.length<=maxLines)break;s-=8;}while(s>min);return{size:s,lines};}
+function seedRand(str){let h=2166136261;for(const c of str)h=Math.imul(h^c.charCodeAt(0),16777619);return()=>{h=Math.imul(h^(h>>>15),2246822507);h=Math.imul(h^(h>>>13),3266489909);return((h^=h>>>16)>>>0)/4294967296;};}
+let fontsReady=document.fonts?Promise.all([document.fonts.load('80px "Black Han Sans"','가'),document.fonts.load('700 80px "Gowun Batang"','가'),document.fonts.load('500 40px "IBM Plex Sans KR"','가')]).catch(()=>{}):Promise.resolve();
+async function drawCover(cv){await fontsReady;const b=cur,ctx=cv.getContext("2d"),W=cv.width,H=cv.height,col=b.cover.color,light=lum(col)>0.6;
+  const fg=light?"#1A222B":"#FFFFFF",soft=light?"rgba(26,34,43,.65)":"rgba(255,255,255,.75)";const title=b.title||"제목을 정해 주세요",sub=b.subtitle||"",au=b.author||"";
+  ctx.textBaseline="alphabetic";ctx.textAlign="left";
+  if(b.cover.tpl==="classic"){
+    ctx.fillStyle=col;ctx.fillRect(0,0,W,H);ctx.strokeStyle=soft;ctx.lineWidth=6;ctx.strokeRect(90,90,W-180,H-180);ctx.lineWidth=2;ctx.strokeRect(115,115,W-230,H-230);
+    ctx.fillStyle=fg;ctx.textAlign="center";const t=fitTitle(ctx,title,'"Gowun Batang",serif',W-360,4,190,90);ctx.font=`700 ${t.size}px "Gowun Batang",serif`;
+    const lh=t.size*1.3,top=H*0.36-(t.lines.length-1)*lh/2;t.lines.forEach((l,i)=>ctx.fillText(l,W/2,top+i*lh));
+    const yy=top+(t.lines.length-1)*lh+110;ctx.fillRect(W/2-90,yy,180,5);
+    if(sub){ctx.fillStyle=soft;ctx.font='500 56px "IBM Plex Sans KR",sans-serif';wrapText(ctx,sub,W-420).slice(0,3).forEach((l,i)=>ctx.fillText(l,W/2,yy+120+i*80));}
+    ctx.fillStyle=fg;ctx.font='500 64px "IBM Plex Sans KR",sans-serif';ctx.fillText(au,W/2,H-260);
+  }else if(b.cover.tpl==="block"){
+    ctx.fillStyle="#F3F1EA";ctx.fillRect(0,0,W,H);ctx.fillStyle=col;ctx.fillRect(0,0,W,H*0.62);
+    const bfg=light?"#1A222B":"#FFFFFF";ctx.fillStyle=bfg;const t=fitTitle(ctx,title,'"Black Han Sans",sans-serif',W-260,4,230,100);ctx.font=`${t.size}px "Black Han Sans",sans-serif`;
+    const lh=t.size*1.12;let y=H*0.62-110-(t.lines.length-1)*lh;t.lines.forEach((l,i)=>ctx.fillText(l,130,y+i*lh));
+    ctx.fillStyle="#1A222B";if(sub){ctx.font='500 60px "IBM Plex Sans KR",sans-serif';wrapText(ctx,sub,W-260).slice(0,3).forEach((l,i)=>ctx.fillText(l,130,H*0.62+180+i*86));}
+    ctx.fillStyle=col;ctx.fillRect(130,H-330,120,8);ctx.fillStyle="#1A222B";ctx.font='600 62px "IBM Plex Sans KR",sans-serif';ctx.fillText(au,130,H-220);
+  }else if(b.cover.tpl==="type"){
+    ctx.fillStyle="#15191E";ctx.fillRect(0,0,W,H);ctx.fillStyle=col;ctx.fillRect(0,H-520,W,24);ctx.fillRect(0,H-470,W*0.55,24);
+    ctx.fillStyle=light||lum(col)>0.35?col:shade(col,0.45);const t=fitTitle(ctx,title,'"Black Han Sans",sans-serif',W-200,6,300,110);ctx.font=`${t.size}px "Black Han Sans",sans-serif`;
+    const lh=t.size*1.05;t.lines.forEach((l,i)=>ctx.fillText(l,100,260+t.size+i*lh));
+    ctx.fillStyle="rgba(255,255,255,.8)";if(sub){ctx.font='500 58px "IBM Plex Sans KR",sans-serif';wrapText(ctx,sub,W-200).slice(0,2).forEach((l,i)=>ctx.fillText(l,100,H-300+i*80));}
+    ctx.fillStyle="#FFFFFF";ctx.font='600 60px "IBM Plex Sans KR",sans-serif';ctx.fillText(au,100,H-120);
+  }else{
+    ctx.fillStyle=col;ctx.fillRect(0,0,W,H);const rnd=seedRand(title);
+    for(let i=0;i<14;i++){ctx.fillStyle=light?`rgba(26,34,43,${.04+rnd()*.08})`:`rgba(255,255,255,${.05+rnd()*.1})`;const x=rnd()*W,y=rnd()*H*0.55,r=80+rnd()*360;ctx.beginPath();if(rnd()>.5)ctx.arc(x,y,r,0,Math.PI*2);else{ctx.moveTo(x,y-r);ctx.lineTo(x+r,y+r);ctx.lineTo(x-r,y+r);ctx.closePath();}ctx.fill();}
+    ctx.fillStyle=light?"#1A222B":"#FFFFFF";ctx.globalAlpha=.94;ctx.fillRect(0,H*0.58,W,H*0.42);ctx.globalAlpha=1;
+    ctx.fillStyle=light?"#FFFFFF":"#1A222B";const t=fitTitle(ctx,title,'"Gowun Batang",serif',W-260,3,170,90);ctx.font=`700 ${t.size}px "Gowun Batang",serif`;
+    const lh=t.size*1.28;t.lines.forEach((l,i)=>ctx.fillText(l,130,H*0.58+120+t.size*0.8+i*lh));
+    const yb=H*0.58+120+t.size*0.8+(t.lines.length-1)*lh;
+    if(sub){ctx.globalAlpha=.7;ctx.font='500 54px "IBM Plex Sans KR",sans-serif';wrapText(ctx,sub,W-260).slice(0,2).forEach((l,i)=>ctx.fillText(l,130,yb+110+i*76));ctx.globalAlpha=1;}
+    ctx.font='600 60px "IBM Plex Sans KR",sans-serif';ctx.fillText(au,130,H-150);
+  }
+}
+async function coverBlob(){const cv=document.createElement("canvas");cv.width=1600;cv.height=2560;await drawCover(cv);return new Promise(r=>cv.toBlob(r,"image/jpeg",0.92));}
+
+/* ---------- 판매 ---------- */
+const CHANNELS=[["크몽 전자책","PDF 판매. 부업·노하우 주제가 강하고, 가격대가 높게 형성돼요."],["리디 · 교보 (유페이퍼 경유)","유페이퍼에 EPUB을 올리면 여러 서점에 한 번에 유통돼요."],["교보 PubPle","교보문고 자가출판. EPUB 업로드, ISBN 발급을 도와줘요."],["아마존 KDP","영어판을 만들면 전 세계 판매. EPUB 그대로 올라가요."]];
+function vSales(){const b=cur,s=b.sales;return `${exBanner()}${aiNote()}
+<h1 class="sh">판매</h1><p class="lead">상세페이지, 검색 키워드, 서점 등록용 소개글을 만들어요. 과장 광고 표현은 빼도록 지시해 두었어요.</p>
+<div class="stack">
+<div class="row"><button class="btn pri" id="gSales" ${aiOff()?"disabled":""}>${s?"판매 문구 다시 쓰기":"판매 문구 만들기"}</button></div>
+${s?`<div class="card stack"><div class="f"><label>한 줄 카피</label><div class="row"><input class="in" id="sHook" value="${esc(s.hook)}" style="flex:1;min-width:200px"><button class="btn sm" data-copy="hook">복사</button></div></div>
+<div class="f"><label>검색 키워드</label><div class="kw">${s.keywords.map(k=>`<span>${esc(k)}</span>`).join("")}</div></div>
+<div class="f"><label>추천 가격</label><div>${esc(s.price)}</div></div></div>
+<div class="card stack"><div class="row" style="justify-content:space-between"><b>상세페이지</b><button class="btn sm" data-copy="detail">복사</button></div><textarea class="in" id="sDetail" rows="14">${esc(s.detail)}</textarea></div>
+<div class="card stack"><div class="row" style="justify-content:space-between"><b>서점 등록용 책 소개</b><button class="btn sm" data-copy="blurb">복사</button></div><textarea class="in" id="sBlurb" rows="5">${esc(s.blurb)}</textarea></div>`:`<div class="card note">원고와 목차를 바탕으로 판매 문구를 씁니다. 목차만 있어도 만들 수 있어요.</div>`}
+<div class="stack"><b>어디에 팔까</b><div class="chan">${CHANNELS.map(([t,d])=>`<div><b>${t}</b>${d}</div>`).join("")}</div></div>
+<div class="row"><button class="btn" id="back">← 표지</button><button class="btn pri" id="toShip">다음: 출고 →</button></div>
+</div>`;}
+bind.sales=()=>{const b=cur;$("#gSales").onclick=genSales;
+  if(b.sales){$("#sHook").oninput=e=>{b.sales.hook=e.target.value;save();};$("#sDetail").oninput=e=>{b.sales.detail=e.target.value;save();};$("#sBlurb").oninput=e=>{b.sales.blurb=e.target.value;save();};
+    document.querySelectorAll("[data-copy]").forEach(x=>x.onclick=()=>copy(b.sales[x.dataset.copy],x));}
+  $("#back").onclick=()=>{station="cover";render();};$("#toShip").onclick=()=>{station="ship";render();window.scrollTo(0,0);};
+};
+
+/* ---------- 출고 ---------- */
+function vShip(){const b=cur,tc=totalChars(b);const ok=[[!!b.title,"제목"],[!!b.author,"저자명"],[b.chapters.length>0,"목차"],[b.chapters.length&&doneCh(b)===b.chapters.length,`원고 (${doneCh(b)}/${b.chapters.length}장)`],[!!b.sales,"판매 문구"]];
+return `${exBanner()}
+<h1 class="sh">출고</h1><p class="lead">EPUB은 리디·교보·유페이퍼·아마존 KDP에 그대로 올릴 수 있는 표준 전자책 파일이에요. PDF가 필요하면 ‘인쇄용 HTML’을 브라우저로 열고 PDF로 저장하세요.</p>
+<div class="stack">
+<div class="stats"><div class="stat"><b>${tc.toLocaleString()}</b><span>총 글자 수</span></div><div class="stat"><b>${Math.max(1,Math.round(tc/650))}</b><span>A5 예상 쪽수</span></div><div class="stat"><b>${b.chapters.length}</b><span>장</span></div><div class="stat"><b>${Math.max(1,Math.round(tc/500/60*10)/10)}</b><span>예상 독서 시간(시간)</span></div></div>
+<div class="card stack"><b>출고 점검</b><div class="checks">${ok.map(([v,t])=>`<div><span class="${v?"y":"x"}">${v?"✓":"!"}</span>${t}</div>`).join("")}</div>
+<label class="row" style="font-size:14px"><input type="checkbox" id="aiNoteChk" ${b.aiNote?"checked":""}> 판권 면에 “AI 도구를 활용해 제작” 표기 넣기 (플랫폼 정책상 권장)</label></div>
+<div class="exp">
+  <button class="main" id="xEpub"><b>EPUB 내려받기</b><span>표지·목차·판권 면 포함 전자책 파일</span></button>
+  <button id="xHtml"><b>인쇄용 HTML</b><span>브라우저에서 열고 ‘PDF로 저장’</span></button>
+  <button id="xMd"><b>원고 (Markdown)</b><span>다른 편집기로 옮길 때</span></button>
+  <button id="xSales"><b>판매 문구 (TXT)</b><span>상세페이지·키워드·소개글</span></button>
+  <button id="xJson"><b>프로젝트 백업</b><span>이 책 전체를 파일로 보관</span></button>
+  <button id="xLoad"><b>백업 불러오기</b><span>백업 파일(.json)을 다시 열기</span></button>
+</div>
+<input type="file" id="loadFile" accept=".json,application/json" hidden>
+<p class="note" id="dlNote">작업 내용은 이 브라우저에 자동 저장돼요. 다른 기기로 옮기려면 ‘프로젝트 백업’을 쓰세요.</p>
+<div class="row"><button class="btn" id="delBook">이 책 삭제</button><span id="delConfirm"></span></div>
+</div>`;}
+bind.ship=()=>{const b=cur;
+  $("#aiNoteChk").onchange=e=>{b.aiNote=e.target.checked;save();};
+  $("#xEpub").onclick=async()=>{try{const blob=await buildEpub(b);b.shipped=true;save();paintRail();offer(fname("","epub"),blob);}catch(e){toast("EPUB 생성 실패: "+(e.message||e));}};
+  $("#xHtml").onclick=async()=>offer(fname("인쇄용","html"),new Blob([await buildPrintHtml(b)],{type:"text/html"}));
+  $("#xMd").onclick=()=>offer(fname("원고","md"),new Blob([buildMd(b)],{type:"text/markdown"}));
+  $("#xSales").onclick=()=>{if(!b.sales){toast("판매 문구를 먼저 만들어 주세요.");return;}const s=b.sales;offer(fname("판매문구","txt"),new Blob([`[한 줄 카피]\n${s.hook}\n\n[추천 가격]\n${s.price}\n\n[검색 키워드]\n${s.keywords.join(", ")}\n\n[서점 등록용 소개]\n${s.blurb}\n\n[상세페이지]\n${s.detail}\n`],{type:"text/plain"}));};
+  $("#xJson").onclick=()=>offer(fname("백업","json"),new Blob([JSON.stringify(b,null,1)],{type:"application/json"}));
+  $("#xLoad").onclick=()=>$("#loadFile").click();
+  $("#loadFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!d||!Array.isArray(d.chapters))throw 0;d.id=uid();d.example=false;d.updatedAt=Date.now();d.cover=d.cover||{tpl:"classic",color:"#1F6B52"};lib.push(d);cur=d;station="plan";save();render();toast("불러왔어요: "+(d.title||"제목 미정"));}catch(_){toast("이 파일은 전자책 공장 백업 파일이 아니에요.");}};
+  $("#delBook").onclick=()=>{$("#delConfirm").innerHTML=`<span class="confirm">정말 삭제할까요? 되돌릴 수 없어요. <button class="btn sm" id="delYes">삭제</button><button class="btn sm ghost" id="delNo">취소</button></span>`;
+    $("#delNo").onclick=()=>$("#delConfirm").innerHTML="";$("#delYes").onclick=()=>{lib=lib.filter(x=>x.id!==b.id);if(!lib.length)lib=[exampleBook()];cur=lib[0];station="plan";save();render();toast("삭제했어요.");};};
+};
+
+/* ---------- 마크다운 → XHTML ---------- */
+function inline(s){return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/(^|[^*])\*([^*\n]+)\*/g,"$1<em>$2</em>");}
+function md2html(md){if(!md)return"";const L=md.replace(/\r/g,"").split("\n");let out=[],para=[],list=null;
+  const fp=()=>{if(para.length){out.push(`<p>${inline(para.join(" "))}</p>`);para=[];}};const fl=()=>{if(list){out.push(`<${list.t}>${list.items.map(i=>`<li>${inline(i)}</li>`).join("")}</${list.t}>`);list=null;}};
+  for(const raw of L){const l=raw.trim();let m;
+    if(!l){fp();fl();continue;}
+    if((m=l.match(/^(#{1,4})\s+(.*)$/))){fp();fl();const lv=Math.min(4,m[1].length+1);out.push(`<h${lv}>${inline(m[2])}</h${lv}>`);continue;}
+    if((m=l.match(/^[-*•]\s+(.*)$/))){fp();if(!list||list.t!=="ul"){fl();list={t:"ul",items:[]};}list.items.push(m[1]);continue;}
+    if((m=l.match(/^\d+[.)]\s+(.*)$/))){fp();if(!list||list.t!=="ol"){fl();list={t:"ol",items:[]};}list.items.push(m[1]);continue;}
+    if((m=l.match(/^>\s?(.*)$/))){fp();fl();out.push(`<blockquote><p>${inline(m[1])}</p></blockquote>`);continue;}
+    if(/^(-{3,}|\*{3,})$/.test(l)){fp();fl();out.push("<hr/>");continue;}
+    fl();para.push(l);}
+  fp();fl();return out.join("\n");}
+
+/* ---------- 파일 만들기 ---------- */
+const today=()=>new Date().toISOString().slice(0,10);
+function fname(tag,ext){const t=(cur.title||"전자책").replace(/[\\/:*?"<>|]/g,"").slice(0,40).trim()||"전자책";return `${t}${tag?"_"+tag:""}.${ext}`;}
+function copyrightHtml(b){return `<p><strong>${esc(b.title)}</strong></p>${b.subtitle?`<p>${esc(b.subtitle)}</p>`:""}<p>지은이 ${esc(b.author||"")}</p><p>펴낸날 ${today()}</p><p>이 책의 저작권은 지은이에게 있습니다. 무단 전재와 복제를 금합니다.</p>${b.aiNote?"<p>이 책은 AI 도구를 활용해 기획·집필되었으며, 지은이가 검토하고 편집했습니다.</p>":""}`;}
+const CSS=`body{font-family:serif;line-height:1.8;margin:0 5%;word-break:keep-all}h1{font-size:1.6em;margin:2em 0 1em;line-height:1.4}h2{font-size:1.25em;margin:1.8em 0 .6em}h3{font-size:1.1em;margin:1.4em 0 .5em}p{margin:0 0 .9em;text-indent:0}blockquote{margin:1em 0;padding-left:1em;border-left:3px solid #999;color:#444}.cover{margin:0;padding:0;text-align:center}.cover img{max-width:100%;height:auto}.title{text-align:center;margin-top:30%}.title h1{font-size:2em}.copy{margin-top:40%;font-size:.85em}nav ol{list-style:none;padding:0}nav li{margin:.4em 0}`;
+const xhtml=(title,body,extra="")=>`<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE html>\n<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="ko" lang="ko"><head><meta charset="UTF-8"/><title>${esc(title)}</title><link rel="stylesheet" type="text/css" href="style.css"/></head><body${extra}>${body}</body></html>`;
+async function buildEpub(b){if(typeof JSZip==="undefined")throw new Error("압축 도구를 불러오지 못했어요. 새로고침해 주세요.");
+  const zip=new JSZip(),id="urn:uuid:"+(crypto.randomUUID?crypto.randomUUID():uid()),title=b.title||"제목 없음";
+  zip.file("mimetype","application/epub+zip",{compression:"STORE"});
+  zip.file("META-INF/container.xml",`<?xml version="1.0" encoding="UTF-8"?><container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles><rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/></rootfiles></container>`);
+  const O=zip.folder("OEBPS");O.file("style.css",CSS);O.file("cover.jpg",await (await coverBlob()).arrayBuffer());
+  O.file("cover.xhtml",xhtml("표지",`<div class="cover"><img src="cover.jpg" alt="${esc(title)} 표지"/></div>`," class=\"cover\""));
+  O.file("title.xhtml",xhtml(title,`<div class="title"><h1>${esc(title)}</h1>${b.subtitle?`<p>${esc(b.subtitle)}</p>`:""}<p>${esc(b.author||"")}</p></div><div class="copy">${copyrightHtml(b)}</div>`));
+  b.chapters.forEach((c,i)=>O.file(`ch${i+1}.xhtml`,xhtml(c.title,`<section epub:type="chapter"><h1>${esc(c.title)}</h1>${md2html(c.body)}</section>`)));
+  O.file("nav.xhtml",xhtml("목차",`<nav epub:type="toc" id="toc"><h1>목차</h1><ol>${b.chapters.map((c,i)=>`<li><a href="ch${i+1}.xhtml">${esc(c.title)}</a></li>`).join("")}</ol></nav>`));
+  O.file("toc.ncx",`<?xml version="1.0" encoding="UTF-8"?><ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1"><head><meta name="dtb:uid" content="${id}"/></head><docTitle><text>${esc(title)}</text></docTitle><navMap>${b.chapters.map((c,i)=>`<navPoint id="n${i+1}" playOrder="${i+1}"><navLabel><text>${esc(c.title)}</text></navLabel><content src="ch${i+1}.xhtml"/></navPoint>`).join("")}</navMap></ncx>`);
+  const mod=new Date().toISOString().replace(/\.\d+Z$/,"Z");
+  O.file("content.opf",`<?xml version="1.0" encoding="UTF-8"?><package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid" xml:lang="ko"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="bookid">${id}</dc:identifier><dc:title>${esc(title)}</dc:title><dc:creator>${esc(b.author||"")}</dc:creator><dc:language>ko</dc:language>${b.sales&&b.sales.blurb?`<dc:description>${esc(b.sales.blurb)}</dc:description>`:""}<meta property="dcterms:modified">${mod}</meta><meta name="cover" content="cover-img"/></metadata><manifest><item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/><item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/><item id="css" href="style.css" media-type="text/css"/><item id="cover-img" href="cover.jpg" media-type="image/jpeg" properties="cover-image"/><item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/><item id="title" href="title.xhtml" media-type="application/xhtml+xml"/>${b.chapters.map((c,i)=>`<item id="ch${i+1}" href="ch${i+1}.xhtml" media-type="application/xhtml+xml"/>`).join("")}</manifest><spine toc="ncx"><itemref idref="cover" linear="yes"/><itemref idref="title"/><itemref idref="nav"/>${b.chapters.map((c,i)=>`<itemref idref="ch${i+1}"/>`).join("")}</spine></package>`);
+  return zip.generateAsync({type:"blob",mimeType:"application/epub+zip",compression:"DEFLATE"});}
+function blobToDataURL(bl){return new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result);f.readAsDataURL(bl);});}
+async function buildPrintHtml(b){const cover=await blobToDataURL(await coverBlob());
+  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>${esc(b.title)}</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap"><style>@page{size:A5;margin:18mm 16mm}body{font-family:"Gowun Batang",serif;font-size:10.5pt;line-height:1.85;word-break:keep-all;max-width:150mm;margin:0 auto}h1{font-size:18pt;page-break-before:always;margin-top:30mm}h2{font-size:13pt;margin-top:1.6em}h3{font-size:11.5pt}.cv{page-break-after:always;text-align:center}.cv img{max-height:190mm}.tp{text-align:center;margin-top:50mm}.tp h1{page-break-before:avoid;margin:0;font-size:24pt}.copy{margin-top:60mm;font-size:9pt}ol{line-height:2}blockquote{border-left:3px solid #999;margin:1em 0;padding-left:1em;color:#444}</style></head><body><div class="cv"><img src="${cover}" alt="표지"></div><div class="tp"><h1>${esc(b.title)}</h1><p>${esc(b.subtitle)}</p><p>${esc(b.author)}</p></div><div class="copy">${copyrightHtml(b)}</div><h1>목차</h1><ol>${b.chapters.map(c=>`<li>${esc(c.title)}</li>`).join("")}</ol>${b.chapters.map(c=>`<h1>${esc(c.title)}</h1>${md2html(c.body)}`).join("\n")}</body></html>`;}
+function buildMd(b){return `# ${b.title}\n\n${b.subtitle?`*${b.subtitle}*\n\n`:""}지은이: ${b.author}\n\n`+b.chapters.map(c=>`# ${c.title}\n\n${c.body}\n`).join("\n");}
+
+/* ---------- 내려받기·복사·알림 ---------- */
+let dlP=null;const getDl=()=>dlP||(dlP=(window.claude&&window.claude.use)?window.claude.use("downloads").catch(()=>null):Promise.resolve(null));
+async function offer(name,blob){const d=await getDl();if(!d){toast("이 화면에서는 파일 저장을 쓸 수 없어요. Claude 앱이나 claude.ai에서 열어 주세요.");return;}
+  try{await d.save({filename:name,data:blob});toast("저장했어요: "+name);}catch(e){if(e&&e.code&&e.code!=="cancelled"&&e.code!=="declined")toast("저장하지 못했어요 ("+e.code+")");}}
+async function copy(text,btn){try{await navigator.clipboard.writeText(text);btn.textContent="복사됨";setTimeout(()=>btn.textContent="복사",1500);}catch(e){toast("복사가 막혀 있어요. 글을 길게 눌러 직접 복사해 주세요.");}}
+let tT;function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(tT);tT=setTimeout(()=>t.hidden=true,3800);}
+
+/* ---------- 시작 ---------- */
+const cid=load();cur=lib.find(b=>b.id===cid)||lib[0];
+render();
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,70 @@
+<script>
+/* 독립 사이트용 연결부: Claude 앱 안의 window.claude 대신, 내 서버(/api)를 통해 AI를 부르고 파일은 브라우저로 바로 저장 */
+(function(){
+  var PW_KEY="ebookfactory.pw";
+  function getPw(){try{return localStorage.getItem(PW_KEY)||""}catch(e){return ""}}
+  function setPw(v){try{v?localStorage.setItem(PW_KEY,v):localStorage.removeItem(PW_KEY)}catch(e){}}
+  var unlocked=null; // Promise<boolean>
+  function login(pw){return fetch("/api/factory/login",{method:"POST",headers:{"x-app-password":pw}}).then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})}
+  function showGate(msg){
+    return new Promise(function(resolve){
+      var g=document.createElement("div");g.id="gate";
+      g.innerHTML='<form id="gateForm"><div class="gt">전자책 공장</div><p>비밀번호를 입력하세요.</p><input id="gatePw" type="password" autocomplete="current-password" aria-label="비밀번호"><button type="submit">들어가기</button><p id="gateMsg" role="alert"></p></form>';
+      document.body.appendChild(g);
+      var m=g.querySelector("#gateMsg");if(msg)m.textContent=msg;
+      var i=g.querySelector("#gatePw");setTimeout(function(){i.focus()},50);
+      g.querySelector("#gateForm").onsubmit=function(e){e.preventDefault();m.textContent="확인 중…";
+        login(i.value).then(function(res){
+          if(res.ok){setPw(i.value);g.remove();resolve(true);}
+          else m.textContent=(res.j&&res.j.message)||"들어갈 수 없어요.";
+        }).catch(function(){m.textContent="서버에 연결하지 못했어요. 인터넷 연결을 확인하세요."});};
+    });
+  }
+  function ensure(){
+    if(!unlocked){unlocked=new Promise(function(resolve){
+      var go=function(){var pw=getPw();
+        if(!pw){showGate().then(resolve);return;}
+        login(pw).then(function(res){if(res.ok)resolve(true);else{setPw("");showGate("다시 로그인해 주세요.").then(resolve);}}).catch(function(){showGate("서버에 연결하지 못했어요.").then(resolve);});};
+      document.readyState==="loading"?document.addEventListener("DOMContentLoaded",go):go();
+    });}
+    return unlocked;
+  }
+  ensure();
+  function sample(input,opts){opts=opts||{};
+    var prompt=typeof input==="string"?input:input.map(function(m){return (m.role==="assistant"?"[이전 답변]\n":"")+m.content}).join("\n\n");
+    return ensure().then(function(){return fetch("/api/factory/claude",{method:"POST",signal:opts.signal,headers:{"content-type":"application/json","x-app-password":getPw()},body:JSON.stringify({prompt:prompt,tier:opts.modelTier==="quick"?"quick":"default"})});})
+    .then(function(r){
+      if(!r.ok)return r.json().catch(function(){return{}}).then(function(j){if(r.status===401){setPw("");unlocked=null;}throw{code:j.code||"upstream_error",message:j.message||("서버 오류 "+r.status)}});
+      var reader=r.body.getReader(),dec=new TextDecoder(),text="";
+      function pump(){return reader.read().then(function(x){
+        if(x.done){
+          var k=text.indexOf("\u0000ERR:");
+          if(k>=0){var code=text.slice(k+5).trim();text=text.slice(0,k).replace(/\n$/,"");
+            if(code==="truncated")return{text:text,truncated:true};
+            throw{code:code,message:code==="bad_api_key"?"API 키가 잘못됐어요. Vercel 설정의 ANTHROPIC_API_KEY를 확인하세요.":code,text:text};}
+          return{text:text,truncated:false};}
+        var d=dec.decode(x.value,{stream:true});if(d){text+=d;if(opts.onText&&text.indexOf("\u0000")<0)try{opts.onText({text:text,delta:d})}catch(e){}}
+        return pump();});}
+      return pump();
+    }).catch(function(e){if(e&&e.name==="AbortError")throw{code:"cancelled",message:"중지했어요."};if(e&&e.code)throw e;throw{code:"upstream_error",message:"서버에 연결하지 못했어요."};});
+  }
+  sample.json=function(input,opts){return sample(input,Object.assign({},opts,{onText:null})).then(function(r){
+    var t=r.text.trim(),m=t.match(/```(?:json)?\s*([\s\S]*?)```/);if(m)t=m[1];
+    try{return JSON.parse(t)}catch(e){}
+    var a=Math.min.apply(null,[t.indexOf("{"),t.indexOf("[")].filter(function(n){return n>=0}));var b=Math.max(t.lastIndexOf("}"),t.lastIndexOf("]"));
+    try{if(a>=0&&b>a)return JSON.parse(t.slice(a,b+1))}catch(e){}
+    throw{code:"invalid_json",message:"AI 답변 형식이 어긋났어요.",text:r.text};});};
+  var downloads={save:function(o){var blob=o.data instanceof Blob?o.data:new Blob([o.data]);var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download=o.filename;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},4000);return Promise.resolve();}};
+  window.claude={use:function(name){return Promise.resolve(name==="sample"?sample:name==="downloads"?downloads:null)}};
+  window.ebookLogout=function(){setPw("");location.reload();};
+})();
+</script>
+<style>
+#gate{position:fixed;inset:0;z-index:100;background:var(--paper,#F5F4EE);display:grid;place-items:center;padding:16px}
+#gate form{width:100%;max-width:340px;display:flex;flex-direction:column;gap:12px;background:var(--sheet,#fff);border:1px solid var(--line,#ddd);border-radius:8px;padding:28px}
+#gate .gt{font-family:"Black Han Sans",sans-serif;font-size:28px}
+#gate p{margin:0;color:var(--muted,#5E6A72);font-size:14px}
+#gate input{padding:11px 12px;border:1px solid var(--line,#ddd);border-radius:6px;font-size:16px;background:var(--sheet,#fff);color:var(--ink,#1A222B)}
+#gate button{padding:11px;border:0;border-radius:6px;background:var(--cloth,#1F6B52);color:var(--cloth-ink,#fff);font-weight:700;font-size:15px;cursor:pointer}
+#gateMsg{color:var(--warn,#B4441F)!important;min-height:1.2em}
+</style>
