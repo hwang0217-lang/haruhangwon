@@ -148,7 +148,7 @@ const WHEN=["오늘","이번 주","한 달 뒤"];
 const STORE=location.protocol.startsWith("http")&&!location.hostname.endsWith("claude.ai")&&!location.hostname.includes("claudeusercontent")?"/store":"#";
 function priceHtml(b){return `<div class="price">${b.was?`<span class="off">${off(b)}%</span>`:""}<span class="now">${won(b.price)}</span>${b.was?`<span class="was">${won(b.was)}</span>`:""}</div>`}
 function render(){
-  const id=(location.hash||"").slice(1);
+  const id=(location.hash||"").slice(1)||window.BOOK_ID||"";
   const b=BOOKS.find(x=>x.id===id)||BOOKS[0];
   document.title=b.title+" | 하루한권";
   const buyHref=STORE==="#"?"#"+b.id:"/store#buy-"+b.id;
@@ -201,7 +201,7 @@ function render(){
     </section>
     <section>
       <h2>함께 많이 보는 책</h2>
-      <div class="more">${BOOKS.filter(x=>x.id!==b.id).sort((x,y)=>(y.cat===b.cat)-(x.cat===b.cat)).slice(0,3).map(x=>`<a href="#${x.id}"><div class="cover">${coverSVG(x)}</div><b>${x.title}</b><span>${won(x.price)}</span></a>`).join("")}</div>
+      <div class="more">${BOOKS.filter(x=>x.id!==b.id).sort((x,y)=>(y.cat===b.cat)-(x.cat===b.cat)).slice(0,3).map(x=>`<a href="${STORE==="#"?"#"+x.id:"/b/"+x.id}"><div class="cover">${coverSVG(x)}</div><b>${x.title}</b><span>${won(x.price)}</span></a>`).join("")}</div>
     </section>
   </article>`;
   bar.innerHTML=`${priceHtml(b)}<a class="btn primary" href="${buyHref}">바로 구매하기</a>`;
