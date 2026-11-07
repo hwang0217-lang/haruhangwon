@@ -72,6 +72,7 @@ button{font:inherit;cursor:pointer}
 /* overlays */
 .scrim{position:fixed;inset:0;background:rgba(10,14,20,.5);z-index:20}
 .sheet{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--card);z-index:21;overflow:auto;padding:calc(20px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) 20px;display:grid;gap:16px;align-content:start}
+[hidden]{display:none !important}
 .sheet h2{font-family:var(--f-book);margin:0;font-size:24px;line-height:1.35}
 .close{justify-self:end;border:0;background:none;color:var(--muted);font-size:14px;display:inline-flex;gap:6px;align-items:center;padding:6px}
 .detail-top{display:grid;grid-template-columns:140px 1fr;gap:16px;align-items:start}
