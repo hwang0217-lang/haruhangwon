@@ -89,3 +89,13 @@ React·Tailwind·motion 의존성은 하나도 들여오지 않았다. 전부 �
 | index | 오른쪽 책등 장식 → 실제 "이번 주의 책" 판매 카드(표지·제목·가격·미리보고 받기), CTA 아래 "권당 9,900원부터·EPUB·PDF 즉시·7일 환불" | Webflow 전자책 히어로, Typeform 전자책, Dropbox Shop | Single Plan Pricing Card(신뢰 줄) |
 
 검증: 390/1280 × 라이트/다크 12장 모두 가로 스크롤 0, 콘솔 에러 0. 장바구니 담기·선반 모두 보기·배너 바로 받기·하단 바 표시 동작 확인. 비교 이미지: `docs/before-after/compare-*.png`.
+
+## 추가: 홈 히어로 오비트 캐러셀 (2026-11-08)
+
+21st "Dish Orbit Carousel"(React+GSAP)을 바닐라 HTML/CSS/JS로 옮김. 요리 접시 대신 `coverSVG` 표지 5권(buy-agent, partners, job-pass, shorts, side-tax).
+- 표지가 위쪽 축을 중심으로 궤도를 그리며 나가고 다음 표지가 반대편에서 들어옴 (CSS transform-origin + transition)
+- 두 굵기 제목: 얇은 줄(표지 훅)은 오른쪽에서, 굵은 줄(책 제목, Black Han Sans)은 왼쪽에서 clip-path로 닦이듯 등장
+- 가격·바로 받기·미리보기가 교차 페이드, 뒤의 띠(arc)가 책 색(`cover.ac`)으로 바뀌며 늘었다 줄어듦
+- 조작: 화살표, 점 페이저, 키보드 ←/→, 스와이프. 5.2초 자동 넘김(마우스 올리거나 포커스 시 멈춤, 동작 줄이기 설정이면 자동 넘김·애니메이션 끔)
+- 원본의 스크롤 고정(pin)·썸네일 띠·좋아요 버튼은 뺌 (히어로가 화면을 붙잡지 않게, 모바일 한 화면 유지)
+- 스크린샷: `docs/before-after/orbit-*.png`

@@ -12,7 +12,7 @@
 <title>하루한권</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Black+Han+Sans&display=swap">
 <style>
-/* Layout: an evening reading desk — dark lamp-lit hero with a stack of book spines, then calm light sections */
+/* Layout: an evening reading desk — dark lamp-lit hero with this week's books orbiting the lamp, then calm light sections */
 :root{
   --bg:#F7F7F4; --card:#FFFFFF; --ink:#18202B; --muted:#5C6672; --line:#E0E2DD;
   --sel:#F7DDA0; --night:#141C2B; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --accent:#2D4FC4; --goal-sel:#EEF2FD;
@@ -63,17 +63,44 @@ section{padding-block:72px}
 .spine small{margin-left:auto;padding-left:16px;font-family:var(--f-ui);font-weight:500;font-size:11px;color:#fff}
 .desk{height:14px;background:#3A2C1C;border-radius:2px 2px 0 0;width:100%}
 /* B: the hero sells one real book — cover on the lamp-lit desk, price and two actions */
-.hbook{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:end;text-decoration:none;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:20px;margin-bottom:56px;transition:border-color .25s,transform .3s cubic-bezier(.16,1,.3,1)}
-.hbook:hover{border-color:var(--lamp);transform:translateY(-3px)}
-.hbook:focus-visible{outline:3px solid var(--lamp);outline-offset:3px}
-.hbook .cv{aspect-ratio:5/8;border-radius:3px 7px 7px 3px;overflow:hidden;box-shadow:inset 6px 0 0 rgba(0,0,0,.18),0 26px 36px -16px rgba(0,0,0,.75);transform:rotate(-3deg)}
-.hbook .cv svg{display:block;width:100%;height:100%}
-.hbook .eb{font-size:12px;font-weight:700;color:var(--lamp);letter-spacing:.5px}
-.hbook b{display:block;font-family:var(--f-book);font-size:21px;line-height:1.35;margin:6px 0}
-.hbook .s{font-size:14px;opacity:.75;display:block}
-.hbook .pr{display:flex;gap:8px;align-items:baseline;margin:12px 0;font-variant-numeric:tabular-nums}
-.hbook .pr strong{font-size:24px}.hbook .pr s{opacity:.55;font-size:14px}
-.hbook .go{display:inline-flex;gap:6px;align-items:center;background:var(--lamp);color:var(--lamp-ink);font-weight:700;border-radius:999px;padding:10px 18px;font-size:15px}
+/* Book orbit (21st "Dish Orbit Carousel" → vanilla): covers swing round a pivot above the desk,
+   the two-weight title wipes out and back in, price and buttons cross-fade, a lamp band follows the book colour */
+.orbit{position:relative;width:100%;max-width:460px;justify-self:end;aspect-ratio:460/540;margin-bottom:40px;outline:none;touch-action:pan-y}
+.orbit:focus-visible{outline:3px solid var(--lamp);outline-offset:6px;border-radius:20px}
+.ob-cv-wrap{position:absolute;left:0;top:0;width:460px;height:540px;transform:scale(var(--obs,1));transform-origin:0 0}
+.ob-arc{position:absolute;left:0;top:0;width:460px;height:540px;overflow:visible;pointer-events:none}
+.ob-arc path{transition:fill .7s ease;opacity:.55}
+.ob-cv{position:absolute;left:140px;top:30px;width:180px;height:288px;transform-origin:90px -480px;transform:rotate(var(--a,0deg));opacity:0;visibility:hidden;border-radius:3px 8px 8px 3px;overflow:hidden;box-shadow:inset 6px 0 0 rgba(0,0,0,.18),0 30px 40px -18px rgba(0,0,0,.8);text-decoration:none}
+.ob-cv svg{display:block;width:100%;height:100%}
+.ob-cv.on{opacity:1;visibility:visible}
+.ob-run .ob-cv{transition:transform .9s cubic-bezier(.65,0,.25,1),opacity .9s cubic-bezier(.65,0,.25,1),visibility 0s .9s}
+.ob-run .ob-cv.on{transition:transform .9s cubic-bezier(.65,0,.25,1),opacity .5s ease .2s,visibility 0s}
+.ob-hd,.ob-buy{position:absolute;left:40px;right:40px;visibility:hidden;text-align:center}
+.ob-hd{top:344px}
+.ob-hd.on,.ob-buy.on{visibility:visible}
+.ob-eb{display:block;font-size:12px;font-weight:700;color:var(--lamp);letter-spacing:.4px;margin-bottom:6px;transition:opacity .4s}
+.ob-t1,.ob-t2{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;clip-path:inset(0 0 0 0);transition:clip-path .55s cubic-bezier(.65,0,.35,1)}
+.ob-t1{font-family:var(--f-book);font-size:16px;opacity:.75}
+.ob-t2{font-family:"Black Han Sans",var(--f-ui);font-size:30px;line-height:1.25;margin-top:2px}
+.ob-hd:not(.on) .ob-t1{clip-path:inset(0 0 0 100%)}
+.ob-hd:not(.on) .ob-t2{clip-path:inset(0 100% 0 0)}
+.ob-hd:not(.on) .ob-eb{opacity:0}
+.ob-run .ob-hd.on .ob-t1{transition-delay:.35s}.ob-run .ob-hd.on .ob-t2{transition-delay:.45s}
+.ob-buy{top:440px;display:flex;align-items:center;justify-content:center;gap:12px;opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s,visibility 0s .4s}
+.ob-buy.on{opacity:1;transform:none;transition:opacity .45s .5s,transform .45s .5s,visibility 0s}
+.ob-pr{font-variant-numeric:tabular-nums;font-weight:700;font-size:22px;white-space:nowrap}
+.ob-pr s{font-weight:400;font-size:13px;opacity:.55;margin-left:6px}
+.ob-buy .btn{padding:10px 18px;font-size:15px;white-space:nowrap}
+.ob-nav{position:absolute;left:0;right:0;top:500px;display:flex;justify-content:center;align-items:center;gap:6px}
+.ob-nav button{all:unset;cursor:pointer;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;color:var(--night-ink)}
+.ob-nav button:focus-visible{outline:2px solid var(--lamp);outline-offset:1px}
+.ob-nav .ob-ar{border:1px solid rgba(255,255,255,.22)}
+.ob-nav .ob-ar:hover{border-color:var(--lamp)}
+.ob-dot{width:18px!important;height:30px!important}
+.ob-dot i{display:block;width:6px;height:6px;border-radius:6px;background:var(--night-ink);opacity:.35;transition:width .45s cubic-bezier(.3,.7,.2,1),opacity .3s}
+.ob-dot[aria-current="true"]{width:30px!important}
+.ob-dot[aria-current="true"] i{width:22px;opacity:1;background:var(--lamp)}
+.ob-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @keyframes slide{from{transform:translateX(24px)}to{transform:none}}
 /* goal picker: one question, five answer cards with fanned covers, then three books */
 .goal{padding-block:64px 56px}
@@ -154,8 +181,7 @@ footer b{color:var(--ink)}
   .stack{justify-items:stretch}
   .hero-grid{padding-top:32px;gap:28px}
   .offer{padding-bottom:0}
-  .hbook{grid-template-columns:104px minmax(0,1fr);gap:16px;padding:16px;margin-bottom:40px}
-  .hbook b{font-size:18px}.hbook .s{display:none}.hbook .pr{margin:8px 0}.hbook .pr strong{font-size:20px}
+  .orbit{justify-self:center;margin-bottom:32px}
   .picks{grid-template-columns:repeat(2,minmax(0,1fr))}
   .steps{grid-template-columns:1fr}
   .hero nav .links{display:none}
@@ -175,7 +201,7 @@ footer b{color:var(--ink)}
         <div class="cta"><a class="btn lamp" href="#goal">나에게 맞는 책 찾기</a><a class="btn ghost" href="/store">전체 책 보기</a></div>
         <ul class="offer" id="offer"><li>권당 <b>9,900원</b>부터</li><li>EPUB·PDF 즉시 다운로드</li><li>내려받기 전 7일 환불</li></ul>
       </div>
-      <a class="hbook" id="hbook" href="/store"></a>
+      <div class="orbit" id="orbit" role="region" aria-roledescription="carousel" aria-label="이번 주 추천 책" tabindex="0"></div>
     </div>
   </div>
 </header>
@@ -244,7 +270,53 @@ footer b{color:var(--ink)}
 
 <script src="/books.js"></script>
 <script>
-{const f=BOOKS.find(b=>b.id==="buy-agent")||BOOKS[0],h=document.getElementById("hbook");h.href="/book#"+f.id;h.setAttribute("aria-label",`이번 주의 책: ${f.title}, ${won(f.price)}`);h.innerHTML=`<div class="cv">${coverSVG(f)}</div><div><span class="eb">이번 주의 책 · ${f.pages}쪽</span><b>${f.title}</b><span class="s">${f.sub}</span><div class="pr"><strong>${won(f.price)}</strong>${f.was?`<s>${won(f.was)}</s>`:""}</div><span class="go">미리보고 받기 →</span></div>`}
+/* Book orbit: vanilla port of 21st "Dish Orbit Carousel" (no React/GSAP). */
+function initOrbit(root,bs){
+  const n=bs.length,CX=230,CY=-450,R=650,SWING=30;
+  const REST=[[78,104],[74,98],[82,108],[76,102],[80,100]],SWEEP=[68,112];
+  const arcPath=(a0,a1,w=64,steps=40)=>{const o=[],q=[];for(let i=0;i<=steps;i++){const t=i/steps,a=(a0+(a1-a0)*t)*Math.PI/180,h=w/2*Math.pow(Math.sin(Math.PI*t),.45),c=Math.cos(a),s=Math.sin(a);o.push((CX+c*(R+h)).toFixed(1)+" "+(CY+s*(R+h)).toFixed(1));q.push((CX+c*(R-h)).toFixed(1)+" "+(CY+s*(R-h)).toFixed(1))}return "M"+o.join("L")+"L"+q.reverse().join("L")+"Z"};
+  const AR='<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>';
+  root.innerHTML=`<div class="ob-cv-wrap"><svg class="ob-arc" viewBox="0 0 460 540" aria-hidden="true"><path/></svg>
+  ${bs.map((b,i)=>`<a class="ob-cv" href="/book#${b.id}" data-i="${i}" tabindex="-1" aria-hidden="true">${coverSVG(b)}</a>`).join("")}
+  ${bs.map((b,i)=>`<div class="ob-hd" data-i="${i}" aria-hidden="true"><span class="ob-eb">이번 주 추천 ${i+1}/${n} · ${b.cat} · ${b.pages}쪽</span><span class="ob-t1">${b.cover.hook||b.sub}</span><span class="ob-t2">${b.title}</span></div>`).join("")}
+  ${bs.map((b,i)=>`<div class="ob-buy" data-i="${i}" aria-hidden="true"><span class="ob-pr">${won(b.price)}${b.was?`<s>${won(b.was)}</s>`:""}</span><a class="btn lamp" href="/store#buy-${b.id}" tabindex="-1">바로 받기</a><a class="btn ghost" href="/book#${b.id}" tabindex="-1">미리보기</a></div>`).join("")}
+  <div class="ob-nav"><button class="ob-ar" type="button" data-step="-1" aria-label="이전 책">${AR}</button>${bs.map((b,i)=>`<button class="ob-dot" type="button" data-go="${i}" aria-label="${i+1}번째 책: ${b.title}"><i></i></button>`).join("")}<button class="ob-ar" type="button" data-step="1" aria-label="다음 책"><span style="transform:scaleX(-1);display:grid">${AR}</span></button></div></div>
+  <p class="ob-sr" aria-live="polite"></p>`;
+  const wrap=root.firstElementChild,path=root.querySelector(".ob-arc path"),live=root.querySelector(".ob-sr");
+  const q=(sel,i)=>root.querySelector(`${sel}[data-i="${i}"]`);
+  const fit=()=>root.style.setProperty("--obs",root.clientWidth/460);fit();
+  if(window.ResizeObserver)new ResizeObserver(fit).observe(root);
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)");
+  let cur=-1,arc=REST[0].slice(),raf=0,timer=0,paused=false;
+  const drawArc=()=>path.setAttribute("d",arcPath(arc[0],arc[1]));
+  function tweenArc(to){cancelAnimationFrame(raf);if(reduce.matches){arc=to.slice();drawArc();return}
+    const from=arc.slice(),t0=performance.now(),D=900,ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+    const step=now=>{const t=Math.min(1,(now-t0)/D),k=ease(t),mid=Math.sin(Math.PI*t);
+      arc=[from[0]+(to[0]-from[0])*k-(from[0]-SWEEP[0])*mid*.6,from[1]+(to[1]-from[1])*k+(SWEEP[1]-from[1])*mid*.6];drawArc();if(t<1)raf=requestAnimationFrame(step)};raf=requestAnimationFrame(step)}
+  function setActive(el,on){el.classList.toggle("on",on);el.setAttribute("aria-hidden",!on);el.querySelectorAll("a").forEach(a=>a.tabIndex=on?0:-1);if(el.tagName==="A")el.tabIndex=on?0:-1}
+  function go(to,dir){to=((to%n)+n)%n;if(to===cur)return;
+    if(dir==null)dir=cur<0?1:(((to-cur)%n)+n)%n<=n/2?1:-1;
+    const run=!reduce.matches&&cur>=0;wrap.classList.toggle("ob-run",run);
+    const inc=q(".ob-cv",to);
+    if(run){wrap.classList.remove("ob-run");inc.style.setProperty("--a",(dir*SWING)+"deg");inc.offsetWidth;wrap.classList.add("ob-run")}
+    if(cur>=0){const out=q(".ob-cv",cur);out.style.setProperty("--a",(-dir*SWING)+"deg");setActive(out,false);setActive(q(".ob-hd",cur),false);setActive(q(".ob-buy",cur),false)}
+    inc.style.setProperty("--a","0deg");setActive(inc,true);setActive(q(".ob-hd",to),true);setActive(q(".ob-buy",to),true);
+    path.style.fill=bs[to].cover.ac||"var(--lamp)";tweenArc(REST[to%REST.length]);
+    root.querySelectorAll(".ob-dot").forEach((d,i)=>d.setAttribute("aria-current",i===to));
+    if(cur>=0)live.textContent=`${to+1}/${n} ${bs[to].title}, ${won(bs[to].price)}`;cur=to}
+  const tick=()=>{clearTimeout(timer);if(!reduce.matches&&!paused&&!document.hidden)timer=setTimeout(()=>{go(cur+1,1);tick()},5200)};
+  root.addEventListener("click",e=>{const s=e.target.closest("[data-step]"),g=e.target.closest("[data-go]");if(s)go(cur+ +s.dataset.step,+s.dataset.step);else if(g)go(+g.dataset.go);else return;tick()});
+  root.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){go(cur+1,1);tick();e.preventDefault()}else if(e.key==="ArrowLeft"){go(cur-1,-1);tick();e.preventDefault()}});
+  let sx=null;root.addEventListener("pointerdown",e=>{sx=e.clientX});root.addEventListener("pointerup",e=>{if(sx!=null&&Math.abs(e.clientX-sx)>40){const d=e.clientX<sx?1:-1;go(cur+d,d);tick()}sx=null});
+  const hold=v=>()=>{paused=v;tick()};
+  root.addEventListener("mouseenter",hold(true));root.addEventListener("mouseleave",hold(false));
+  root.addEventListener("focusin",hold(true));root.addEventListener("focusout",e=>{if(!root.contains(e.relatedTarget))hold(false)()});
+  document.addEventListener("visibilitychange",tick);
+  drawArc();go(0);tick();
+}
+</script>
+<script>
+{const ids=["buy-agent","partners","job-pass","shorts","side-tax"],bs=ids.map(id=>BOOKS.find(b=>b.id===id)).filter(Boolean);if(bs.length)initOrbit(document.getElementById("orbit"),bs)}
 {const T='<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>';document.getElementById("offer").innerHTML=[`권당 <b>${won(Math.min(...BOOKS.map(b=>b.price)))}</b>부터`,"EPUB·PDF 즉시 다운로드","내려받기 전 7일 환불"].map(t=>`<li>${T}<span>${t}</span></li>`).join("")}
 const ON_SITE=location.protocol.startsWith("http")&&!location.hostname.endsWith("claude.ai")&&!location.hostname.includes("claudeusercontent");
 document.getElementById("picks-list").innerHTML=["buy-agent","partners","shorts","side-tax"].map(id=>BOOKS.find(b=>b.id===id)).map(b=>`<a class="pick" href="${ON_SITE?"/book#"+b.id:"https://claude.ai/artifact/NNptiX8fNxzsThEBj39ik2"}"${ON_SITE?"":' target="_blank" rel="noopener"'}><div class="cover">${coverSVG(b)}</div><b>${b.title}</b><span><strong>${won(b.price)}</strong> · ${b.pages}쪽</span></a>`).join("");
