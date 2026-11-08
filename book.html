@@ -49,9 +49,18 @@ header nav a{text-decoration:none}
 .btn:hover{border-color:var(--ink)}.btn.primary:hover{filter:brightness(1.08)}
 .btn:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 /* layout */
-.layout{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:56px;padding-block:40px 80px;align-items:start}
-.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);display:grid;gap:18px}
-.side>.cover{width:min(100%,calc(44vh * 5 / 8));justify-self:center}
+/* B: Skillshare-style — book header on the left, buy card pinned on the right for the whole scroll */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);grid-template-rows:auto 1fr;column-gap:56px;row-gap:40px;padding-block:40px 80px;align-items:start}
+.top{grid-column:1;grid-row:1;display:grid;grid-template-columns:200px minmax(0,1fr);gap:32px;align-items:end}
+.top .cover{width:100%}
+.metaline{display:flex;flex-wrap:wrap;gap:6px 14px;margin:4px 0 0;padding:0;list-style:none;font-size:14px;color:var(--muted)}
+.metaline li{display:inline-flex;align-items:center;gap:6px}
+.metaline li+li::before{content:"";width:3px;height:3px;border-radius:50%;background:currentColor;margin-right:8px;opacity:.6}
+.side{grid-column:2;grid-row:1/span 2;position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);display:grid;gap:18px}
+.main{grid-column:1;grid-row:2}
+.buy .head{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.buy .head .cover{width:44px;border-radius:2px 4px 4px 2px;box-shadow:inset 3px 0 0 rgba(0,0,0,.2)}
+.buy .head b{font-family:var(--f-book);font-size:16px;line-height:1.4}
 .cover{max-width:100%;border-radius:4px 10px 10px 4px;overflow:hidden;box-shadow:inset 8px 0 0 rgba(0,0,0,.2),0 24px 40px -22px rgba(10,16,30,.55);aspect-ratio:5/8}
 .cover svg{display:block;width:100%;height:100%}
 .buy{display:grid;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 18px 40px -28px rgba(10,16,30,.45)}
@@ -70,7 +79,7 @@ header nav a{text-decoration:none}
 .facts dt{float:left;margin-right:6px}.facts dd{margin:0;color:var(--ink);font-weight:600}
 .facts div{display:flex;gap:6px}
 .main{min-width:0;display:grid;gap:64px}
-.intro{display:grid;gap:14px}
+.intro{display:grid;gap:12px}
 .cat{font-size:14px;font-weight:600;color:var(--accent)}
 h1{font-family:var(--f-book);font-size:clamp(28px,4vw,42px);line-height:1.3;margin:0;text-wrap:balance}
 .subtitle{font-size:18px;color:var(--muted);margin:0}
@@ -168,25 +177,30 @@ footer{border-top:1px solid var(--line);background:var(--card);font-size:12px;co
 footer .wrap{padding-block:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 footer b{color:var(--ink)}
 @media (max-width:860px){
-  .layout{grid-template-columns:minmax(0,1fr);gap:28px;padding-block:24px 120px}
-  .side{position:static;grid-template-columns:minmax(0,150px) minmax(0,1fr);align-items:end}
-  .side>.cover{width:100%}
-  .buy .badges,.buy .refund{display:none}
-  .buy{padding:14px}.buy .btn,.buy .wish,.buy .gethead,.buy .getfiles{display:none}
+  .layout{grid-template-columns:minmax(0,1fr);grid-template-rows:none;row-gap:24px;padding-block:24px 120px}
+  .top,.side,.main{grid-column:1;grid-row:auto}
+  .top{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;gap:20px}
+  .top .cover{width:min(40vw,150px)}
+  .buy{padding:16px;gap:12px}
+  .top .intro{justify-items:center}
+  .metaline{justify-content:center}
+  .side{position:static}
+  .buy .head,.buy .gethead,.buy .getfiles,.buy .wish{display:none}
   .who,.files{grid-template-columns:minmax(0,1fr)}
   .more{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
   header nav{display:none}
   .tabs{margin-bottom:-24px}
   .main{gap:48px}
-  .bar{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:10px;align-items:center;position:fixed;left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:8;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:10px;box-shadow:0 16px 36px -14px rgba(10,16,30,.5)}
+  .bar{display:grid;transform:translateY(calc(100% + 24px));transition:transform .35s cubic-bezier(.16,1,.3,1);grid-template-columns:auto minmax(0,1fr) auto auto;gap:10px;align-items:center;position:fixed;left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:8;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:10px;box-shadow:0 16px 36px -14px rgba(10,16,30,.5)}
   .bar .pb{min-width:0;display:grid;line-height:1.25}
   .bar .pb b{font-size:18px;font-variant-numeric:tabular-nums;white-space:nowrap}
   .bar .pb b span{color:var(--sale);font-size:14px;margin-right:4px}
   .bar .pb small{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .bar .btn{white-space:nowrap;border-radius:14px;padding:13px 16px}
   .bar .wish{padding:0;width:46px;height:46px;border-radius:14px}
+  .bar.show{transform:none}
 }
-@media (max-width:420px){.bar .thumb{display:none}.side{grid-template-columns:minmax(0,120px) minmax(0,1fr)}.facts{grid-template-columns:minmax(0,1fr)}.ch{grid-template-columns:48px minmax(0,1fr)}}
+@media (max-width:420px){.bar .thumb{display:none}.facts{gap:4px 10px}.ch{grid-template-columns:48px minmax(0,1fr)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -225,9 +239,18 @@ function render(){
   document.title=b.title+" | 하루한권";
   const buyHref=STORE==="#"?"#"+b.id:"/store#buy-"+b.id;
   app.innerHTML=`
-  <aside class="side">
+  <section class="top">
     <div class="cover">${coverSVG(b)}</div>
-    <div class="buy">
+    <div class="intro">
+      <div class="cat">${b.cat}</div>
+      <h1>${b.title}</h1>
+      <p class="subtitle">${b.sub}</p>
+      <ul class="metaline"><li>${b.chapters}장 · ${b.pages}쪽</li><li>EPUB · PDF</li><li>결제 즉시 받기</li></ul>
+    </div>
+  </section>
+  <aside class="side">
+    <div class="buy" id="buybox">
+      <div class="head"><div class="cover">${coverSVG(b)}</div><b>${b.title}</b></div>
       ${priceHtml(b)}
       <dl class="facts"><div><dt>형식</dt><dd>EPUB · PDF</dd></div><div><dt>분량</dt><dd>${b.pages}쪽</dd></div><div><dt>구성</dt><dd>${b.chapters}장</dd></div><div><dt>받는 시간</dt><dd>결제 즉시</dd></div></dl>
       <a class="btn primary" href="${buyHref}">${won(b.price)} 바로 받기 ${ARROW}</a>
@@ -242,12 +265,7 @@ function render(){
     </div>
   </aside>
   <article class="main">
-    <section class="intro">
-      <div class="cat">${b.cat}</div>
-      <h1>${b.title}</h1>
-      <p class="subtitle">${b.sub}</p>
-      <ul class="summary">${b.summary.map(t=>`<li>${CHECK}<span>${t}</span></li>`).join("")}</ul>
-    </section>
+    <ul class="summary">${b.summary.map(t=>`<li>${CHECK}<span>${t}</span></li>`).join("")}</ul>
     <nav class="tabs" aria-label="상세 목차"><a href="#s-pain">책 소개</a><a href="#s-toc">목차</a><a href="#s-preview">미리보기</a><a href="#s-reviews">후기</a><a href="#faq">자주 묻는 질문</a></nav>
     <section id="s-pain">
       <h2>이런 고민, 해 보셨나요?</h2>
@@ -291,6 +309,7 @@ function render(){
     </section>
   </article>`;
   bar.innerHTML=`<span class="thumb">${coverSVG(b)}</span><span class="pb"><b>${b.was?`<span>${off(b)}%</span>`:""}${won(b.price)}</b><small>EPUB·PDF 즉시 · 7일 환불</small></span><button class="wish" type="button" data-w aria-pressed="${WISH.has(b.id)}" aria-label="찜하기">${HEART}</button><a class="btn primary" href="${buyHref}">바로 받기</a>`;
+  if(window.IntersectionObserver){if(window._io)_io.disconnect();window._io=new IntersectionObserver(([e])=>bar.classList.toggle("show",!e.isIntersecting));_io.observe(document.querySelector("#buybox .btn.primary"))}else bar.classList.add("show");
   document.querySelectorAll("[data-w]").forEach(w=>w.onclick=()=>{const on=WISH.toggle(b.id);document.querySelectorAll("[data-w]").forEach(x=>x.setAttribute("aria-pressed",on))});
 }
 window.addEventListener("hashchange",()=>{const id=location.hash.slice(1);if(BOOKS.some(b=>b.id===id)){render();window.scrollTo(0,0)}});

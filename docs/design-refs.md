@@ -79,3 +79,13 @@
 | Smooth Drawer (kokonutd/smooth-drawer) | https://21st.dev/@kokonutd/components/smooth-drawer | 하단 고정 카드의 가격 블록(가격+"평생 소장") + 꽉 찬 CTA → 모바일 하단 구매 바 |
 
 React·Tailwind·motion 의존성은 하나도 들여오지 않았다. 전부 기존 CSS 토큰과 바닐라 JS로 다시 썼다.
+
+## 4단계 적용 (형 선택: B 과감한 개편, A 포함)
+
+| 페이지 | 바뀐 점 | 참고 Mobbin | 21st |
+|---|---|---|---|
+| book | 상단을 표지+제목+"11장·91쪽·EPUB·PDF·결제 즉시" 한 줄로, 오른쪽에 스크롤 내내 고정되는 구매 카드(미니 표지·가격·한 번 결제·버튼·신뢰 배지·잠긴 파일 2개·환불 한 줄). 모바일은 Apple Books 순서(표지→제목→가격 카드), 구매 버튼이 화면 밖으로 나가면 하단 떠 있는 구매 바가 올라옴(깨진 버튼 수리). FAQ 아코디언에 환불·파일 형식·기기, "후기 준비 중" 자리, 목차 5장부터 접기 | Skillshare 구매 흐름, Snowflake 상세, Apple Books 상세, Deepstash 상세, Notion Q&A, New Yorker FAQ, Jasper 목차 | Single Plan Pricing Card, Smooth Drawer, Accordion, Empty Testimonial |
+| store | 램프색 구매 버튼, 신뢰 칩 4개(최저가·즉시 EPUB·PDF·기기·7일 환불), "이번 주 추천" 어두운 램프 배너(바로 받기/미리보기), "전체"는 분야별 가로 선반 + 모두 보기, 카드마다 장바구니 담기, 모바일 칩 한 줄 스크롤, 결제창 버튼 위 안내 3줄 | Apple Books 홈, Speechify 홈, Kindle 추천, Webflow 히어로, Mailchimp·Behance 결제 | Single Plan Pricing Card(배너 가격), Product Card 패턴(찜 배지) |
+| index | 오른쪽 책등 장식 → 실제 "이번 주의 책" 판매 카드(표지·제목·가격·미리보고 받기), CTA 아래 "권당 9,900원부터·EPUB·PDF 즉시·7일 환불" | Webflow 전자책 히어로, Typeform 전자책, Dropbox Shop | Single Plan Pricing Card(신뢰 줄) |
+
+검증: 390/1280 × 라이트/다크 12장 모두 가로 스크롤 0, 콘솔 에러 0. 장바구니 담기·선반 모두 보기·배너 바로 받기·하단 바 표시 동작 확인. 비교 이미지: `docs/before-after/compare-*.png`.

@@ -64,6 +64,24 @@ button{font:inherit;cursor:pointer}
 .add:hover{border-color:var(--ink)}
 .add:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .add[aria-pressed="true"]{background:var(--lamp);border-color:var(--lamp);color:var(--lamp-ink)}
+.feature{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:32px;align-items:center;background:var(--night);color:var(--night-ink);border-radius:20px;padding:32px 36px;margin:4px 0 28px;position:relative;overflow:hidden}
+.feature::after{content:"";position:absolute;width:420px;height:420px;right:-60px;top:-200px;background:radial-gradient(circle,rgba(242,184,75,.30),transparent 65%);pointer-events:none}
+.feature>*{position:relative;z-index:1}
+.feature .eyebrow{font-size:13px;font-weight:700;color:var(--lamp);letter-spacing:.5px}
+.feature h2{font-family:var(--f-book);font-size:clamp(24px,3.4vw,34px);line-height:1.3;margin:6px 0 8px;text-wrap:balance}
+.feature p{margin:0;opacity:.8;max-width:44ch}
+.feature .price{margin-top:16px;flex-wrap:wrap}.feature .price>*{white-space:nowrap}.feature .price .now{font-size:26px}.feature .price .was{color:rgba(238,240,244,.6)}.feature .price .off{color:#F59A86}
+.feature .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.feature .acts .btn{border-radius:999px;padding:12px 20px;font-size:15px}
+.feature .acts .btn.ghost{background:transparent;color:var(--night-ink);border-color:rgba(238,240,244,.5)}
+.feature .cover{width:100%;justify-self:end;transform:rotate(3deg);box-shadow:inset 6px 0 0 rgba(0,0,0,.18),0 28px 40px -18px rgba(0,0,0,.7)}
+.shelf{padding-bottom:28px}
+.shelf-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+.shelf-h h3{font-family:var(--f-book);font-size:21px;margin:0}
+.shelf-h button{all:unset;cursor:pointer;font-size:14px;font-weight:600;color:var(--lamp-text);white-space:nowrap}
+.shelf-h button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.row-scroll{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(160px,190px);gap:18px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x proximity;scrollbar-width:thin}
+.row-scroll .item{scroll-snap-align:start}
 .paynote{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--muted);margin:0;padding:0;list-style:none}
 .paynote li{display:inline-flex;gap:5px;align-items:center}.paynote svg{color:var(--ok)}
 .chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font-size:14px}
@@ -124,7 +142,7 @@ footer{border-top:1px solid var(--line);background:var(--card);font-size:12px;co
 footer .wrap{padding-block:24px;display:grid;gap:12px}
 footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 footer b{color:var(--ink)}
-@media (max-width:640px){.chips{flex-wrap:nowrap;overflow-x:auto;margin-inline:-16px;padding-inline:16px;scrollbar-width:none;scroll-snap-type:x proximity}.chips::-webkit-scrollbar{display:none}.chip{flex:none;scroll-snap-align:start}.hero{padding-block:24px 12px}}
+@media (max-width:640px){.feature h2{font-size:22px}.feature .price .now{font-size:21px}.feature{grid-template-columns:minmax(0,1fr) 96px;gap:16px;padding:22px 18px;border-radius:16px}.feature p{display:none}.feature .acts .btn{padding:10px 14px;font-size:14px}.row-scroll{grid-auto-columns:42%;gap:12px;margin-inline:-16px;padding-inline:16px;scroll-padding-inline:16px}.chips{flex-wrap:nowrap;overflow-x:auto;margin-inline:-16px;padding-inline:16px;scrollbar-width:none;scroll-snap-type:x proximity}.chips::-webkit-scrollbar{display:none}.chip{flex:none;scroll-snap-align:start}.hero{padding-block:24px 12px}}
 @media (max-width:480px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 14px}.detail-top{grid-template-columns:100px 1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -143,6 +161,7 @@ footer b{color:var(--ink)}
     <ul class="trust" id="trust"></ul>
   </section>
   <div class="chips" id="chips" role="group" aria-label="분야"></div>
+  <div id="feature"></div>
   <div class="pickbar" id="pickbar" hidden></div>
   <section class="grid" id="grid" aria-label="전자책 목록"></section>
 </main>
@@ -186,16 +205,30 @@ function renderChips(){
     +cats.map(c=>`<button class="chip" type="button" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("")
     +`<button class="chip" type="button" aria-pressed="${cat==="찜한 책"}" data-c="찜한 책">찜한 책 ${w}</button>`;
 }
+const FEATURE=BOOKS.find(b=>b.id==="buy-agent")||BOOKS[0];
+const card=(b,tag="")=>`<div class="item"><button class="book" type="button" data-id="${b.id}">${cover(b)}<div class="meta">${tag}<b>${b.t}</b>${priceHtml(b)}<span class="sub">EPUB · PDF · ${b.pages}쪽</span></div></button><button class="add" type="button" data-add="${b.id}" aria-pressed="${cart.includes(b.id)}">${cart.includes(b.id)?"담았어요 ✓":"장바구니 담기"}</button><button class="wish" type="button" data-w="${b.id}" aria-pressed="${WISH.has(b.id)}" aria-label="${b.t} 찜하기">${HEART}</button></div>`;
+function renderFeature(){
+  const f=FEATURE;feature.hidden=cat!=="전체";
+  feature.innerHTML=`<section class="feature" aria-label="이번 주 추천"><div><div class="eyebrow">이번 주 추천 · ${f.cat}</div><h2>${f.t}</h2><p>${f.sub}</p>${priceHtml(f)}<div class="acts"><button class="btn primary" type="button" data-buy="${f.id}">바로 받기</button>${ON_SITE?`<a class="btn ghost" href="/book#${f.id}">미리보기</a>`:`<button class="btn ghost" type="button" data-open="${f.id}">자세히</button>`}</div></div>${cover(f)}</section>`;
+}
 function renderGrid(){
+  renderFeature();
+  if(cat==="전체"){pickbar.hidden=true;grid.className="";
+    const cats=[...new Set(BOOKS.map(b=>b.cat))];
+    grid.innerHTML=cats.map(c=>{const bs=BOOKS.filter(b=>b.cat===c);return `<section class="shelf"><div class="shelf-h"><h3>${c} <span class="sub">${bs.length}권</span></h3><button type="button" data-cat="${c}">모두 보기 ›</button></div><div class="row-scroll">${bs.map(b=>card(b)).join("")}</div></section>`}).join("");
+    return}
+  grid.className="grid";
   const g=cat.startsWith("goal-")?GOAL_OF(cat.slice(5)):null;
   pickbar.hidden=!g&&cat!=="찜한 책";
   if(g)pickbar.innerHTML=`<b>${g.t}: 앞의 3권부터 순서대로 읽어 보세요</b><a href="/#goal">목표 다시 고르기</a>`;
   else if(cat==="찜한 책")pickbar.innerHTML=`<b>${WISH.all().length?"찜한 책을 한 번에 담아 보세요":"아직 찜한 책이 없어요. 표지의 하트를 눌러 보세요"}</b>${WISH.all().length?'<button class="btn primary" type="button" id="wishAll">모두 장바구니에 담기</button>':""}`;
-  grid.innerHTML=list().map((b,i)=>`<div class="item"><button class="book" type="button" data-id="${b.id}">${cover(b)}<div class="meta">${g&&i<3?`<span class="tag">${i+1}번째로 읽기</span>`:""}<b>${b.t}</b>${priceHtml(b)}<span class="sub">EPUB · PDF · ${b.pages}쪽</span></div></button><button class="add" type="button" data-add="${b.id}" aria-pressed="${cart.includes(b.id)}">${cart.includes(b.id)?"담았어요 ✓":"장바구니 담기"}</button><button class="wish" type="button" data-w="${b.id}" aria-pressed="${WISH.has(b.id)}" aria-label="${b.t} 찜하기">${HEART}</button></div>`).join("");
+  grid.innerHTML=list().map((b,i)=>card(b,g&&i<3?`<span class="tag">${i+1}번째로 읽기</span>`:"")).join("");
   const wa=document.getElementById("wishAll");if(wa)wa.onclick=()=>{WISH.all().forEach(id=>{if(!cart.includes(id))cart.push(id)});save();openCart()};
 }
 chips.onclick=e=>{const c=e.target.closest(".chip");if(!c)return;cat=c.dataset.c;renderChips();renderGrid()};
-grid.onclick=e=>{const ad=e.target.closest(".add");if(ad){const id=ad.dataset.add;if(cart.includes(id)){openCart();return}cart.push(id);save();ad.setAttribute("aria-pressed","true");ad.textContent="담았어요 ✓";return}
+feature.onclick=e=>{const by=e.target.closest("[data-buy]");if(by){const id=by.dataset.buy;if(!cart.includes(id)){cart.push(id);save()}openCart();return}const o=e.target.closest("[data-open]");if(o)openDetail(o.dataset.open)};
+grid.onclick=e=>{const sc=e.target.closest("[data-cat]");if(sc){cat=sc.dataset.cat;renderChips();renderGrid();chips.scrollIntoView({block:"start"});return}
+  const ad=e.target.closest(".add");if(ad){const id=ad.dataset.add;if(cart.includes(id)){openCart();return}cart.push(id);save();ad.setAttribute("aria-pressed","true");ad.textContent="담았어요 ✓";return}
   const w=e.target.closest(".wish");if(w){w.setAttribute("aria-pressed",WISH.toggle(w.dataset.w));renderChips();if(cat==="찜한 책")renderGrid();return}
   const b=e.target.closest(".book");if(b)openDetail(b.dataset.id)};
 
