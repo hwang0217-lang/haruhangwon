@@ -16,16 +16,19 @@
 :root{
   --bg:#F6F7F9; --card:#FFFFFF; --ink:#16202A; --muted:#5D6873; --line:#DFE3E8;
   --accent:#2446C7; --accent-ink:#FFFFFF; --accent-soft:#E6EBFB; --sale:#C2361F; --badge:#B3301B; --sel:#C9D4FA; --ok:#22784A;
+  --night:#141C2B; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --lamp-soft:#FBF0D9; --lamp-text:#9A6508;
   --f-display:"Do Hyeon","IBM Plex Sans KR",sans-serif;
   --f-book:"Gowun Batang","Nanum Myeongjo",serif;
   --f-ui:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0F141A; --card:#182029; --ink:#E8ECF0; --muted:#9AA5B0; --line:#2A3440;
-  --accent:#7D95F5; --accent-ink:#0B1230; --accent-soft:#1E2A4D; --sale:#F07A63; --badge:#B3301B; --sel:#2F3F73; --ok:#5CC28A; color-scheme:dark}}
+  --accent:#7D95F5; --accent-ink:#0B1230; --accent-soft:#1E2A4D; --sale:#F07A63; --badge:#B3301B; --sel:#2F3F73; --ok:#5CC28A;
+  --night:#0A0F18; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --lamp-soft:#2E2715; --lamp-text:#F2B84B; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0F141A; --card:#182029; --ink:#E8ECF0; --muted:#9AA5B0; --line:#2A3440;
-  --accent:#7D95F5; --accent-ink:#0B1230; --accent-soft:#1E2A4D; --sale:#F07A63; --badge:#B3301B; --sel:#2F3F73; --ok:#5CC28A; color-scheme:dark}
+  --accent:#7D95F5; --accent-ink:#0B1230; --accent-soft:#1E2A4D; --sale:#F07A63; --badge:#B3301B; --sel:#2F3F73; --ok:#5CC28A;
+  --night:#0A0F18; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --lamp-soft:#2E2715; --lamp-text:#F2B84B; color-scheme:dark}
 *{box-sizing:border-box}
 ::selection{background:var(--sel);color:var(--ink)}
 input,textarea{caret-color:var(--accent)}
@@ -33,27 +36,54 @@ input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
 html{scrollbar-color:var(--line) var(--bg)}
 a{text-underline-offset:3px}
 
-body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.6}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
 .wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--card)}
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--card);border-bottom:1px solid var(--line)}
 header .wrap{display:flex;align-items:center;gap:16px;padding-block:12px}
 .logo{font-family:var(--f-display);font-size:24px;letter-spacing:.5px}
-.logo span{color:var(--accent)}
+.logo span{color:var(--lamp-text)}
 header nav{margin-left:auto;display:flex;gap:8px;align-items:center}
 button{font:inherit;cursor:pointer}
 .btn:hover{border-color:var(--ink)}
 .btn.primary:hover{filter:brightness(1.08)}
 .btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 14px;font-weight:600}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary{background:var(--lamp);border-color:var(--lamp);color:var(--lamp-ink)}
 .btn:focus-visible,.chip:focus-visible,.book:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .badge{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:10px;background:var(--badge);color:#fff;font-size:12px;margin-left:6px;padding:0 6px}
-.demo{background:var(--accent-soft);color:var(--ink);font-size:13px}
-.demo .wrap{padding-block:10px}
+.demo{background:var(--night);color:var(--night-ink);font-size:12px}
+.demo .wrap{padding-block:6px}
 .hero{padding-block:40px 24px;display:grid;gap:10px}
 .hero h1{font-family:var(--f-book);font-size:clamp(26px,4.5vw,40px);line-height:1.3;margin:0;text-wrap:balance}
 .hero p{margin:0;color:var(--muted);max-width:60ch}
 .chips{display:flex;flex-wrap:wrap;gap:8px;padding-block:8px 20px}
+.trust{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.trust li{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;background:var(--lamp-soft);color:var(--ink);border-radius:999px;padding:5px 12px}
+.trust svg{color:var(--lamp-text);flex:none}
+.add{all:unset;box-sizing:border-box;cursor:pointer;margin-top:10px;width:100%;text-align:center;font-size:13px;font-weight:700;border:1px solid var(--line);border-radius:999px;padding:8px 10px;background:var(--card);color:var(--ink);transition:border-color .2s,background .2s}
+.add:hover{border-color:var(--ink)}
+.add:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.add[aria-pressed="true"]{background:var(--lamp);border-color:var(--lamp);color:var(--lamp-ink)}
+.feature{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:32px;align-items:center;background:var(--night);color:var(--night-ink);border-radius:20px;padding:32px 36px;margin:4px 0 28px;position:relative;overflow:hidden}
+.feature::after{content:"";position:absolute;width:420px;height:420px;right:-60px;top:-200px;background:radial-gradient(circle,rgba(242,184,75,.30),transparent 65%);pointer-events:none}
+.feature>*{position:relative;z-index:1}
+.feature .eyebrow{font-size:13px;font-weight:700;color:var(--lamp);letter-spacing:.5px}
+.feature h2{font-family:var(--f-book);font-size:clamp(24px,3.4vw,34px);line-height:1.3;margin:6px 0 8px;text-wrap:balance}
+.feature p{margin:0;opacity:.8;max-width:44ch}
+.feature .price{margin-top:16px;flex-wrap:wrap}.feature .price>*{white-space:nowrap}.feature .price .now{font-size:26px}.feature .price .was{color:rgba(238,240,244,.6)}.feature .price .off{color:#F59A86}
+.feature .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.feature .acts .btn{border-radius:999px;padding:12px 20px;font-size:15px}
+.feature .acts .btn.ghost{background:transparent;color:var(--night-ink);border-color:rgba(238,240,244,.5)}
+.feature .cover{width:100%;justify-self:end;transform:rotate(3deg);box-shadow:inset 6px 0 0 rgba(0,0,0,.18),0 28px 40px -18px rgba(0,0,0,.7)}
+.shelf{padding-bottom:28px}
+.shelf-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+.shelf-h h3{font-family:var(--f-book);font-size:21px;margin:0}
+.shelf-h button{all:unset;cursor:pointer;font-size:14px;font-weight:600;color:var(--lamp-text);white-space:nowrap}
+.shelf-h button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.row-scroll{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(160px,190px);gap:18px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x proximity;scrollbar-width:thin}
+.row-scroll .item{scroll-snap-align:start}
+.paynote{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--muted);margin:0;padding:0;list-style:none}
+.paynote li{display:inline-flex;gap:5px;align-items:center}.paynote svg{color:var(--ok)}
 .chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font-size:14px}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:28px 22px;padding-bottom:48px}
@@ -69,6 +99,20 @@ button{font:inherit;cursor:pointer}
 .price .was{color:var(--muted);text-decoration:line-through;font-size:13px}
 .price .off{color:var(--sale);font-weight:700;font-size:14px}
 .sub{color:var(--muted);font-size:13px}
+.item{position:relative;min-width:0}
+.wish{position:absolute;top:8px;right:8px;z-index:1;width:36px;height:36px;border-radius:50%;border:0;display:grid;place-items:center;background:rgba(255,255,255,.92);color:#16202A;box-shadow:0 2px 8px rgba(0,0,0,.18);transition:transform .2s cubic-bezier(.16,1,.3,1)}
+.wish:hover{transform:scale(1.08)}
+.wish:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wish[aria-pressed="true"]{color:var(--sale)}
+.wish[aria-pressed="true"] svg{fill:currentColor}
+.wish.big{position:static;width:auto;height:auto;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);box-shadow:none;padding:8px 14px;display:inline-flex;gap:6px;align-items:center;font-weight:600}
+.wish.big[aria-pressed="true"]{color:var(--sale);border-color:var(--sale)}
+.chip.goalchip{border-color:var(--accent);color:var(--accent);font-weight:600}
+.chip.goalchip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.pickbar{background:var(--accent-soft);border-radius:14px;padding:16px 18px;margin-bottom:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.pickbar b{font-family:var(--f-book);font-size:18px}
+.pickbar a{color:var(--accent);font-weight:600;font-size:14px;text-decoration:none}
+.tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent-ink);background:var(--accent);border-radius:999px;padding:1px 8px;justify-self:start}
 /* overlays */
 .scrim{position:fixed;inset:0;background:rgba(10,14,20,.5);z-index:20}
 .sheet{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--card);z-index:21;overflow:auto;padding:calc(20px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) 20px;display:grid;gap:16px;align-content:start}
@@ -98,12 +142,13 @@ footer{border-top:1px solid var(--line);background:var(--card);font-size:12px;co
 footer .wrap{padding-block:24px;display:grid;gap:12px}
 footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 footer b{color:var(--ink)}
+@media (max-width:640px){.feature h2{font-size:22px}.feature .price .now{font-size:21px}.feature{grid-template-columns:minmax(0,1fr) 96px;gap:16px;padding:22px 18px;border-radius:16px}.feature p{display:none}.feature .acts .btn{padding:10px 14px;font-size:14px}.row-scroll{grid-auto-columns:42%;gap:12px;margin-inline:-16px;padding-inline:16px;scroll-padding-inline:16px}.chips{flex-wrap:nowrap;overflow-x:auto;margin-inline:-16px;padding-inline:16px;scrollbar-width:none;scroll-snap-type:x proximity}.chips::-webkit-scrollbar{display:none}.chip{flex:none;scroll-snap-align:start}.hero{padding-block:24px 12px}}
 @media (max-width:480px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 14px}.detail-top{grid-template-columns:100px 1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div class="demo"><div class="wrap">시안입니다. 결제는 실제로 되지 않습니다. 토스페이먼츠 가입이 끝나면 진짜 결제로 바꿉니다.</div></div>
+<div class="demo"><div class="wrap">시안 · 결제는 아직 실제로 되지 않아요 (토스페이먼츠 연결 전)</div></div>
 <header><div class="wrap">
   <a class="logo" href="/" style="text-decoration:none">하루<span>한권</span></a>
   <nav><button class="btn" id="cartBtn" type="button">장바구니<span class="badge" id="cartCount">0</span></button></nav>
@@ -113,8 +158,11 @@ footer b{color:var(--ink)}
   <section class="hero">
     <h1>하루 저녁에 읽고, 다음 날 바로 써먹는 실전 전자책</h1>
     <p>결제하면 바로 EPUB·PDF 파일을 내려받을 수 있습니다. 휴대폰, 태블릿, 전자책 리더기 어디서나 읽을 수 있어요.</p>
+    <ul class="trust" id="trust"></ul>
   </section>
   <div class="chips" id="chips" role="group" aria-label="분야"></div>
+  <div id="feature"></div>
+  <div class="pickbar" id="pickbar" hidden></div>
   <section class="grid" id="grid" aria-label="전자책 목록"></section>
 </main>
 
@@ -135,20 +183,54 @@ footer b{color:var(--ink)}
 BOOKS.forEach(b=>{b.p=b.price;b.w=b.was;b.t=b.title;b.a="하루한권 편집부"});
 let cat="전체", cart=[], payMethod="카드";
 try{cart=JSON.parse(localStorage.getItem("hr-cart")||"[]").filter(id=>BOOKS.some(b=>b.id===id))}catch(e){cart=[]}
-const save=()=>{try{localStorage.setItem("hr-cart",JSON.stringify(cart))}catch(e){} document.getElementById("cartCount").textContent=cart.length};
+const save=()=>{try{localStorage.setItem("hr-cart",JSON.stringify(cart))}catch(e){} document.getElementById("cartCount").textContent=cart.length;document.querySelectorAll(".add").forEach(x=>{const on=cart.includes(x.dataset.add);x.setAttribute("aria-pressed",on);x.textContent=on?"담았어요 ✓":"장바구니 담기"})};
 const cover=(b,cls="cover")=>`<div class="${cls}">${coverSVG(b)}</div>`;
-const ON_SITE=location.protocol.startsWith("http")&&location.hostname.endsWith("haruhangwon.kr");
+const ON_SITE=location.protocol.startsWith("http")&&!location.hostname.endsWith("claude.ai")&&!location.hostname.includes("claudeusercontent");
 const priceHtml=b=>`<div class="price">${b.w?`<span class="off">${Math.round((1-b.p/b.w)*100)}%</span>`:""}<span class="now">${won(b.p)}</span>${b.w?`<span class="was">${won(b.w)}</span>`:""}</div>`;
 
+const GOAL_OF=k=>GOALS.find(g=>g.k===k);
+const TICK='<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>';
+{const ps=BOOKS.map(b=>b.price);document.getElementById("trust").innerHTML=[`한 권 ${won(Math.min(...ps))}부터`,"결제 즉시 EPUB·PDF","폰·태블릿·PC·리더기","내려받기 전 7일 환불"].map(t=>`<li>${TICK}${t}</li>`).join("")}
+function list(){
+  if(cat==="찜한 책"){const w=WISH.all();return BOOKS.filter(b=>w.includes(b.id))}
+  if(cat.startsWith("goal-")){const g=GOAL_OF(cat.slice(5));return [...g.ids.map(id=>BOOKS.find(b=>b.id===id)),...BOOKS.filter(b=>g.cats.includes(b.cat)&&!g.ids.includes(b.id))]}
+  return BOOKS.filter(b=>cat==="전체"||b.cat===cat);
+}
 function renderChips(){
+  let goal=null;try{goal=GOAL_OF(localStorage.getItem("hr-goal"))}catch(e){}
+  if(cat.startsWith("goal-"))goal=GOAL_OF(cat.slice(5));
+  const w=WISH.all().length;
   const cats=["전체",...new Set(BOOKS.map(b=>b.cat))];
-  chips.innerHTML=cats.map(c=>`<button class="chip" type="button" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("");
+  chips.innerHTML=(goal?`<button class="chip goalchip" type="button" aria-pressed="${cat==="goal-"+goal.k}" data-c="goal-${goal.k}">내 목표: ${goal.t}</button>`:"")
+    +cats.map(c=>`<button class="chip" type="button" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("")
+    +`<button class="chip" type="button" aria-pressed="${cat==="찜한 책"}" data-c="찜한 책">찜한 책 ${w}</button>`;
+}
+const FEATURE=BOOKS.find(b=>b.id==="buy-agent")||BOOKS[0];
+const card=(b,tag="")=>`<div class="item"><button class="book" type="button" data-id="${b.id}">${cover(b)}<div class="meta">${tag}<b>${b.t}</b>${priceHtml(b)}<span class="sub">EPUB · PDF · ${b.pages}쪽</span></div></button><button class="add" type="button" data-add="${b.id}" aria-pressed="${cart.includes(b.id)}">${cart.includes(b.id)?"담았어요 ✓":"장바구니 담기"}</button><button class="wish" type="button" data-w="${b.id}" aria-pressed="${WISH.has(b.id)}" aria-label="${b.t} 찜하기">${HEART}</button></div>`;
+function renderFeature(){
+  const f=FEATURE;feature.hidden=cat!=="전체";
+  feature.innerHTML=`<section class="feature" aria-label="이번 주 추천"><div><div class="eyebrow">이번 주 추천 · ${f.cat}</div><h2>${f.t}</h2><p>${f.sub}</p>${priceHtml(f)}<div class="acts"><button class="btn primary" type="button" data-buy="${f.id}">바로 받기</button>${ON_SITE?`<a class="btn ghost" href="/book#${f.id}">미리보기</a>`:`<button class="btn ghost" type="button" data-open="${f.id}">자세히</button>`}</div></div>${cover(f)}</section>`;
 }
 function renderGrid(){
-  grid.innerHTML=BOOKS.filter(b=>cat==="전체"||b.cat===cat).map(b=>`<button class="book" type="button" data-id="${b.id}">${cover(b)}<div class="meta"><b>${b.t}</b>${priceHtml(b)}<span class="sub">EPUB · PDF · ${b.pages}쪽</span></div></button>`).join("");
+  renderFeature();
+  if(cat==="전체"){pickbar.hidden=true;grid.className="";
+    const cats=[...new Set(BOOKS.map(b=>b.cat))];
+    grid.innerHTML=cats.map(c=>{const bs=BOOKS.filter(b=>b.cat===c);return `<section class="shelf"><div class="shelf-h"><h3>${c} <span class="sub">${bs.length}권</span></h3><button type="button" data-cat="${c}">모두 보기 ›</button></div><div class="row-scroll">${bs.map(b=>card(b)).join("")}</div></section>`}).join("");
+    return}
+  grid.className="grid";
+  const g=cat.startsWith("goal-")?GOAL_OF(cat.slice(5)):null;
+  pickbar.hidden=!g&&cat!=="찜한 책";
+  if(g)pickbar.innerHTML=`<b>${g.t}: 앞의 3권부터 순서대로 읽어 보세요</b><a href="/#goal">목표 다시 고르기</a>`;
+  else if(cat==="찜한 책")pickbar.innerHTML=`<b>${WISH.all().length?"찜한 책을 한 번에 담아 보세요":"아직 찜한 책이 없어요. 표지의 하트를 눌러 보세요"}</b>${WISH.all().length?'<button class="btn primary" type="button" id="wishAll">모두 장바구니에 담기</button>':""}`;
+  grid.innerHTML=list().map((b,i)=>card(b,g&&i<3?`<span class="tag">${i+1}번째로 읽기</span>`:"")).join("");
+  const wa=document.getElementById("wishAll");if(wa)wa.onclick=()=>{WISH.all().forEach(id=>{if(!cart.includes(id))cart.push(id)});save();openCart()};
 }
 chips.onclick=e=>{const c=e.target.closest(".chip");if(!c)return;cat=c.dataset.c;renderChips();renderGrid()};
-grid.onclick=e=>{const b=e.target.closest(".book");if(b)openDetail(b.dataset.id)};
+feature.onclick=e=>{const by=e.target.closest("[data-buy]");if(by){const id=by.dataset.buy;if(!cart.includes(id)){cart.push(id);save()}openCart();return}const o=e.target.closest("[data-open]");if(o)openDetail(o.dataset.open)};
+grid.onclick=e=>{const sc=e.target.closest("[data-cat]");if(sc){cat=sc.dataset.cat;renderChips();renderGrid();chips.scrollIntoView({block:"start"});return}
+  const ad=e.target.closest(".add");if(ad){const id=ad.dataset.add;if(cart.includes(id)){openCart();return}cart.push(id);save();ad.setAttribute("aria-pressed","true");ad.textContent="담았어요 ✓";return}
+  const w=e.target.closest(".wish");if(w){w.setAttribute("aria-pressed",WISH.toggle(w.dataset.w));renderChips();if(cat==="찜한 책")renderGrid();return}
+  const b=e.target.closest(".book");if(b)openDetail(b.dataset.id)};
 
 function open(html){sheet.innerHTML=`<button class="close" type="button" id="x">닫기 <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>`+html;sheet.hidden=scrim.hidden=false;sheet.scrollTop=0;x.onclick=close;x.focus()}
 function close(){sheet.hidden=scrim.hidden=true}
@@ -157,10 +239,11 @@ scrim.onclick=close;document.addEventListener("keydown",e=>{if(e.key==="Escape")
 function openDetail(id){
   const b=BOOKS.find(x=>x.id===id), inCart=cart.includes(id);
   open(`<div class="detail-top">${cover(b)}<div style="display:grid;gap:8px;min-width:0"><span class="sub">${b.cat}</span><h2>${b.t}</h2>${priceHtml(b)}<div class="facts"><span>EPUB</span><span>PDF</span><span>${b.pages}쪽</span><span>바로 다운로드</span></div></div></div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" type="button" id="buyNow">바로 구매</button><button class="btn" type="button" id="addCart">${inCart?"장바구니에 있음":"장바구니 담기"}</button></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" type="button" id="buyNow">바로 구매</button><button class="btn" type="button" id="addCart">${inCart?"장바구니에 있음":"장바구니 담기"}</button><button class="wish big" type="button" id="wishD" aria-pressed="${WISH.has(id)}">${HEART}<span>찜</span></button></div>
   <div class="toc"><b>이런 내용을 담았어요</b><ol>${b.toc.map(t=>`<li>${t[0]}</li>`).join("")}</ol></div>
   ${ON_SITE?`<a class="btn" href="/book#${b.id}">상세페이지 전체 보기</a>`:""}
   <p class="note">결제 후 이메일로 내려받기 링크가 발송되며, 구매내역에서 언제든 다시 받을 수 있습니다.</p>`);
+  wishD.onclick=()=>{wishD.setAttribute("aria-pressed",WISH.toggle(id));renderChips();renderGrid()};
   addCart.onclick=()=>{if(!cart.includes(id)){cart.push(id);save()}addCart.textContent="장바구니에 있음"};
   buyNow.onclick=()=>{if(!cart.includes(id)){cart.push(id);save()}openCart()};
 }
@@ -169,14 +252,15 @@ function openCart(){
   if(!items.length){open(`<h2>장바구니</h2><p class="sub">담긴 책이 없습니다. 마음에 드는 책을 눌러 담아 보세요.</p>`);return}
   const sum=items.reduce((s,b)=>s+b.p,0);
   open(`<h2>장바구니 · 결제</h2>
-  <div>${items.map(b=>`<div class="row">${cover(b,"mini")}<div class="grow"><b>${b.t}</b><div class="sub">${won(b.p)}</div></div><button type="button" data-rm="${b.id}">빼기</button></div>`).join("")}</div>
+  <div>${items.map(b=>`<div class="row">${cover(b,"mini")}<div class="grow"><b>${b.t}</b><div class="sub">${won(b.p)} · EPUB·PDF</div></div><button type="button" data-rm="${b.id}">빼기</button></div>`).join("")}</div>
   <div class="total"><span>결제 금액</span><span>${won(sum)}</span></div>
   <form id="f" style="display:grid;gap:12px">
     <label for="nm">이름<input id="nm" type="text" required value="홍길동"></label>
     <label for="em">이메일 (파일 받을 주소)<input id="em" type="email" required value="reader@example.com"></label>
     <div class="pay" role="group" aria-label="결제 수단">${["카드","카카오페이","네이버페이","토스페이","계좌이체","휴대폰"].map(m=>`<button type="button" aria-pressed="${m===payMethod}" data-m="${m}">${m}</button>`).join("")}</div>
     <label class="check" for="agree"><input id="agree" type="checkbox" required> <span>디지털 상품은 내려받은 뒤 청약철회가 제한되는 것에 동의합니다.</span></label>
-    <button class="btn primary" type="submit" style="padding:12px">${won(sum)} 결제하기</button>
+    <ul class="paynote"><li>${TICK}결제 즉시 다운로드</li><li>${TICK}이메일로도 링크 발송</li><li>${TICK}내려받기 전 7일 환불</li></ul>
+    <button class="btn primary" type="submit" style="padding:14px;border-radius:999px;font-size:16px">${won(sum)} 결제하기</button>
     <p class="note">시안이라 실제 결제는 일어나지 않습니다.</p>
   </form>`);
   sheet.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{cart=cart.filter(i=>i!==b.dataset.rm);save();openCart()});
@@ -187,6 +271,7 @@ function openCart(){
     <p class="note">실제 사이트에서는 결제 확인 후 72시간 동안 유효한 개인 링크가 발급됩니다.</p>`)};
 }
 cartBtn.onclick=openCart;
+{const h=decodeURIComponent(location.hash.slice(1));if(h.startsWith("goal-")&&GOAL_OF(h.slice(5)))cat=h;}
 renderChips();renderGrid();save();
 const m=location.hash.match(/^#buy-(.+)$/);if(m&&BOOKS.some(b=>b.id===m[1])){if(!cart.includes(m[1])){cart.push(m[1]);save()}openCart()}
 </script>
