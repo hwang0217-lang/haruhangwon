@@ -431,3 +431,20 @@ function coverSVG(b) {
 ${sub.map((l, i) => `<text x="160" y="${subY + i * 84}" font-family="Gowun Batang, serif" font-size="62" fill="${c.ink}" opacity=".85">${l}</text>`).join("")}
 <text x="160" y="2420" font-family="IBM Plex Sans KR, sans-serif" font-size="46" fill="${c.ink}" opacity=".75">하루한권 편집부</text><text x="1440" y="2420" text-anchor="end" font-family="IBM Plex Sans KR, sans-serif" font-size="46" fill="${c.ink}" opacity=".75">EPUB · PDF</text></svg>`;
 }
+
+/* 첫 방문 목표 고르기: index.html이 묻고 store.html이 #goal-<k>로 보여줍니다. ids 순서 = 읽는 순서 */
+const GOALS=[
+  {k:"side",t:"퇴근 후 부수입 만들기",s:"블로그·SNS·AI로 월급 밖 첫 수입",ids:["ai-side","naver-blog","threads"],cats:["부업","SNS 수익화"]},
+  {k:"save",t:"빚 줄이고 돈 모으기",s:"이자 끊기, 지출 줄이기, 첫 1억",ids:["debt-cut","jjan","first-100m"],cats:["재테크"]},
+  {k:"invest",t:"투자 처음 시작하기",s:"ETF·배당·절세 통장 순서",ids:["us-etf","dividend","tax-account"],cats:["재테크","부동산"]},
+  {k:"sell",t:"내 상품 만들어 팔기",s:"전자책·앱·오픈마켓 첫 판매",ids:["ebook-7days","vibe-coding","market-seller"],cats:["지식창업","온라인 판매","창업"]},
+  {k:"career",t:"취업하고 연봉 올리기",s:"자소서·면접·연봉 협상",ids:["job-pass","salary-up","quit-money"],cats:["취업","커리어"]}
+];
+
+/* 찜 목록 (브라우저에만 저장) */
+const WISH={
+  all(){try{return JSON.parse(localStorage.getItem("hr-wish")||"[]")}catch(e){return []}},
+  has(id){return this.all().includes(id)},
+  toggle(id){const w=this.all();const i=w.indexOf(id);i<0?w.push(id):w.splice(i,1);try{localStorage.setItem("hr-wish",JSON.stringify(w))}catch(e){}return i<0}
+};
+const HEART='<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7-4.4-9.2-8.6C1.3 8.5 3 5 6.4 5c2 0 3.3 1.1 4.1 2.3h3C14.3 6.1 15.6 5 17.6 5 21 5 22.7 8.5 21.2 11.4 19 15.6 12 20 12 20z"/></svg>';

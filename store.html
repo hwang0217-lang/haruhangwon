@@ -69,6 +69,20 @@ button{font:inherit;cursor:pointer}
 .price .was{color:var(--muted);text-decoration:line-through;font-size:13px}
 .price .off{color:var(--sale);font-weight:700;font-size:14px}
 .sub{color:var(--muted);font-size:13px}
+.item{position:relative;min-width:0}
+.wish{position:absolute;top:8px;right:8px;z-index:1;width:36px;height:36px;border-radius:50%;border:0;display:grid;place-items:center;background:rgba(255,255,255,.92);color:#16202A;box-shadow:0 2px 8px rgba(0,0,0,.18);transition:transform .2s cubic-bezier(.16,1,.3,1)}
+.wish:hover{transform:scale(1.08)}
+.wish:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wish[aria-pressed="true"]{color:var(--sale)}
+.wish[aria-pressed="true"] svg{fill:currentColor}
+.wish.big{position:static;width:auto;height:auto;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);box-shadow:none;padding:8px 14px;display:inline-flex;gap:6px;align-items:center;font-weight:600}
+.wish.big[aria-pressed="true"]{color:var(--sale);border-color:var(--sale)}
+.chip.goalchip{border-color:var(--accent);color:var(--accent);font-weight:600}
+.chip.goalchip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.pickbar{background:var(--accent-soft);border-radius:14px;padding:16px 18px;margin-bottom:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.pickbar b{font-family:var(--f-book);font-size:18px}
+.pickbar a{color:var(--accent);font-weight:600;font-size:14px;text-decoration:none}
+.tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent-ink);background:var(--accent);border-radius:999px;padding:1px 8px;justify-self:start}
 /* overlays */
 .scrim{position:fixed;inset:0;background:rgba(10,14,20,.5);z-index:20}
 .sheet{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--card);z-index:21;overflow:auto;padding:calc(20px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) 20px;display:grid;gap:16px;align-content:start}
@@ -115,6 +129,7 @@ footer b{color:var(--ink)}
     <p>결제하면 바로 EPUB·PDF 파일을 내려받을 수 있습니다. 휴대폰, 태블릿, 전자책 리더기 어디서나 읽을 수 있어요.</p>
   </section>
   <div class="chips" id="chips" role="group" aria-label="분야"></div>
+  <div class="pickbar" id="pickbar" hidden></div>
   <section class="grid" id="grid" aria-label="전자책 목록"></section>
 </main>
 
@@ -137,18 +152,35 @@ let cat="전체", cart=[], payMethod="카드";
 try{cart=JSON.parse(localStorage.getItem("hr-cart")||"[]").filter(id=>BOOKS.some(b=>b.id===id))}catch(e){cart=[]}
 const save=()=>{try{localStorage.setItem("hr-cart",JSON.stringify(cart))}catch(e){} document.getElementById("cartCount").textContent=cart.length};
 const cover=(b,cls="cover")=>`<div class="${cls}">${coverSVG(b)}</div>`;
-const ON_SITE=location.protocol.startsWith("http")&&location.hostname.endsWith("haruhangwon.kr");
+const ON_SITE=location.protocol.startsWith("http")&&!location.hostname.endsWith("claude.ai")&&!location.hostname.includes("claudeusercontent");
 const priceHtml=b=>`<div class="price">${b.w?`<span class="off">${Math.round((1-b.p/b.w)*100)}%</span>`:""}<span class="now">${won(b.p)}</span>${b.w?`<span class="was">${won(b.w)}</span>`:""}</div>`;
 
+const GOAL_OF=k=>GOALS.find(g=>g.k===k);
+function list(){
+  if(cat==="찜한 책"){const w=WISH.all();return BOOKS.filter(b=>w.includes(b.id))}
+  if(cat.startsWith("goal-")){const g=GOAL_OF(cat.slice(5));return [...g.ids.map(id=>BOOKS.find(b=>b.id===id)),...BOOKS.filter(b=>g.cats.includes(b.cat)&&!g.ids.includes(b.id))]}
+  return BOOKS.filter(b=>cat==="전체"||b.cat===cat);
+}
 function renderChips(){
+  let goal=null;try{goal=GOAL_OF(localStorage.getItem("hr-goal"))}catch(e){}
+  if(cat.startsWith("goal-"))goal=GOAL_OF(cat.slice(5));
+  const w=WISH.all().length;
   const cats=["전체",...new Set(BOOKS.map(b=>b.cat))];
-  chips.innerHTML=cats.map(c=>`<button class="chip" type="button" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("");
+  chips.innerHTML=(goal?`<button class="chip goalchip" type="button" aria-pressed="${cat==="goal-"+goal.k}" data-c="goal-${goal.k}">내 목표: ${goal.t}</button>`:"")
+    +cats.map(c=>`<button class="chip" type="button" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("")
+    +`<button class="chip" type="button" aria-pressed="${cat==="찜한 책"}" data-c="찜한 책">찜한 책 ${w}</button>`;
 }
 function renderGrid(){
-  grid.innerHTML=BOOKS.filter(b=>cat==="전체"||b.cat===cat).map(b=>`<button class="book" type="button" data-id="${b.id}">${cover(b)}<div class="meta"><b>${b.t}</b>${priceHtml(b)}<span class="sub">EPUB · PDF · ${b.pages}쪽</span></div></button>`).join("");
+  const g=cat.startsWith("goal-")?GOAL_OF(cat.slice(5)):null;
+  pickbar.hidden=!g&&cat!=="찜한 책";
+  if(g)pickbar.innerHTML=`<b>${g.t}: 앞의 3권부터 순서대로 읽어 보세요</b><a href="/#goal">목표 다시 고르기</a>`;
+  else if(cat==="찜한 책")pickbar.innerHTML=`<b>${WISH.all().length?"찜한 책을 한 번에 담아 보세요":"아직 찜한 책이 없어요. 표지의 하트를 눌러 보세요"}</b>${WISH.all().length?'<button class="btn primary" type="button" id="wishAll">모두 장바구니에 담기</button>':""}`;
+  grid.innerHTML=list().map((b,i)=>`<div class="item"><button class="book" type="button" data-id="${b.id}">${cover(b)}<div class="meta">${g&&i<3?`<span class="tag">${i+1}번째로 읽기</span>`:""}<b>${b.t}</b>${priceHtml(b)}<span class="sub">EPUB · PDF · ${b.pages}쪽</span></div></button><button class="wish" type="button" data-w="${b.id}" aria-pressed="${WISH.has(b.id)}" aria-label="${b.t} 찜하기">${HEART}</button></div>`).join("");
+  const wa=document.getElementById("wishAll");if(wa)wa.onclick=()=>{WISH.all().forEach(id=>{if(!cart.includes(id))cart.push(id)});save();openCart()};
 }
 chips.onclick=e=>{const c=e.target.closest(".chip");if(!c)return;cat=c.dataset.c;renderChips();renderGrid()};
-grid.onclick=e=>{const b=e.target.closest(".book");if(b)openDetail(b.dataset.id)};
+grid.onclick=e=>{const w=e.target.closest(".wish");if(w){w.setAttribute("aria-pressed",WISH.toggle(w.dataset.w));renderChips();if(cat==="찜한 책")renderGrid();return}
+  const b=e.target.closest(".book");if(b)openDetail(b.dataset.id)};
 
 function open(html){sheet.innerHTML=`<button class="close" type="button" id="x">닫기 <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>`+html;sheet.hidden=scrim.hidden=false;sheet.scrollTop=0;x.onclick=close;x.focus()}
 function close(){sheet.hidden=scrim.hidden=true}
@@ -157,10 +189,11 @@ scrim.onclick=close;document.addEventListener("keydown",e=>{if(e.key==="Escape")
 function openDetail(id){
   const b=BOOKS.find(x=>x.id===id), inCart=cart.includes(id);
   open(`<div class="detail-top">${cover(b)}<div style="display:grid;gap:8px;min-width:0"><span class="sub">${b.cat}</span><h2>${b.t}</h2>${priceHtml(b)}<div class="facts"><span>EPUB</span><span>PDF</span><span>${b.pages}쪽</span><span>바로 다운로드</span></div></div></div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" type="button" id="buyNow">바로 구매</button><button class="btn" type="button" id="addCart">${inCart?"장바구니에 있음":"장바구니 담기"}</button></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" type="button" id="buyNow">바로 구매</button><button class="btn" type="button" id="addCart">${inCart?"장바구니에 있음":"장바구니 담기"}</button><button class="wish big" type="button" id="wishD" aria-pressed="${WISH.has(id)}">${HEART}<span>찜</span></button></div>
   <div class="toc"><b>이런 내용을 담았어요</b><ol>${b.toc.map(t=>`<li>${t[0]}</li>`).join("")}</ol></div>
   ${ON_SITE?`<a class="btn" href="/book#${b.id}">상세페이지 전체 보기</a>`:""}
   <p class="note">결제 후 이메일로 내려받기 링크가 발송되며, 구매내역에서 언제든 다시 받을 수 있습니다.</p>`);
+  wishD.onclick=()=>{wishD.setAttribute("aria-pressed",WISH.toggle(id));renderChips();renderGrid()};
   addCart.onclick=()=>{if(!cart.includes(id)){cart.push(id);save()}addCart.textContent="장바구니에 있음"};
   buyNow.onclick=()=>{if(!cart.includes(id)){cart.push(id);save()}openCart()};
 }
@@ -187,6 +220,7 @@ function openCart(){
     <p class="note">실제 사이트에서는 결제 확인 후 72시간 동안 유효한 개인 링크가 발급됩니다.</p>`)};
 }
 cartBtn.onclick=openCart;
+{const h=decodeURIComponent(location.hash.slice(1));if(h.startsWith("goal-")&&GOAL_OF(h.slice(5)))cat=h;}
 renderChips();renderGrid();save();
 const m=location.hash.match(/^#buy-(.+)$/);if(m&&BOOKS.some(b=>b.id===m[1])){if(!cart.includes(m[1])){cart.push(m[1]);save()}openCart()}
 </script>
