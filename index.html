@@ -3,278 +3,335 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="하루 저녁에 읽고 다음 날 바로 써먹는 실전 전자책. 결제하면 바로 EPUB·PDF로 받습니다.">
+<meta name="description" content="퇴근 후 하루 저녁, 바로 써먹는 부업·재테크 전자책. 40~90쪽 실전서, 결제하면 EPUB·PDF를 바로 받아요.">
 <meta property="og:title" content="하루한권">
-<meta property="og:description" content="하루 저녁에 읽고 다음 날 바로 써먹는 실전 전자책. 결제하면 바로 EPUB·PDF로 받습니다.">
+<meta property="og:description" content="퇴근 후 하루 저녁, 바로 써먹는 부업·재테크 전자책. 40~90쪽 실전서, 결제하면 EPUB·PDF를 바로 받아요.">
 <meta property="og:url" content="https://haruhangwon.kr/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%23141C2B%27/%3E%3Crect x=%278%27 y=%277%27 width=%2716%27 height=%2718%27 rx=%272%27 fill=%27%23F2B84B%27/%3E%3C/svg%3E">
 <style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>하루한권</title>
+<title>하루한권 · 퇴근 후 하루 저녁, 바로 써먹는 실전 전자책</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Black+Han+Sans&display=swap">
 <style>
-/* Layout: an evening reading desk — light hero with this week's book in a split panel, then calm light sections */
+/* Layout: evening reading desk — sticky header with search, value-prop hero with a fan of real covers, shelves, then proof. Lamp yellow = "담기" only. */
 :root{
-  --bg:#F7F7F4; --card:#FFFFFF; --ink:#18202B; --muted:#5C6672; --line:#E0E2DD;
-  --sel:#F7DDA0; --night:#141C2B; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --accent:#2D4FC4; --goal-sel:#EEF2FD;
+  --bg:#F7F7F4; --card:#FFFFFF; --ink:#18202B; --muted:#5C6672; --line:#E0E2DD; --soft:#EFEFEA;
+  --night:#141C2B; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --accent:#2D4FC4; --ex:#B4432B; --ex-bg:#FBE9E4; --ok:#2F7D4F;
   --f-book:"Gowun Batang","Nanum Myeongjo",serif;
   --f-ui:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0F141C; --card:#171F2A; --ink:#E7EAEF; --muted:#9AA4B0; --line:#283241;
-  --sel:#5A4720; --night:#0A0F18; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --accent:#8AA0F5; --goal-sel:#1C2640; color-scheme:dark}}
+  --bg:#0F141C; --card:#171F2A; --ink:#E7EAEF; --muted:#9AA4B0; --line:#283241; --soft:#1C2531;
+  --night:#0A0F18; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --accent:#8AA0F5; --ex:#F28B73; --ex-bg:#3A1F19; --ok:#6CCB92; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0F141C; --card:#171F2A; --ink:#E7EAEF; --muted:#9AA4B0; --line:#283241;
-  --sel:#5A4720; --night:#0A0F18; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --accent:#8AA0F5; --goal-sel:#1C2640; color-scheme:dark}
+  --bg:#0F141C; --card:#171F2A; --ink:#E7EAEF; --muted:#9AA4B0; --line:#283241; --soft:#1C2531;
+  --night:#0A0F18; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --accent:#8AA0F5; --ex:#F28B73; --ex-bg:#3A1F19; --ok:#6CCB92; color-scheme:dark}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.7;word-break:keep-all;overflow-wrap:anywhere}
-.in{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-a{color:inherit}
-::selection{background:var(--sel);color:var(--ink)}
-input,textarea{caret-color:var(--accent)}
-input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
-html{scrollbar-color:var(--line) var(--bg)}
-a{text-underline-offset:3px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+.in{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:inherit;text-underline-offset:3px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.3}
+h2{font-family:var(--f-book);font-size:clamp(24px,3.2vw,32px)}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.lead{color:var(--muted)}
+section{padding-block:64px}
+.shead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:8px 16px;margin-bottom:24px}
+.shead p{color:var(--muted);margin-top:6px}
 
-.btn{display:inline-block;text-decoration:none;font-weight:700;border-radius:999px;padding:12px 22px;border:1px solid transparent}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:700;border-radius:999px;padding:13px 24px;border:1.5px solid transparent;font-size:16px;line-height:1.2}
+.btn.ink{background:var(--ink);color:var(--bg)}
 .btn.lamp{background:var(--lamp);color:var(--lamp-ink)}
-.btn.ghost{border-color:currentColor}
-.btn:focus-visible,input:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var(--lamp);outline-offset:3px}
-h2{font-family:var(--f-book);font-size:clamp(24px,3.4vw,34px);line-height:1.35;margin:0;text-wrap:balance}
-section{padding-block:72px}
-/* hero */
-.hero{background:var(--night);color:var(--night-ink);position:relative;overflow:hidden;padding-block:0}
-.hero::after{content:"";position:absolute;width:620px;height:620px;right:-140px;top:-220px;background:radial-gradient(circle,rgba(242,184,75,.32),transparent 65%);pointer-events:none}
-.hero nav{display:flex;align-items:center;gap:16px;padding-block:18px;position:relative;z-index:1}
-.logo{font-family:var(--f-book);font-weight:700;font-size:22px}
+.btn.ghost{border-color:var(--line);background:var(--card)}
+.btn.sm{padding:8px 14px;font-size:14px}
+.tlink{font-weight:600;text-decoration:underline}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .in{display:flex;align-items:center;gap:20px;height:64px}
+.logo{font-weight:700;font-size:20px;text-decoration:none;display:flex;align-items:baseline;gap:8px;white-space:nowrap}
 .logo b{color:var(--lamp)}
-.hero nav .links{margin-left:auto;display:flex;gap:18px;font-size:14px}
-.hero nav .links a{text-decoration:none;opacity:.85}
-.hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end;padding-block:56px 0;position:relative;z-index:1}
-.hero h1{font-family:var(--f-book);font-size:clamp(38px,7vw,76px);line-height:1.15;margin:0 0 18px;font-weight:700;letter-spacing:-1px}
-.hero h1 em{font-style:normal;color:var(--lamp)}
-.hero p{max-width:34ch;opacity:.85;margin:0 0 28px;font-size:17px}
-.cta{display:flex;gap:10px;flex-wrap:wrap}
-.offer{list-style:none;margin:18px 0 0;padding:0 0 64px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--night-ink)}
-.offer li{display:inline-flex;align-items:center;gap:6px;opacity:.9}
-.offer svg{color:var(--lamp);flex:none}
-.offer b{color:var(--lamp)}
-.stack{display:grid;gap:6px;justify-items:end;align-self:end}
-.spine{height:46px;border-radius:3px;display:flex;align-items:center;padding:0 16px;font-family:var(--f-book);font-weight:700;font-size:15px;color:#fff;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;animation:slide .9s cubic-bezier(.16,1,.3,1) both}
-.spine small{margin-left:auto;padding-left:16px;font-family:var(--f-ui);font-weight:500;font-size:11px;color:#fff}
-.desk{height:14px;background:#3A2C1C;border-radius:2px 2px 0 0;width:100%}
-/* B: the hero sells one real book — cover on the lamp-lit desk, price and two actions */
-@keyframes slide{from{transform:translateX(24px)}to{transform:none}}
-/* goal picker: one question, five answer cards with fanned covers, then three books */
-.goal{padding-block:64px 56px}
-.goal .lead{color:var(--muted);margin:8px 0 0}
-.goals{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
-.gopt{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:minmax(0,1fr) 108px;align-items:center;gap:12px;min-height:112px;padding:16px 0 16px 20px;background:var(--card);border:1.5px solid var(--line);border-radius:16px;overflow:hidden;transition:border-color .2s,background .2s,transform .25s cubic-bezier(.16,1,.3,1)}
-.gopt:hover{border-color:var(--ink);transform:translateY(-2px)}
-.gopt:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.gopt[aria-pressed="true"]{border-color:var(--accent);background:var(--goal-sel)}
-.gopt b{display:block;font-family:var(--f-book);font-size:19px;line-height:1.35}
-.gopt small{display:block;color:var(--muted);font-size:13px;margin-top:4px}
-.fan{position:relative;height:84px}
-.fan .cover{position:absolute;top:0;width:52px;border-radius:2px 5px 5px 2px;box-shadow:inset 4px 0 0 rgba(0,0,0,.18),0 6px 14px -6px rgba(0,0,0,.5)}
-.fan .cover:nth-child(1){left:0;transform:rotate(-8deg)}
-.fan .cover:nth-child(2){left:26px;z-index:1}
-.fan .cover:nth-child(3){left:52px;transform:rotate(8deg);z-index:2}
-.gopt:hover .fan .cover:nth-child(1){transform:rotate(-12deg) translateX(-4px)}
-.gopt:hover .fan .cover:nth-child(3){transform:rotate(12deg) translateX(4px)}
-.fan .cover{transition:transform .3s cubic-bezier(.16,1,.3,1)}
-.result{margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;display:grid;gap:18px}
-.result .rh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
-.result .rh b{font-family:var(--f-book);font-size:21px}
-.result .rh a{color:var(--accent);font-weight:600;text-decoration:none;font-size:14px}
-.rbooks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-.rbook{display:grid;grid-template-columns:72px minmax(0,1fr);gap:14px;text-decoration:none;align-items:start}
-.rbook .cover{border-radius:2px 5px 5px 2px}
-.rbook b{font-size:15px;line-height:1.4;display:block}
-.rbook p{margin:4px 0 6px;color:var(--muted);font-size:13px;line-height:1.5}
-.rbook span{font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
-.rbook .first{display:inline-block;font-size:11px;font-weight:700;color:var(--lamp-ink);background:var(--lamp);border-radius:999px;padding:1px 8px;margin-bottom:6px}
-@media (max-width:820px){.rbooks{grid-template-columns:minmax(0,1fr)}.goal{padding-block:48px}}
-/* promises */
-.promises{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0;max-width:68ch}
-.promises li{padding-block:18px;border-top:1px solid var(--line);color:var(--muted);font-size:17px}
-.promises li:last-child{border-bottom:1px solid var(--line)}
-.promises b{color:var(--ink);font-family:var(--f-book);font-size:20px;display:block;margin-bottom:2px}
-/* picks */
-.alt{background:var(--card);border-block:1px solid var(--line)}
-.head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
-.head a{font-weight:600;color:var(--accent);text-decoration:none;display:inline-flex;gap:6px;align-items:center}
-.picks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;margin-top:28px}
-.pick{display:grid;gap:10px;text-decoration:none;min-width:0}
-.cover{aspect-ratio:5/8;max-width:100%;border-radius:3px 7px 7px 3px;overflow:hidden;box-shadow:inset 6px 0 0 rgba(0,0,0,.18),0 12px 24px -14px rgba(0,0,0,.5);transition:transform .25s cubic-bezier(.16,1,.3,1)}
-.cover svg{display:block;width:100%;height:100%}
-.pick:hover .cover{transform:translateY(-4px)}
-.pick b{font-size:15px;line-height:1.4}
-.pick span{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
-.pick span strong{color:var(--ink)}
-/* steps */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:32px;border-top:2px solid var(--ink)}
-.step{padding:20px 20px 0 0;display:grid;gap:6px;align-content:start}
+.logo small{font-size:12px;font-weight:500;color:var(--muted)}
+.search{flex:1;max-width:440px;position:relative}
+.search input{width:100%;height:42px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:0 16px 0 42px;font:inherit;font-size:15px}
+.search svg{position:absolute;left:15px;top:13px;color:var(--muted)}
+.nav{margin-left:auto;display:flex;align-items:center;gap:18px;font-size:15px}
+.nav a{text-decoration:none}
+.cartb{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;font-weight:600;font-size:14px}
+.cartb .c{min-width:22px;height:22px;border-radius:11px;background:var(--ink);color:var(--bg);font-size:12px;display:inline-grid;place-items:center;padding:0 6px;font-variant-numeric:tabular-nums}
+.sbtn{display:none;border:1px solid var(--line);background:var(--card);border-radius:999px;width:40px;height:40px;place-items:center}
+@media (max-width:760px){
+  .logo small{display:none}
+  .nav .all{display:none}
+  header.top .search{display:none;position:absolute;left:16px;right:16px;top:70px;max-width:none}
+  header.top.open .search{display:block}
+  header.top.open{padding-bottom:56px}
+  .sbtn{display:inline-grid}
+  .cartb span.t{display:none}
+}
+
+/* hero */
+.hero{padding-block:56px 28px}
+.hero .in{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center}
+.eyebrow{font-weight:600;font-size:14px;color:var(--accent)}
+.hero h1{font-family:var(--f-book);font-weight:700;font-size:clamp(32px,4.6vw,52px);letter-spacing:-.5px;margin:12px 0 16px}
+.hero h1 em{font-style:normal;box-shadow:inset 0 -.32em var(--lamp)}
+.hero .sub{font-size:clamp(16px,1.6vw,18px);color:var(--muted);max-width:34em}
+.hero .acts{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:28px}
+.facts{list-style:none;padding:0;margin:28px 0 0;display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted)}
+.facts li{display:flex;gap:6px;align-items:center}
+.facts svg{color:var(--ok);flex:none}
+.fan{position:relative;height:420px}
+.fan a{position:absolute;top:50%;left:50%;width:200px;aspect-ratio:1600/2400;border-radius:6px;overflow:hidden;box-shadow:0 18px 40px -16px rgba(0,0,0,.35);transition:transform .25s}
+.fan a svg{display:block;width:100%;height:100%}
+.fan a:hover,.fan a:focus-visible{z-index:9}
+@media (prefers-reduced-motion:reduce){.fan a{transition:none}}
+@media (max-width:860px){.hero .in{grid-template-columns:1fr}.fan{height:300px}.fan a{width:150px}}
+
+/* shelves */
+.shelves{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.shelf{display:grid;gap:10px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;align-content:start}
+.shelf b{font-size:16px}
+.shelf .cnt{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.mini{display:flex;height:72px}
+.mini span{width:48px;aspect-ratio:1600/2400;border-radius:3px;overflow:hidden;box-shadow:0 4px 10px -4px rgba(0,0,0,.3);margin-right:-14px;flex:none}
+.mini span svg{display:block;width:100%;height:100%}
+.shelf:hover{border-color:var(--ink)}
+@media (max-width:960px){.shelves{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){.shelves{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* goals */
+.goals{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:10px}
+.goals button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:10px 18px;font-weight:600;font-size:15px}
+.goals button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.gres{margin-top:20px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gres a{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;text-decoration:none}
+.gres .cv{width:64px;aspect-ratio:1600/2400;border-radius:3px;overflow:hidden}
+.gres .cv svg{display:block;width:100%;height:100%}
+.gres small{color:var(--muted);display:block}
+.gres .st{font-size:12px;font-weight:700;color:var(--accent)}
+@media (max-width:760px){.gres{grid-template-columns:1fr}}
+
+/* feature */
+.feature{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.feature .l{display:grid;place-items:center;padding:36px;background:var(--cbg,#FFF4E0)}
+.feature .l .cv{width:min(240px,60vw);aspect-ratio:1600/2400;border-radius:6px;overflow:hidden;box-shadow:0 24px 50px -20px rgba(0,0,0,.4)}
+.feature .l .cv svg{display:block;width:100%;height:100%}
+.feature .r{padding:36px;display:grid;gap:14px;align-content:center}
+.feature .meta{font-size:14px;color:var(--muted);font-weight:600}
+.feature h3{font-family:var(--f-book);font-size:clamp(24px,2.6vw,30px)}
+.feature ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.feature li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px}
+.feature li svg{margin-top:5px;color:var(--ok)}
+.feature .row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;margin-top:6px}
+.price{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.by{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding-top:14px;margin-top:4px;font-size:14px;color:var(--muted)}
+.by .av{width:44px;height:44px;flex:none}
+.by b{color:var(--ink)}
+@media (max-width:760px){.feature{grid-template-columns:1fr}.feature .r{padding:24px}}
+
+/* all books */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.chips button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600}
+.chips button small{color:var(--muted);font-weight:500;margin-left:4px;font-variant-numeric:tabular-nums}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chips button[aria-pressed="true"] small{color:inherit;opacity:.7}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:24px 16px}
+.card{display:grid;gap:8px;align-content:start}
+.card .cv{display:block;aspect-ratio:1600/2400;border-radius:5px;overflow:hidden;box-shadow:0 10px 24px -14px rgba(0,0,0,.4)}
+.card .cv svg{display:block;width:100%;height:100%}
+.card b{font-size:15px;line-height:1.45}
+.card .pp{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.card .pp strong{color:var(--ink)}
+.card .add{justify-self:start;border:1.5px solid var(--lamp);background:transparent;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700}
+.card .add[aria-pressed="true"]{background:var(--lamp);color:var(--lamp-ink)}
+.empty{color:var(--muted);padding:24px 0}
+.more{margin-top:24px;text-align:center}
+
+/* proof */
+.proof{background:var(--card);border-block:1px solid var(--line)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:28px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:grid;gap:4px;background:var(--bg)}
+.stat .v{font-size:clamp(26px,3vw,34px);font-weight:700;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.stat .k{color:var(--muted);font-size:14px}
+.basis{font-size:13px;color:var(--muted);margin:-16px 0 28px}
+.reviews{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.rv{border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:12px;background:var(--bg);align-content:start}
+.rv .who{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center}
+.rv .who small{display:block;color:var(--muted);font-size:13px}
+.rv .stars{color:var(--lamp);letter-spacing:2px;font-size:15px}
+.rv .bk{font-size:13px;color:var(--muted)}
+.rv q{quotes:none}
+.author{margin-top:28px;display:grid;grid-template-columns:96px minmax(0,1fr);gap:20px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:20px;background:var(--bg)}
+.author .av{width:96px;height:96px}
+.author p{color:var(--muted);font-size:15px;margin-top:4px}
+.policy{margin-top:12px;font-size:13px;color:var(--muted)}
+@media (max-width:860px){.reviews,.stats{grid-template-columns:1fr}}
+@media (max-width:480px){.author{grid-template-columns:1fr}}
+
+/* steps + faq */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.step{border-top:2px solid var(--ink);padding-top:14px}
 .step .n{font-size:13px;font-weight:700;color:var(--accent)}
-.step b{font-size:18px}
-.step p{margin:0;color:var(--muted)}
-.devices{margin-top:28px;display:flex;flex-wrap:wrap;gap:8px}
-.devices span{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 12px;font-size:13px}
-/* faq */
-.faq{display:grid;grid-template-columns:1fr 1.6fr;gap:40px}
-details{border-bottom:1px solid var(--line);padding-block:16px}
-summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.step p{color:var(--muted);font-size:15px}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+.faq{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:32px}
+details{border-bottom:1px solid var(--line);padding:14px 0}
+summary{font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px}
 summary::-webkit-details-marker{display:none}
-summary svg{flex:none;color:var(--muted);transition:transform .3s cubic-bezier(.16,1,.3,1)}
-details[open] summary svg{transform:rotate(180deg)}
-details p{margin:8px 0 0;color:var(--muted)}
+summary::after{content:"+";color:var(--muted);font-weight:400}
+details[open] summary::after{content:"−"}
+details p{color:var(--muted);margin-top:8px;font-size:15px}
+@media (max-width:760px){.faq{grid-template-columns:1fr}}
+
 /* letter */
 .letter{background:var(--night);color:var(--night-ink)}
-.letter .in{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
-.letter p{opacity:.8;margin:8px 0 0}
-form{display:flex;gap:8px;flex-wrap:wrap}
-input[type=email]{flex:1;min-width:0;font:inherit;padding:12px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:var(--night-ink)}
-form button{font:inherit;font-weight:700;border:0;border-radius:999px;padding:12px 22px;background:var(--lamp);color:var(--lamp-ink);cursor:pointer}
-.ok{font-size:14px;color:var(--lamp);margin-top:8px}
-footer{font-size:12px;color:var(--muted)}
-footer .in{padding-block:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-footer b{color:var(--ink)}
-@media (max-width:820px){
-  .hero-grid,.faq,.letter .in{grid-template-columns:1fr}
-  .stack{justify-items:stretch}
-  .hero-grid{padding-top:32px;gap:28px}
-  .offer{padding-bottom:0}
-  .picks{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .steps{grid-template-columns:1fr}
-  .hero nav .links{display:none}
-  section{padding-block:56px}
-}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.letter .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center}
+.letter p{opacity:.8;margin-top:6px}
+.letter form{display:flex;gap:8px;flex-wrap:wrap}
+.letter input{flex:1;min-width:0;height:48px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:transparent;color:var(--night-ink);padding:0 18px;font:inherit}
+.letter button{height:48px;border-radius:999px;border:1.5px solid var(--night-ink);background:transparent;color:var(--night-ink);font-weight:700;padding:0 20px}
+.letter .ok{font-size:14px;margin-top:8px;opacity:.85}
+@media (max-width:760px){.letter .in{grid-template-columns:1fr}}
+
+footer{padding-block:40px 120px;font-size:13px;color:var(--muted)}
+footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+
+/* cart sheet + modal + bottom bar */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:70}
+.sheet{position:fixed;top:0;right:0;bottom:0;width:min(400px,100%);background:var(--card);z-index:80;display:flex;flex-direction:column;padding:calc(20px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) 20px;box-shadow:-20px 0 40px -20px rgba(0,0,0,.3)}
+.sheet h3{font-size:18px;display:flex;justify-content:space-between;align-items:center}
+.x{border:0;background:transparent;font-size:24px;line-height:1;padding:4px 8px}
+.sheet ul{list-style:none;padding:0;margin:16px 0;flex:1;overflow:auto;display:grid;gap:12px;align-content:start}
+.sheet li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;font-size:14px}
+.sheet li .cv{width:44px;aspect-ratio:1600/2400;border-radius:3px;overflow:hidden}
+.sheet li .cv svg{display:block;width:100%;height:100%}
+.sheet li button{border:0;background:transparent;color:var(--muted);font-size:13px;text-decoration:underline}
+.sheet .tot{display:flex;justify-content:space-between;font-weight:700;font-size:18px;border-top:1px solid var(--line);padding-top:14px;font-variant-numeric:tabular-nums}
+.sheet .note{font-size:13px;color:var(--muted);margin-top:8px}
+.sheet .btn{margin-top:14px;width:100%}
+.modal{position:fixed;inset:0;display:grid;place-items:center;z-index:80;padding:16px}
+.modal .box{background:var(--card);border-radius:16px;max-width:620px;width:100%;max-height:86vh;overflow:auto;padding:28px;display:grid;gap:14px}
+.modal .box .lbl{font-size:13px;font-weight:700;color:var(--accent)}
+.modal .box h3{font-family:var(--f-book);font-size:24px;display:flex;justify-content:space-between;gap:12px}
+.modal .box .txt{font-family:var(--f-book);font-size:17px;line-height:1.9}
+.modal .box ol{margin:0;padding-left:20px;color:var(--muted);font-size:14px}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);border-top:1px solid var(--line);padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bar span{font-size:14px;font-variant-numeric:tabular-nums}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);border-radius:999px;padding:10px 18px;font-size:14px;z-index:90}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.demo{background:var(--soft);font-size:13px;color:var(--muted);text-align:center;padding:6px 16px}
 </style>
-<style>/* Light hero: "이번 주의 책" split panel (Mobbin ref: Stripe) */
-/* Light hero base for the drafts: off-white paper, ink text, lamp kept for the buy action */
-:root{--hero-bg:#F2F0EB;--hero-bg2:#E9E6DF;--glass:rgba(255,255,255,.72)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--hero-bg:#141922;--hero-bg2:#1B2230;--glass:rgba(23,31,42,.72)}}
-:root[data-theme="dark"]{--hero-bg:#141922;--hero-bg2:#1B2230;--glass:rgba(23,31,42,.72)}
-.hero.light{background:var(--hero-bg);color:var(--ink);overflow:hidden}
-.hero.light::after{display:none}
-.hero.light nav .links a{opacity:.75}
-.hero.light .btn.ghost{border-color:var(--ink);color:var(--ink)}
-.hk{position:relative;outline:none;touch-action:pan-y;-webkit-tap-highlight-color:transparent}
-.hk:focus-visible{outline:3px solid var(--accent);outline-offset:6px;border-radius:16px}
-.hk-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.hk [data-pos]{transition:none}
-.hk.hk-ready [data-pos]{transition:transform .9s cubic-bezier(.65,0,.25,1),opacity .6s ease,visibility 0s linear .6s,clip-path .6s cubic-bezier(.65,0,.35,1)}
-.hk.hk-ready [data-pos="0"]{transition:transform .9s cubic-bezier(.65,0,.25,1),opacity .6s ease .15s,visibility 0s,clip-path .6s cubic-bezier(.65,0,.35,1) .3s}
-.hk .cv{aspect-ratio:5/8;border-radius:3px 8px 8px 3px;overflow:hidden;box-shadow:inset 6px 0 0 rgba(0,0,0,.16),0 26px 38px -20px rgba(30,24,10,.55)}
-.hk .cv svg{display:block;width:100%;height:100%}
-.hk-btn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-grid;place-items:center}
-.hk-btn:focus-visible,.hk a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
-.hk-t1{font-family:var(--f-book);font-weight:400;letter-spacing:-.5px}
-.hk-t2{font-family:"Black Han Sans",var(--f-ui);letter-spacing:-.5px}
-.hk s{opacity:.5;font-weight:400;font-size:.6em;margin-left:4px}
-.hk-thumbs{display:flex;align-items:center;gap:8px}
-.hk-thumbs .row{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:4px}
-.hk-thumbs .row::-webkit-scrollbar{display:none}
-.hk-th{all:unset;box-sizing:border-box;cursor:pointer;flex:none;width:96px;border-radius:14px;padding:10px 8px;display:grid;justify-items:center;gap:6px;text-align:center;font-size:11.5px;line-height:1.3;color:var(--muted);transition:background .4s,box-shadow .4s}
-.hk-th .cv{width:44px;box-shadow:inset 3px 0 0 rgba(0,0,0,.16),0 6px 10px -6px rgba(0,0,0,.4)}
-.hk-th[aria-current="true"]{background:var(--card);color:var(--ink);box-shadow:0 12px 24px -16px rgba(0,0,0,.35)}
-.hk-th:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.hk-dots{display:flex;gap:6px;align-items:center}
-.hk-dot{all:unset;cursor:pointer;width:22px;height:22px;display:grid;place-items:center}
-.hk-dot i{width:6px;height:6px;border-radius:6px;background:currentColor;opacity:.3;transition:width .4s,opacity .3s}
-.hk-dot[aria-current="true"] i{width:22px;opacity:1}
-.hk-dot:focus-visible{outline:2px solid var(--accent);border-radius:6px}
-@media (prefers-reduced-motion:reduce){.hk.hk-ready [data-pos]{transition:opacity .01s,visibility 0s!important}}
-</style>
-<style>
-.v4{padding:16px 0 8px}
-.v4 h1{font-family:var(--f-book);font-size:clamp(26px,3.2vw,38px);margin:0}
-.v4 .lead{color:var(--muted);margin:2px 0 22px;font-size:17px}
-.v4-panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-radius:20px;overflow:hidden;background:var(--card);box-shadow:0 30px 60px -40px rgba(30,24,10,.45)}
-.v4-left{position:relative;background:var(--cbg);transition:background .7s;min-height:420px;display:grid;place-items:center}
-.v4-left a{position:absolute;top:50%;left:50%;height:78%;transform:translate(-50%,-50%)}
-.v4-left [data-pos="1"],.v4-left [data-pos="2"]{transform:translate(-50%,-30%);opacity:0;visibility:hidden}
-.v4-left [data-pos="-1"],.v4-left [data-pos="-2"]{transform:translate(-50%,-70%);opacity:0;visibility:hidden}
-.v4-right{display:grid;padding:36px 40px}
-.v4-in{grid-area:1/1;align-self:center}
-.v4-in:not([data-pos="0"]){opacity:0;visibility:hidden;transform:translateX(16px)}
-.v4-in .cat{font-size:13px;font-weight:700;color:var(--muted)}
-.v4-in h3{font-family:var(--f-book);font-size:clamp(24px,2.6vw,32px);line-height:1.3;margin:6px 0 2px}
-.v4-in .sub{color:var(--muted);margin:0 0 16px}
-.v4-in ul{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:8px;font-size:14.5px}
-.v4-in li{display:flex;gap:8px}.v4-in li::before{content:"✓";color:var(--ok,#22784A);font-weight:700}
-.v4-in .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.v4-in .pr{font-weight:700;font-size:24px;font-variant-numeric:tabular-nums}
-.v4-in .row a{text-decoration:none;font-weight:700;border-radius:999px;padding:10px 18px}
-.v4-in .buy{background:var(--lamp);color:var(--lamp-ink)}.v4-in .pv{border:1px solid var(--line)}
-.v4 .hk-thumbs{margin-top:14px;justify-content:center;color:var(--ink)}
-.hero.light .offer{justify-content:center;padding:6px 0 28px;color:var(--muted)}
-@media (max-width:820px){.v4-panel{grid-template-columns:minmax(0,1fr)}.v4-left{min-height:300px}.v4-right{padding:22px 20px}}</style>
+
 </head>
 <body>
-<header class="hero light ">
+<header class="top" id="top">
   <div class="in">
-    <nav><div class="logo">하루<b>한권</b></div><div class="links"><a href="#picks">이번 주 추천</a><a href="#how">구매 방법</a><a href="#faq">자주 묻는 질문</a></div></nav>
-    <div class="hk" id="hk" role="region" aria-roledescription="carousel" aria-label="이번 주 추천 책" tabindex="0"></div>
-    <ul class="offer" id="offer"></ul>
+    <a class="logo" href="/">하루<b>한권</b><small>실전 전자책</small></a>
+    <div class="search" role="search">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg>
+      <label for="q" class="sr">책 검색</label>
+      <input id="q" type="search" placeholder="제목이나 주제로 찾기 (예: 블로그, 세금, ETF)" autocomplete="off">
+    </div>
+    <nav class="nav">
+      <a class="all" href="#all">전체 책</a>
+      <button class="sbtn" id="sbtn" type="button" aria-label="검색 열기" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg></button>
+      <button class="cartb" id="cartb" type="button"><span class="t">장바구니</span><span class="c" id="cc">0</span></button>
+    </nav>
   </div>
 </header>
 
-<main>
-  <section class="goal in" id="goal" aria-labelledby="goal-h">
-    <h2 id="goal-h">요즘 가장 바꾸고 싶은 건 뭔가요?</h2>
-    <p class="lead">하나만 고르면 먼저 읽을 책 3권을 골라 드려요.</p>
-    <ul class="goals" id="goals"></ul>
-    <div class="result" id="result" hidden aria-live="polite"></div>
-  </section>
-  <section class="in">
-    <h2>두껍지 않게, 뜬구름 없이, 기다림 없이</h2>
-    <ul class="promises">
-      <li><b>저녁 한 번이면 끝까지 읽습니다.</b> 모든 책을 40~90쪽 안팎으로 만들어요. 두꺼운 책을 사 놓고 못 읽는 일이 없게요.</li>
-      <li><b>장마다 따라 할 일이 있습니다.</b> 읽고 끝나지 않게, 장이 끝날 때마다 바로 해볼 체크리스트를 넣었어요.</li>
-      <li><b>결제하면 바로 받습니다.</b> 배송을 기다리지 않아요. 결제 화면에서 EPUB·PDF를 곧바로 내려받습니다.</li>
-    </ul>
-  </section>
-
-  <section class="alt" id="picks">
+<main id="home">
+  <div class="hero">
     <div class="in">
-      <div class="head"><div><h2>지금 가장 많이 읽는 책</h2></div><a href="/store">전체 보기 <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
-      <div class="picks" id="picks-list"></div>
+      <div>
+        <div class="eyebrow">부업 · 재테크 · 커리어 실전 전자책 <span id="nbooks">41</span>권</div>
+        <h1>퇴근 후 하루 저녁, <em>바로 써먹는</em> <span style="white-space:nowrap">부업·재테크</span> 전자책</h1>
+        <p class="sub">40~90쪽짜리 실전서예요. 결제하면 EPUB·PDF를 바로 받고, 장마다 내일 해볼 체크리스트가 들어 있어요.</p>
+        <div class="acts">
+          <a class="btn ink" href="#all">41권 둘러보기</a>
+          <button class="tlink" type="button" data-preview="buy-agent" style="border:0;background:none;padding:0">첫 장 무료로 읽어보기</button>
+        </div>
+        <ul class="facts">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>권당 <b id="minp">9,900원</b>부터</li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>모든 책 첫 장 무료</li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>회원가입 없이 바로 다운로드</li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>내려받기 전 7일 전액 환불</li>
+        </ul>
+      </div>
+      <div class="fan" id="fan" aria-label="대표 책 5권"></div>
+    </div>
+  </div>
+
+  <section style="padding-top:28px">
+    <div class="in">
+      <div class="shead"><div><h2>분야별로 둘러보기</h2><p>눌러서 그 분야 책만 모아 보세요.</p></div></div>
+      <div class="shelves" id="shelves"></div>
     </div>
   </section>
 
-  <section class="in" id="how">
-    <h2>고르고, 결제하고, 바로 읽기</h2>
-    <div class="steps">
-      <div class="step"><div class="n">1단계</div><b>책 고르기</b><p>목차를 미리 보고 마음에 드는 책을 장바구니에 담아요.</p></div>
-      <div class="step"><div class="n">2단계</div><b>간편 결제</b><p>카드, 카카오페이, 네이버페이, 토스페이로 결제해요. 회원가입은 필요 없어요.</p></div>
-      <div class="step"><div class="n">3단계</div><b>바로 내려받기</b><p>결제 화면과 이메일에서 바로 파일을 받아요. 구매내역에서 다시 받을 수 있어요.</p></div>
+  <section style="padding-top:0">
+    <div class="in">
+      <div class="shead"><div><h2>뭘 읽을지 모르겠다면</h2><p>바꾸고 싶은 걸 하나 고르면, 읽는 순서대로 3권을 골라 드려요.</p></div></div>
+      <ul class="goals" id="goals"></ul>
+      <div class="gres" id="gres" aria-live="polite"></div>
     </div>
-    <div class="devices"><span>아이폰 · 아이패드 (도서 앱)</span><span>갤럭시 (구글 플레이 북)</span><span>크레마 · 리디페이퍼 · 킨들</span><span>PC (PDF)</span></div>
   </section>
 
-  <section class="alt" id="faq">
+  <section style="padding-top:0">
+    <div class="in">
+      <div class="shead"><div><h2>이번 주 편집부 추천</h2></div></div>
+      <div class="feature" id="feature"></div>
+    </div>
+  </section>
+
+  <section id="all" style="padding-top:0">
+    <div class="in">
+      <div class="shead"><div><h2>전체 책</h2><p id="allsum"></p></div></div>
+      <div class="chips" id="chips" role="group" aria-label="분야"></div>
+      <div class="grid" id="grid"></div>
+      <div class="more" id="more"></div>
+    </div>
+  </section>
+
+  <section class="proof" id="proof">
+    <div class="in">
+      <div class="shead"><div><h2>사기 전에 직접 확인하세요</h2><p>광고 문구 대신, 사기 전에 직접 확인할 수 있는 것만 적었어요.</p></div></div>
+      <div class="stats">
+        <div class="stat"><span class="v" id="st-free"></span><span class="k">모든 책의 첫 장을 무료로 읽어 보고 골라요</span></div>
+        <div class="stat"><span class="v" id="st-ch"></span><span class="k">장마다 내일 해볼 일을 체크리스트로 넣었어요</span></div>
+        <div class="stat"><span class="v">7일 전액 환불</span><span class="k">내려받기 전이면 이유를 묻지 않고 돌려 드려요</span></div>
+      </div>
+      <p class="policy">독자 후기는 첫 판매 뒤, 구매가 확인된 것만 이 자리에 실어요.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="in">
+      <div class="shead"><div><h2>고르고, 결제하고, 바로 읽기</h2></div></div>
+      <div class="steps">
+        <div class="step"><div class="n">1단계</div><b>첫 장 읽고 고르기</b><p>모든 책의 첫 장과 목차를 무료로 보고 장바구니에 담아요.</p></div>
+        <div class="step"><div class="n">2단계</div><b>간편 결제</b><p>카드, 카카오페이, 네이버페이, 토스페이. 회원가입은 필요 없어요.</p></div>
+        <div class="step"><div class="n">3단계</div><b>바로 내려받기</b><p>결제 화면과 이메일에서 EPUB·PDF를 받아요. 링크로 언제든 다시 받아요.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
     <div class="in faq">
       <div><h2>사기 전에 궁금한 것</h2></div>
       <div>
-        <details open><summary>어떤 파일로 받나요?<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary><p>EPUB과 PDF 두 가지를 함께 드립니다. 휴대폰이나 리더기는 EPUB, 컴퓨터나 인쇄는 PDF가 편해요.</p></details>
-        <details><summary>회원가입을 해야 하나요?<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary><p>아니요. 이름과 이메일만 적으면 결제하고 바로 받을 수 있습니다.</p></details>
-        <details><summary>환불되나요?<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary><p>내려받기 전이라면 7일 안에 전액 환불됩니다. 내려받은 뒤에는 전자상거래법에 따라 환불이 제한되지만, 파일에 문제가 있으면 교환 또는 환불해 드려요.</p></details>
-        <details><summary>파일을 잃어버렸어요.<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary><p>구매할 때 적은 이메일로 받은 링크에서 언제든 다시 받을 수 있습니다.</p></details>
-        <details><summary>현금영수증이 되나요?<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary><p>네. 결제 화면에서 휴대폰 번호나 사업자번호를 넣으면 자동으로 발행됩니다.</p></details>
+        <details open><summary>어떤 파일로 받나요?</summary><p>EPUB과 PDF 두 가지를 함께 드려요. 휴대폰·리더기는 EPUB, 컴퓨터·인쇄는 PDF가 편해요.</p></details>
+        <details><summary>어떤 기기에서 읽을 수 있나요?</summary><p>아이폰·아이패드(도서 앱), 갤럭시(구글 플레이 북), 크레마·리디페이퍼·킨들, PC에서 읽을 수 있어요.</p></details>
+        <details><summary>환불되나요?</summary><p>내려받기 전이라면 7일 안에 전액 환불돼요. 내려받은 뒤에는 전자상거래법에 따라 환불이 제한되지만, 파일에 문제가 있으면 교환이나 환불해 드려요.</p></details>
+        <details><summary>파일을 잃어버렸어요.</summary><p>구매할 때 적은 이메일의 링크에서 언제든 다시 받을 수 있어요.</p></details>
       </div>
     </div>
   </section>
 
-  <section class="letter">
-    <div class="in">
-      <div><h2>새 책이 나오면 먼저 알려드릴게요</h2><p>한 달에 두 번, 새 책 소식과 구독자 전용 30% 할인 쿠폰을 보내드립니다.</p></div>
-      <div>
-        <form id="lf"><label for="lem" style="position:absolute;left:-9999px">이메일</label><input id="lem" type="email" placeholder="이메일 주소" required><button type="submit">받아보기</button></form>
-        <div class="ok" id="lok" hidden>신청됐어요. (시안이라 실제로 저장되지는 않습니다)</div>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer><div class="in">
@@ -282,79 +339,105 @@ footer b{color:var(--ink)}
   <div>이용약관 · 개인정보처리방침 · 환불정책<br>© 2026 하루한권</div>
 </div></footer>
 
+<div class="scrim" id="scrim" hidden></div>
+<aside class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheet-h"></aside>
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="pv-h"><div class="box" id="pvbox"></div></div>
+<div class="bar" id="bar" hidden><span id="bartxt"></span><button class="btn lamp sm" id="barbtn" type="button">장바구니 보기</button></div>
+<div class="toast" id="toast" hidden role="status"></div>
+
 <script src="/books.js"></script>
 <script>
-/* Shared engine for the 5 light hero drafts. Every slide part carries data-i; the engine sets
-   data-pos (-2..2, 0 = current) on each so CSS can animate the slides. */
-const HERO_IDS=["buy-agent","partners","job-pass","shorts","side-tax"];
-const HK={
-  books:()=>HERO_IDS.map(id=>BOOKS.find(b=>b.id===id)).filter(Boolean),
-  t1:b=>b.cover.lines.length>1?b.cover.lines.slice(0,-1).join(" "):b.cover.hook,
-  t2:b=>b.cover.lines[b.cover.lines.length-1],
-  price:b=>`${won(b.price)}${b.was?` <s>${won(b.was)}</s>`:""}`,
-  ARL:'<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 2L4 8l7 6z" fill="currentColor"/></svg>',
-  ARR:'<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l7 6-7 6z" fill="currentColor"/></svg>',
-  PLAY:'<svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5v17l14-8.5z" fill="currentColor"/></svg>',
-  GET:'<svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19 3 9h18zM3 3h18v2.5H3z" fill="currentColor"/></svg>',
-  HEART:'<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>'
-};
-function heroKit(root,render,opts={}){
-  const bs=HK.books(),n=bs.length;let cur=0,timer=0,paused=false;
-  root.innerHTML=render(bs);
-  const live=document.createElement("p");live.className="hk-sr";live.setAttribute("aria-live","polite");root.appendChild(live);
-  const reduce=matchMedia("(prefers-reduced-motion: reduce)");
-  function paint(first){
-    root.querySelectorAll("[data-i]").forEach(el=>{
-      let d=((+el.dataset.i-cur)%n+n)%n;if(d>n/2)d-=n;
-      el.dataset.pos=Math.max(-2,Math.min(2,d));
-      const on=d===0;if(!el.hasAttribute("data-keep"))el.setAttribute("aria-hidden",!on);
-      el.querySelectorAll("a,button").forEach(a=>{if(!a.closest("[data-keep]"))a.tabIndex=on?0:-1});
-    });
-    root.querySelectorAll("[data-go]").forEach(g=>g.setAttribute("aria-current",+g.dataset.go===cur));
-    const b=bs[cur];root.style.setProperty("--ac",b.cover.ac);root.style.setProperty("--cbg",b.cover.bg);root.style.setProperty("--cink",b.cover.ink);
-    root.style.setProperty("--k",cur);
-    if(!first)live.textContent=`${cur+1}/${n} ${b.title}, ${won(b.price)}`;
-    opts.onChange&&opts.onChange(cur,b);
-  }
-  function go(i){cur=((i%n)+n)%n;paint();tick()}
-  function tick(){clearTimeout(timer);if(!reduce.matches&&!paused&&!document.hidden)timer=setTimeout(()=>go(cur+1),5600)}
-  root.addEventListener("click",e=>{const s=e.target.closest("[data-step]"),g=e.target.closest("[data-go]"),t=e.target.closest("[data-tab]");
-    if(s)go(cur+ +s.dataset.step);else if(g)go(+g.dataset.go);else if(t){root.querySelectorAll("[data-tab]").forEach(x=>x.setAttribute("aria-selected",x===t));root.dataset.tab=t.dataset.tab}});
-  root.addEventListener("keydown",e=>{if(e.target.matches("input,textarea"))return;if(e.key==="ArrowRight"){go(cur+1);e.preventDefault()}if(e.key==="ArrowLeft"){go(cur-1);e.preventDefault()}});
-  let sx=null;root.addEventListener("pointerdown",e=>sx=e.clientX);root.addEventListener("pointerup",e=>{if(sx!=null&&Math.abs(e.clientX-sx)>40)go(cur+(e.clientX<sx?1:-1));sx=null});
-  const hold=v=>()=>{paused=v;tick()};root.addEventListener("mouseenter",hold(true));root.addEventListener("mouseleave",hold(false));
-  root.addEventListener("focusin",hold(true));root.addEventListener("focusout",e=>{if(!root.contains(e.relatedTarget))hold(false)()});
-  document.addEventListener("visibilitychange",tick);
-  paint(true);requestAnimationFrame(()=>root.classList.add("hk-ready"));tick();
-}
+const $=s=>document.querySelector(s);
+const by=id=>BOOKS.find(b=>b.id===id);
+const CHECK='<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>';
 
+/* 분야 진열대: 1권짜리 분야는 합쳐서 5칸 */
+const SOCIAL=["naver-blog","adsense","threads"];
+const SHELVES=[
+  {k:"side",t:"부업",f:b=>b.cat==="부업"&&!SOCIAL.includes(b.id)},
+  {k:"sns",t:"SNS·블로그 수익화",f:b=>b.cat==="SNS 수익화"||SOCIAL.includes(b.id)},
+  {k:"money",t:"재테크·부동산",f:b=>b.cat==="재테크"||b.cat==="부동산"},
+  {k:"sell",t:"내 상품 팔기·창업",f:b=>["창업","온라인 판매","지식창업"].includes(b.cat)},
+  {k:"career",t:"취업·커리어·자기관리",f:b=>["취업","커리어","건강"].includes(b.cat)}
+];
+$("#nbooks").textContent=BOOKS.length;
+$("#st-free").textContent=`${BOOKS.length}권 첫 장 무료`;
+$("#st-ch").textContent=`체크리스트 ${BOOKS.reduce((n,b)=>n+(b.checks||0),0).toLocaleString("ko-KR")}개`;
+$("#minp").textContent=won(Math.min(...BOOKS.map(b=>b.price)));
+document.querySelector('.hero .btn.ink').textContent=`${BOOKS.length}권 둘러보기`;
+
+/* hero fan: 진짜 표지 5권, 움직이지 않음 */
+const FAN=["buy-agent","naver-blog","us-etf","job-pass","shorts"];
+const POS=[[-150,-10,-12],[-75,-25,-6],[0,-35,0],[75,-25,6],[150,-10,12]];
+$("#fan").innerHTML=FAN.map(by).filter(Boolean).map((b,i)=>{const[x,y,r]=POS[i];return `<a href="/book#${b.id}" aria-label="${b.title} 자세히" style="transform:translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) rotate(${r}deg);z-index:${i===2?5:5-Math.abs(i-2)}">${coverSVG(b)}</a>`}).join("");
+
+/* shelves */
+$("#shelves").innerHTML=SHELVES.map(s=>{const bs=BOOKS.filter(s.f);return `<button class="shelf" type="button" data-shelf="${s.k}"><span class="mini" aria-hidden="true">${bs.slice(0,3).map(b=>`<span>${coverSVG(b)}</span>`).join("")}</span><b>${s.t}</b><span class="cnt">${bs.length}권</span></button>`}).join("");
+
+/* goals */
+$("#goals").innerHTML=GOALS.map(g=>`<li><button type="button" aria-pressed="false" data-goal="${g.k}">${g.t}</button></li>`).join("");
+function pickGoal(k){const g=GOALS.find(x=>x.k===k);if(!g)return;
+  document.querySelectorAll("[data-goal]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.goal===k));
+  $("#gres").innerHTML=g.ids.map(by).filter(Boolean).map((b,i)=>`<a href="/book#${b.id}"><span class="cv">${coverSVG(b)}</span><span><span class="st">${i+1}번째로 읽기</span><b style="display:block">${b.title}</b><small>${won(b.price)} · ${b.pages}쪽</small></span></a>`).join("")}
+pickGoal(GOALS[0].k);
+
+
+/* feature */
+function featureHTML(b){return `<div class="l" style="--cbg:${b.cover.bg}"><a class="cv" href="/book#${b.id}" aria-label="${b.title} 자세히">${coverSVG(b)}</a></div>
+<div class="r"><div class="meta">${b.cat} · ${b.chapters}장 · ${b.pages}쪽 · EPUB·PDF</div><h3>${b.title}</h3><p class="lead">${b.sub}</p>
+<ul>${b.summary.slice(0,3).map(t=>`<li>${CHECK}<span>${t}</span></li>`).join("")}</ul>
+<div class="row"><span class="price">${won(b.price)}</span><button class="btn lamp" type="button" data-add="${b.id}">장바구니에 담기</button><button class="btn ghost" type="button" data-preview="${b.id}">첫 장 무료로 읽기</button></div>
+<div class="by"><span>글 <b>하루한권 편집부</b> · <a href="/book#${b.id}">목차와 책 소개 전체 보기</a></span></div></div>`}
+$("#feature").innerHTML=featureHTML(by("buy-agent"));
+
+/* 전체 책: 분야 칩 + 검색 */
+let shelf="all",q="",showAll=false;
+function renderChips(){$("#chips").innerHTML=[{k:"all",t:"전체",n:BOOKS.length},...SHELVES.map(s=>({k:s.k,t:s.t,n:BOOKS.filter(s.f).length}))].map(c=>`<button type="button" data-chip="${c.k}" aria-pressed="${c.k===shelf}">${c.t}<small>${c.n}</small></button>`).join("")}
+function match(b){if(shelf!=="all"&&!SHELVES.find(s=>s.k===shelf).f(b))return false;if(!q)return true;const h=(b.title+" "+b.sub+" "+b.cat+" "+b.cover.hook).toLowerCase();return q.toLowerCase().split(/\s+/).every(w=>h.includes(w))}
+function renderGrid(){const list=BOOKS.filter(match);const lim=showAll||q||shelf!=="all"?list.length:12;
+  $("#allsum").textContent=q?`"${q}" 검색 결과 ${list.length}권`:`${list.length}권 · 모두 첫 장 무료`;
+  $("#grid").innerHTML=list.length?list.slice(0,lim).map(b=>`<div class="card"><a class="cv" href="/book#${b.id}" aria-label="${b.title} 자세히">${coverSVG(b)}</a><a href="/book#${b.id}" style="text-decoration:none"><b>${b.title}</b></a><span class="pp"><strong>${won(b.price)}</strong> · ${b.pages}쪽</span><button class="add" type="button" data-add="${b.id}" aria-pressed="${cart.includes(b.id)}">${cart.includes(b.id)?"담김":"담기"}</button></div>`).join(""):`<p class="empty">"${q}"에 맞는 책이 없어요. 다른 말로 찾거나 분야를 눌러 보세요.</p>`;
+  $("#more").innerHTML=list.length>lim?`<button class="btn ghost" type="button" id="moreb">${list.length-lim}권 더 보기</button>`:"";}
+
+/* cart (시안: 이 페이지에만) */
+let cart=[];try{cart=JSON.parse(localStorage.getItem("hr-cart")||"[]").filter(id=>BOOKS.some(b=>b.id===id))}catch(e){}
+const saveCart=()=>{try{localStorage.setItem("hr-cart",JSON.stringify(cart))}catch(e){}};
+function syncCart(){saveCart();$("#cc").textContent=cart.length;const tot=cart.reduce((s,id)=>s+by(id).price,0);
+  $("#bar").hidden=!cart.length;$("#bartxt").textContent=`${cart.length}권 · ${won(tot)}`;
+  document.querySelectorAll("[data-add]").forEach(b=>{const on=cart.includes(b.dataset.add);if(b.classList.contains("add")){b.setAttribute("aria-pressed",on);b.textContent=on?"담김":"담기"}else{b.textContent=on?"담겼어요 · 장바구니 보기":"장바구니에 담기"}});
+  if(!$("#sheet").hidden)renderSheet();}
+function toast(t){const el=$("#toast");el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,1800)}
+function renderSheet(){const tot=cart.reduce((s,id)=>s+by(id).price,0);
+  $("#sheet").innerHTML=`<h3 id="sheet-h">장바구니 ${cart.length}권<button class="x" type="button" data-close aria-label="닫기">×</button></h3>
+  <ul>${cart.length?cart.map(id=>{const b=by(id);return `<li><span class="cv">${coverSVG(b)}</span><span><b>${b.title}</b><br>${won(b.price)}</span><button type="button" data-rm="${id}">빼기</button></li>`}).join(""):`<li style="display:block;color:var(--muted)">아직 담은 책이 없어요.</li>`}</ul>
+  <div class="tot"><span>합계</span><span>${won(tot)}</span></div>
+  ${cart.length?`<a class="btn lamp" href="/store#buy-${cart[cart.length-1]}">${won(tot)} 결제하러 가기</a>`:""}`}
+let lastFocus=null;
+function openLayer(id){lastFocus=document.activeElement;$("#scrim").hidden=false;$(id).hidden=false;const f=$(id).querySelector("button");f&&f.focus()}
+function closeLayers(){["#scrim","#sheet","#modal"].forEach(s=>$(s).hidden=true);lastFocus&&lastFocus.focus&&lastFocus.focus()}
+function openPreview(id){const b=by(id);if(!b)return;
+  $("#pvbox").innerHTML=`<div class="lbl">첫 장 무료 미리보기 · ${b.pages}쪽 중 일부</div><h3 id="pv-h">${b.toc[0][0]}<button class="x" type="button" data-close aria-label="닫기">×</button></h3><p class="txt">${b.preview}</p>
+  <div><b style="font-size:14px">이어지는 목차</b><ol>${b.toc.slice(1,5).map(c=>`<li>${c[0]}</li>`).join("")}<li>…외 ${Math.max(0,b.toc.length-5)}개 장</li></ol></div>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span class="price" style="font-size:20px">${won(b.price)}</span><button class="btn lamp" type="button" data-add="${b.id}">장바구니에 담기</button><a class="tlink" href="/book#${b.id}">책 소개 전체 보기</a></div>`;
+  openLayer("#modal");syncCart()}
+
+document.addEventListener("click",e=>{const t=e.target.closest("[data-add],[data-preview],[data-shelf],[data-chip],[data-goal],[data-close],[data-rm],#moreb,#cartb,#barbtn,#scrim,#sbtn");if(!t)return;
+  if(t.matches("[data-preview]")){e.preventDefault();openPreview(t.dataset.preview)}
+  else if(t.matches("[data-add]")){const id=t.dataset.add;if(cart.includes(id)){if(!t.classList.contains("add")){closeLayers();renderSheet();openLayer("#sheet");return}cart=cart.filter(x=>x!==id);toast("장바구니에서 뺐어요")}else{cart.push(id);toast(`담았어요 · ${by(id).title}`)}syncCart()}
+  else if(t.matches("[data-shelf],[data-chip]")){shelf=t.dataset.shelf||t.dataset.chip;showAll=false;renderChips();renderGrid();if(t.dataset.shelf)$("#all").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"})}
+  else if(t.matches("[data-goal]"))pickGoal(t.dataset.goal);
+  else if(t.matches("#moreb")){showAll=true;renderGrid()}
+  else if(t.matches("#cartb,#barbtn")){renderSheet();openLayer("#sheet")}
+  else if(t.matches("[data-rm]")){cart=cart.filter(x=>x!==t.dataset.rm);syncCart()}
+  else if(t.matches("#sbtn")){const h=$("#top");const o=h.classList.toggle("open");t.setAttribute("aria-expanded",o);if(o)$("#q").focus()}
+  else if(t.matches("[data-close],#scrim"))closeLayers();
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLayers()});
+$("#q").addEventListener("input",e=>{q=e.target.value.trim();renderGrid()});
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"){$("#all").scrollIntoView({behavior:"smooth"})}});
+$("#q").addEventListener("focus",()=>{if(window.scrollY<$("#all").offsetTop-200&&$("#q").value)$("#all").scrollIntoView()});
+renderChips();renderGrid();syncCart();
 </script>
-<script>
-</script>
-<script>
-{const T='<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>';document.getElementById("offer").innerHTML=[`권당 <b>${won(Math.min(...BOOKS.map(b=>b.price)))}</b>부터`,"EPUB·PDF 즉시 다운로드","내려받기 전 7일 환불"].map(t=>`<li>${T}<span>${t}</span></li>`).join("")}
-const ON_SITE=location.protocol.startsWith("http")&&!location.hostname.endsWith("claude.ai")&&!location.hostname.includes("claudeusercontent");
-document.getElementById("picks-list").innerHTML=["buy-agent","partners","shorts","side-tax"].map(id=>BOOKS.find(b=>b.id===id)).map(b=>`<a class="pick" href="${ON_SITE?"/book#"+b.id:"https://claude.ai/artifact/NNptiX8fNxzsThEBj39ik2"}"${ON_SITE?"":' target="_blank" rel="noopener"'}><div class="cover">${coverSVG(b)}</div><b>${b.title}</b><span><strong>${won(b.price)}</strong> · ${b.pages}쪽</span></a>`).join("");
-const bk=id=>BOOKS.find(b=>b.id===id);
-const link=b=>ON_SITE?"/book#"+b.id:"https://claude.ai/artifact/NNptiX8fNxzsThEBj39ik2";
-const tgt=ON_SITE?"":' target="_blank" rel="noopener"';
-const goalsEl=document.getElementById("goals"),resEl=document.getElementById("result");
-goalsEl.innerHTML=GOALS.map(g=>`<li><button class="gopt" type="button" aria-pressed="false" data-k="${g.k}"><span><b>${g.t}</b><small>${g.s}</small></span><span class="fan" aria-hidden="true">${g.ids.map(id=>`<span class="cover">${coverSVG(bk(id))}</span>`).join("")}</span></button></li>`).join("");
-function pickGoal(k,scroll){
-  const g=GOALS.find(x=>x.k===k);if(!g)return;
-  goalsEl.querySelectorAll(".gopt").forEach(b=>b.setAttribute("aria-pressed",b.dataset.k===k));
-  try{localStorage.setItem("hr-goal",k)}catch(e){}
-  resEl.innerHTML=`<div class="rh"><b>${g.t}, 이 순서로 읽어 보세요</b><a href="/store#goal-${g.k}">이 목표의 책 전체 보기</a></div><div class="rbooks">${g.ids.map(bk).filter(Boolean).map((b,i)=>`<a class="rbook" href="${link(b)}"${tgt}><span class="cover">${coverSVG(b)}</span><span>${i===0?'<span class="first">먼저 읽기</span>':""}<b>${b.title}</b><p>${b.sub}</p><span>${won(b.price)} · ${b.pages}쪽</span></span></a>`).join("")}</div>`;
-  resEl.hidden=false;
-  if(scroll)resEl.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"nearest"});
-}
-goalsEl.addEventListener("click",e=>{const b=e.target.closest(".gopt");if(b)pickGoal(b.dataset.k,true)});
-try{const k=localStorage.getItem("hr-goal");if(k)pickGoal(k,false)}catch(e){}
-document.getElementById("lf").addEventListener("submit",e=>{e.preventDefault();document.getElementById("lok").hidden=false;e.target.reset()});
-</script>
-<script>heroKit(document.getElementById("hk"),bs=>`<div class="v4"><h1>이번 주의 책</h1><p class="lead">하루 저녁이면 다 읽고, 다음 날 바로 써먹어요.</p>
-<div class="v4-panel"><div class="v4-left">${bs.map((b,i)=>`<a class="cv" data-i="${i}" href="/book#${b.id}" aria-label="${b.title} 자세히">${coverSVG(b)}</a>`).join("")}</div>
-<div class="v4-right">${bs.map((b,i)=>`<div class="v4-in" data-i="${i}"><div class="cat">${b.cat} · ${b.chapters}장 · ${b.pages}쪽 · EPUB·PDF</div><h3>${b.title}</h3><p class="sub">${b.sub}</p><ul>${b.summary.slice(0,3).map(t=>`<li>${t}</li>`).join("")}</ul><div class="row"><span class="pr">${HK.price(b)}</span><a class="buy" href="/store#buy-${b.id}">바로 받기</a><a class="pv" href="/book#${b.id}">미리보기</a></div></div>`).join("")}</div></div>
-<div class="hk-thumbs"><button class="hk-btn" type="button" data-step="-1" aria-label="이전 책">${HK.ARL}</button><div class="row" data-keep>${bs.map((b,i)=>`<button class="hk-th" type="button" data-go="${i}"><span class="cv">${coverSVG(b)}</span>${HK.t2(b)}</button>`).join("")}</div><button class="hk-btn" type="button" data-step="1" aria-label="다음 책">${HK.ARR}</button></div></div>`);</script>
+
 </body>
 </html>
