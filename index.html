@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="하루 저녁에 읽고 다음 날 바로 써먹는 실전 전자책. 결제하면 바로 EPUB·PDF로 받습니다.">
+<meta name="description" content="하루 저녁이면 다 읽는 부업·재테크 실전서. 40~100쪽, 결제하면 EPUB·PDF를 바로 받아요.">
 <meta property="og:title" content="하루한권">
-<meta property="og:description" content="하루 저녁에 읽고 다음 날 바로 써먹는 실전 전자책. 결제하면 바로 EPUB·PDF로 받습니다.">
+<meta property="og:description" content="하루 저녁이면 다 읽는 부업·재테크 실전서. 40~100쪽, 결제하면 EPUB·PDF를 바로 받아요.">
 <meta property="og:url" content="https://haruhangwon.kr/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="하루한권">
@@ -16,182 +16,341 @@
 <link rel="canonical" href="https://haruhangwon.kr/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%23141C2B%27/%3E%3Crect x=%278%27 y=%277%27 width=%2716%27 height=%2718%27 rx=%272%27 fill=%27%23F2B84B%27/%3E%3C/svg%3E">
 <style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>하루한권</title>
+<title>하루한권 · 하루 저녁이면 다 읽는 부업·재테크 실전서</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Black+Han+Sans&display=swap">
 <style>
-/* Layout: an evening reading desk — dark lamp-lit hero with a stack of book spines, then calm light sections */
+/* Layout: evening reading desk — sticky header with search, value-prop hero with a fan of real covers, shelves, then proof. Lamp yellow = "담기" only. */
 :root{
-  --bg:#F7F7F4; --card:#FFFFFF; --ink:#18202B; --muted:#5C6672; --line:#E0E2DD;
-  --sel:#F7DDA0; --night:#141C2B; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --accent:#2D4FC4;
+  --bg:#F7F7F4; --card:#FFFFFF; --ink:#18202B; --muted:#5C6672; --line:#E0E2DD; --soft:#EFEFEA;
+  --night:#141C2B; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --accent:#2D4FC4; --ex:#B4432B; --ex-bg:#FBE9E4; --ok:#2F7D4F;
   --f-book:"Gowun Batang","Nanum Myeongjo",serif;
   --f-ui:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0F141C; --card:#171F2A; --ink:#E7EAEF; --muted:#9AA4B0; --line:#283241;
-  --sel:#5A4720; --night:#0A0F18; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --accent:#8AA0F5; color-scheme:dark}}
+  --bg:#0F141C; --card:#171F2A; --ink:#E7EAEF; --muted:#9AA4B0; --line:#283241; --soft:#1C2531;
+  --night:#0A0F18; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --accent:#8AA0F5; --ex:#F28B73; --ex-bg:#3A1F19; --ok:#6CCB92; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0F141C; --card:#171F2A; --ink:#E7EAEF; --muted:#9AA4B0; --line:#283241;
-  --sel:#5A4720; --night:#0A0F18; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --accent:#8AA0F5; color-scheme:dark}
+  --bg:#0F141C; --card:#171F2A; --ink:#E7EAEF; --muted:#9AA4B0; --line:#283241; --soft:#1C2531;
+  --night:#0A0F18; --night-ink:#EEF0F4; --lamp:#F2B84B; --lamp-ink:#1D1606; --accent:#8AA0F5; --ex:#F28B73; --ex-bg:#3A1F19; --ok:#6CCB92; color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.7}
-.in{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-a{color:inherit}
-::selection{background:var(--sel);color:var(--ink)}
-input,textarea{caret-color:var(--accent)}
-input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
-html{scrollbar-color:var(--line) var(--bg)}
-a{text-underline-offset:3px}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.7;word-break:keep-all;overflow-wrap:anywhere}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+.in{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:inherit;text-underline-offset:3px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.3}
+h2{font-family:var(--f-book);font-size:clamp(24px,3.2vw,32px)}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.lead{color:var(--muted)}
+section{padding-block:64px}
+.shead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:8px 16px;margin-bottom:24px}
+.shead p{color:var(--muted);margin-top:6px}
 
-.btn{display:inline-block;text-decoration:none;font-weight:700;border-radius:999px;padding:12px 22px;border:1px solid transparent}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:700;border-radius:999px;padding:13px 24px;border:1.5px solid transparent;font-size:16px;line-height:1.2}
+.btn.ink{background:var(--ink);color:var(--bg)}
 .btn.lamp{background:var(--lamp);color:var(--lamp-ink)}
-.btn.ghost{border-color:currentColor}
-.btn:focus-visible,input:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var(--lamp);outline-offset:3px}
-h2{font-family:var(--f-book);font-size:clamp(24px,3.4vw,34px);line-height:1.35;margin:0;text-wrap:balance}
-section{padding-block:72px}
-/* hero */
-.hero{background:var(--night);color:var(--night-ink);position:relative;overflow:hidden;padding-block:0}
-.hero::after{content:"";position:absolute;width:620px;height:620px;right:-140px;top:-220px;background:radial-gradient(circle,rgba(242,184,75,.32),transparent 65%);pointer-events:none}
-.hero nav{display:flex;align-items:center;gap:16px;padding-block:18px;position:relative;z-index:1}
-.logo{font-family:var(--f-book);font-weight:700;font-size:22px}
+.btn.ghost{border-color:var(--line);background:var(--card)}
+.btn.sm{padding:8px 14px;font-size:14px}
+.tlink{font-weight:600;text-decoration:underline}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .in{display:flex;align-items:center;gap:20px;height:64px}
+.logo{font-weight:700;font-size:20px;text-decoration:none;display:flex;align-items:baseline;gap:8px;white-space:nowrap}
 .logo b{color:var(--lamp)}
-.hero nav .links{margin-left:auto;display:flex;gap:18px;font-size:14px}
-.hero nav .links a{text-decoration:none;opacity:.85}
-.hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end;padding-block:56px 0;position:relative;z-index:1}
-.hero h1{font-family:var(--f-book);font-size:clamp(38px,7vw,76px);line-height:1.15;margin:0 0 18px;font-weight:700;letter-spacing:-1px}
-.hero h1 em{font-style:normal;color:var(--lamp)}
-.hero p{max-width:34ch;opacity:.85;margin:0 0 28px;font-size:17px}
-.cta{display:flex;gap:10px;flex-wrap:wrap;padding-bottom:64px}
-.stack{display:grid;gap:6px;justify-items:end;align-self:end}
-.spine{height:46px;border-radius:3px;display:flex;align-items:center;padding:0 16px;font-family:var(--f-book);font-weight:700;font-size:15px;color:#fff;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;animation:slide .9s cubic-bezier(.16,1,.3,1) both}
-.spine small{margin-left:auto;padding-left:16px;font-family:var(--f-ui);font-weight:500;font-size:11px;color:#fff}
-.desk{height:14px;background:#3A2C1C;border-radius:2px 2px 0 0;width:100%}
-@keyframes slide{from{transform:translateX(24px)}to{transform:none}}
-/* promises */
-.promises{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0;max-width:68ch}
-.promises li{padding-block:18px;border-top:1px solid var(--line);color:var(--muted);font-size:17px}
-.promises li:last-child{border-bottom:1px solid var(--line)}
-.promises b{color:var(--ink);font-family:var(--f-book);font-size:20px;display:block;margin-bottom:2px}
-/* picks */
-.alt{background:var(--card);border-block:1px solid var(--line)}
-.head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
-.head a{font-weight:600;color:var(--accent);text-decoration:none;display:inline-flex;gap:6px;align-items:center}
-.picks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;margin-top:28px}
-.pick{display:grid;gap:10px;text-decoration:none;min-width:0}
-.cover{aspect-ratio:5/8;max-width:100%;border-radius:3px 7px 7px 3px;overflow:hidden;box-shadow:inset 6px 0 0 rgba(0,0,0,.18),0 12px 24px -14px rgba(0,0,0,.5);transition:transform .25s cubic-bezier(.16,1,.3,1)}
-.cover svg{display:block;width:100%;height:100%}
-.pick:hover .cover{transform:translateY(-4px)}
-.pick b{font-size:15px;line-height:1.4}
-.pick span{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
-.pick span strong{color:var(--ink)}
-/* steps */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:32px;border-top:2px solid var(--ink)}
-.step{padding:20px 20px 0 0;display:grid;gap:6px;align-content:start}
+.logo small{font-size:12px;font-weight:500;color:var(--muted)}
+.search{flex:1;max-width:440px;position:relative}
+.search input{width:100%;height:42px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:0 16px 0 42px;font:inherit;font-size:15px}
+.search svg{position:absolute;left:15px;top:13px;color:var(--muted)}
+.nav{margin-left:auto;display:flex;align-items:center;gap:18px;font-size:15px}
+.nav a{text-decoration:none}
+.cartb{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;font-weight:600;font-size:14px}
+.cartb .c{min-width:22px;height:22px;border-radius:11px;background:var(--ink);color:var(--bg);font-size:12px;display:inline-grid;place-items:center;padding:0 6px;font-variant-numeric:tabular-nums}
+.sbtn{display:none;border:1px solid var(--line);background:var(--card);border-radius:999px;width:40px;height:40px;place-items:center}
+@media (max-width:760px){
+  .logo small{display:none}
+  .nav .all{display:none}
+  header.top .search{display:none;position:absolute;left:16px;right:16px;top:70px;max-width:none}
+  header.top.open .search{display:block}
+  header.top.open{padding-bottom:56px}
+  .sbtn{display:inline-grid}
+  .cartb span.t{display:none}
+}
+
+/* hero */
+.hero{padding-block:56px 28px}
+.hero .in{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center}
+.eyebrow{font-weight:600;font-size:14px;color:var(--accent)}
+.hero h1{font-family:var(--f-book);font-weight:700;font-size:clamp(32px,4.6vw,52px);letter-spacing:-.5px;margin:12px 0 16px}
+.hero h1 em{font-style:normal;box-shadow:inset 0 -.32em var(--lamp)}
+.hero .sub{font-size:clamp(16px,1.6vw,18px);color:var(--muted);max-width:34em}
+.hero .acts{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:28px}
+.facts{list-style:none;padding:0;margin:28px 0 0;display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted)}
+.facts li{display:flex;gap:6px;align-items:center}
+.facts svg{color:var(--ok);flex:none}
+.fan{position:relative;height:420px}
+.fan a{position:absolute;top:50%;left:50%;width:200px;aspect-ratio:1600/2400;border-radius:6px;overflow:hidden;box-shadow:0 18px 40px -16px rgba(0,0,0,.35);transition:transform .25s}
+.fan a svg{display:block;width:100%;height:100%}
+.fan a:hover,.fan a:focus-visible{z-index:9}
+@media (prefers-reduced-motion:reduce){.fan a{transition:none}}
+@media (max-width:860px){.hero .in{grid-template-columns:1fr}.fan{height:300px;overflow-x:clip}.fan a{width:150px}}
+
+/* shelves */
+.shelves{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.shelf{display:grid;gap:10px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;align-content:start}
+.shelf b{font-size:16px}
+.shelf .cnt{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.mini{display:flex;height:72px}
+.mini span{width:48px;aspect-ratio:1600/2400;border-radius:3px;overflow:hidden;box-shadow:0 4px 10px -4px rgba(0,0,0,.3);margin-right:-14px;flex:none}
+.mini span svg{display:block;width:100%;height:100%}
+.shelf:hover{border-color:var(--ink)}
+@media (max-width:960px){.shelves{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){.shelves{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* goals */
+.goals{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:10px}
+.goals button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:10px 18px;font-weight:600;font-size:15px}
+.goals button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.gres{margin-top:20px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gres a{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;text-decoration:none}
+.gres .cv{width:64px;aspect-ratio:1600/2400;border-radius:3px;overflow:hidden}
+.gres a.setlink{grid-column:1/-1;grid-template-columns:minmax(0,1fr) auto;background:var(--lamp-soft);border-color:var(--lamp)}
+.gres .setlink .go{font-weight:700;white-space:nowrap}
+.gres .cv svg{display:block;width:100%;height:100%}
+.gres small{color:var(--muted);display:block}
+.gres .st{font-size:12px;font-weight:700;color:var(--accent)}
+@media (max-width:760px){.gres{grid-template-columns:1fr}}
+
+/* feature */
+.feature{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.feature .l{display:grid;place-items:center;padding:36px;background:var(--cbg,#FFF4E0)}
+.feature .l .cv{width:min(240px,60vw);aspect-ratio:1600/2400;border-radius:6px;overflow:hidden;box-shadow:0 24px 50px -20px rgba(0,0,0,.4)}
+.feature .l .cv svg{display:block;width:100%;height:100%}
+.feature .r{padding:36px;display:grid;gap:14px;align-content:center}
+.feature .meta{font-size:14px;color:var(--muted);font-weight:600}
+.feature h3{font-family:var(--f-book);font-size:clamp(24px,2.6vw,30px)}
+.feature ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.feature li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px}
+.feature li svg{margin-top:5px;color:var(--ok)}
+.feature .row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;margin-top:6px}
+.price{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.by{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding-top:14px;margin-top:4px;font-size:14px;color:var(--muted)}
+.by .av{width:44px;height:44px;flex:none}
+.by b{color:var(--ink)}
+@media (max-width:760px){.feature{grid-template-columns:1fr}.feature .r{padding:24px}}
+
+/* all books */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.chips button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600}
+.chips button small{color:var(--muted);font-weight:500;margin-left:4px;font-variant-numeric:tabular-nums}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chips button[aria-pressed="true"] small{color:inherit;opacity:.7}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:24px 16px}
+.card{display:grid;gap:8px;align-content:start}
+.card .cv{display:block;aspect-ratio:1600/2400;border-radius:5px;overflow:hidden;box-shadow:0 10px 24px -14px rgba(0,0,0,.4)}
+.card .cv svg{display:block;width:100%;height:100%}
+.card b{font-size:15px;line-height:1.45}
+.card .pp{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.card .pp strong{color:var(--ink)}
+.card .add{justify-self:start;border:1.5px solid var(--lamp);background:transparent;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700}
+.card .add[aria-pressed="true"]{background:var(--lamp);color:var(--lamp-ink)}
+.empty{color:var(--muted);padding:24px 0}
+.more{margin-top:24px;text-align:center}
+
+/* proof */
+.proof{background:var(--card);border-block:1px solid var(--line)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:28px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:grid;gap:4px;background:var(--bg)}
+.stat .v{font-size:clamp(26px,3vw,34px);font-weight:700;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.stat .k{color:var(--muted);font-size:14px}
+.basis{font-size:13px;color:var(--muted);margin:-16px 0 28px}
+.reviews{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.rv{border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:12px;background:var(--bg);align-content:start}
+.rv .who{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center}
+.rv .who small{display:block;color:var(--muted);font-size:13px}
+.rv .stars{color:var(--lamp);letter-spacing:2px;font-size:15px}
+.rv .bk{font-size:13px;color:var(--muted)}
+.rv q{quotes:none}
+.author{margin-top:28px;display:grid;grid-template-columns:96px minmax(0,1fr);gap:20px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:20px;background:var(--bg)}
+.author .av{width:96px;height:96px}
+.author p{color:var(--muted);font-size:15px;margin-top:4px}
+.notice{margin:-8px 0 24px;padding:12px 16px;border-radius:10px;background:var(--bg);border:1px solid var(--line);font-size:14px;color:var(--muted)}
+.notice b{color:var(--ink)}
+.policy{margin-top:12px;font-size:13px;color:var(--muted)}
+@media (max-width:860px){.reviews,.stats{grid-template-columns:1fr}}
+@media (max-width:480px){.author{grid-template-columns:1fr}}
+
+/* steps + faq */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.step{border-top:2px solid var(--ink);padding-top:14px}
 .step .n{font-size:13px;font-weight:700;color:var(--accent)}
-.step b{font-size:18px}
-.step p{margin:0;color:var(--muted)}
-.devices{margin-top:28px;display:flex;flex-wrap:wrap;gap:8px}
-.devices span{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 12px;font-size:13px}
-/* faq */
-.faq{display:grid;grid-template-columns:1fr 1.6fr;gap:40px}
-details{border-bottom:1px solid var(--line);padding-block:16px}
-summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.step p{color:var(--muted);font-size:15px}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+.faq{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:32px}
+details{border-bottom:1px solid var(--line);padding:14px 0}
+summary{font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px}
 summary::-webkit-details-marker{display:none}
-summary svg{flex:none;color:var(--muted);transition:transform .3s cubic-bezier(.16,1,.3,1)}
-details[open] summary svg{transform:rotate(180deg)}
-details p{margin:8px 0 0;color:var(--muted)}
+summary::after{content:"+";color:var(--muted);font-weight:400}
+details[open] summary::after{content:"−"}
+details p{color:var(--muted);margin-top:8px;font-size:15px}
+@media (max-width:760px){.faq{grid-template-columns:1fr}}
+
 /* letter */
 .letter{background:var(--night);color:var(--night-ink)}
-.letter .in{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
-.letter p{opacity:.8;margin:8px 0 0}
-form{display:flex;gap:8px;flex-wrap:wrap}
-input[type=email]{flex:1;min-width:0;font:inherit;padding:12px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:var(--night-ink)}
-form button{font:inherit;font-weight:700;border:0;border-radius:999px;padding:12px 22px;background:var(--lamp);color:var(--lamp-ink);cursor:pointer}
-.ok{font-size:14px;color:var(--lamp);margin-top:8px}
-footer{font-size:12px;color:var(--muted)}
-footer .in{padding-block:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-footer b{color:var(--ink)}
-@media (max-width:820px){
-  .hero-grid,.faq,.letter .in{grid-template-columns:1fr}
-  .stack{justify-items:stretch}
-  .picks{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .steps{grid-template-columns:1fr}
-  .hero nav .links{display:none}
-  section{padding-block:56px}
-}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.letter .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center}
+.letter p{opacity:.8;margin-top:6px}
+.letter form{display:flex;gap:8px;flex-wrap:wrap}
+.letter input{flex:1;min-width:0;height:48px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:transparent;color:var(--night-ink);padding:0 18px;font:inherit}
+.letter button{height:48px;border-radius:999px;border:1.5px solid var(--night-ink);background:transparent;color:var(--night-ink);font-weight:700;padding:0 20px}
+.letter .ok{font-size:14px;margin-top:8px;opacity:.85}
+@media (max-width:760px){.letter .in{grid-template-columns:1fr}}
+
+footer{padding-block:40px 120px;font-size:13px;color:var(--muted)}
+footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+
+/* cart sheet + modal + bottom bar */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:70}
+.sheet{position:fixed;top:0;right:0;bottom:0;width:min(400px,100%);background:var(--card);z-index:80;display:flex;flex-direction:column;padding:calc(20px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) 20px;box-shadow:-20px 0 40px -20px rgba(0,0,0,.3)}
+.sheet h3{font-size:18px;display:flex;justify-content:space-between;align-items:center}
+.x{border:0;background:transparent;font-size:24px;line-height:1;padding:4px 8px}
+.sheet ul{list-style:none;padding:0;margin:16px 0;flex:1;overflow:auto;display:grid;gap:12px;align-content:start}
+.sheet li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;font-size:14px}
+.sheet li .cv{width:44px;aspect-ratio:1600/2400;border-radius:3px;overflow:hidden}
+.sheet li .cv svg{display:block;width:100%;height:100%}
+.sheet li button{border:0;background:transparent;color:var(--muted);font-size:13px;text-decoration:underline}
+.sheet .tot{display:flex;justify-content:space-between;font-weight:700;font-size:18px;border-top:1px solid var(--line);padding-top:14px;font-variant-numeric:tabular-nums}
+.sheet .note{font-size:13px;color:var(--muted);margin-top:8px}
+.sheet .btn{margin-top:14px;width:100%}
+.modal{position:fixed;inset:0;display:grid;place-items:center;z-index:80;padding:16px}
+.modal .box{background:var(--card);border-radius:16px;max-width:620px;width:100%;max-height:86vh;overflow:auto;padding:28px;display:grid;gap:14px}
+.modal .box .lbl{font-size:13px;font-weight:700;color:var(--accent)}
+.modal .box h3{font-family:var(--f-book);font-size:24px;display:flex;justify-content:space-between;gap:12px}
+.modal .box .txt{font-family:var(--f-book);font-size:17px;line-height:1.9}
+.modal .box ol{margin:0;padding-left:20px;color:var(--muted);font-size:14px}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);border-top:1px solid var(--line);padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bar span{font-size:14px;font-variant-numeric:tabular-nums}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);border-radius:999px;padding:10px 18px;font-size:14px;z-index:90}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.demo{background:var(--soft);font-size:13px;color:var(--muted);text-align:center;padding:6px 16px}
 </style>
+
 </head>
 <body>
-<header class="hero">
+<header class="top" id="top">
   <div class="in">
-    <nav><div class="logo">하루<b>한권</b></div><div class="links"><a href="#picks">이번 주 추천</a><a href="#how">구매 방법</a><a href="#faq">자주 묻는 질문</a></div></nav>
-    <div class="hero-grid">
-      <div>
-        <h1>하루 저녁,<br><em>한 권.</em></h1>
-        <p>퇴근 후 2시간이면 다 읽고, 다음 날 바로 써먹는 실전 전자책. 결제하면 1분 안에 내 휴대폰으로 받습니다.</p>
-        <div class="cta"><a class="btn lamp" href="/store">책 둘러보기</a><a class="btn ghost" href="#how">어떻게 받나요?</a></div>
-      </div>
-      <div class="stack" aria-hidden="true">
-        <div class="spine" style="background:#2B1A05;width:92%;animation-delay:0.05s">직장인 해외구매대행 첫 판매<small>75쪽</small></div>
-        <div class="spine" style="background:#0B3B2C;width:100%;animation-delay:0.12s">블로그로 시작하는 쿠팡 파트너스<small>76쪽</small></div>
-        <div class="spine" style="background:#3B0A0A;width:86%;animation-delay:0.19s">유튜브 쇼츠로 부업 시작하기<small>72쪽</small></div>
-        <div class="spine" style="background:#14244F;width:96%;animation-delay:0.26s">신입 합격 자소서·면접 템플릿북<small>91쪽</small></div>
-        <div class="spine" style="background:#212529;width:78%;animation-delay:0.33s">부업 세금 한 권 정리<small>55쪽</small></div>
-        <div class="desk"></div>
-      </div>
+    <a class="logo" href="/">하루<b>한권</b><small>실전 전자책</small></a>
+    <div class="search" role="search">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg>
+      <label for="q" class="sr">책 검색</label>
+      <input id="q" type="search" placeholder="제목이나 주제로 찾기 (예: 블로그, 세금, ETF)" autocomplete="off">
     </div>
+    <nav class="nav">
+      <a class="all" href="#all">전체 책</a>
+      <button class="sbtn" id="sbtn" type="button" aria-label="검색 열기" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg></button>
+      <button class="cartb" id="cartb" type="button"><span class="t">장바구니</span><span class="c" id="cc">0</span></button>
+    </nav>
   </div>
 </header>
 
-<main>
-  <section class="in">
-    <h2>두껍지 않게, 뜬구름 없이, 기다림 없이</h2>
-    <ul class="promises">
-      <li><b>저녁 한 번이면 끝까지 읽습니다.</b> 모든 책을 40~90쪽 안팎으로 만들어요. 두꺼운 책을 사 놓고 못 읽는 일이 없게요.</li>
-      <li><b>장마다 따라 할 일이 있습니다.</b> 읽고 끝나지 않게, 장이 끝날 때마다 바로 해볼 체크리스트를 넣었어요.</li>
-      <li><b>결제하면 바로 받습니다.</b> 배송을 기다리지 않아요. 결제 화면에서 EPUB·PDF를 곧바로 내려받습니다.</li>
-    </ul>
-  </section>
-
-  <section class="alt" id="picks">
+<main id="home">
+  <div class="hero">
     <div class="in">
-      <div class="head"><div><h2>지금 가장 많이 읽는 책</h2></div><a href="/store">전체 보기 <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
-      <div class="picks" id="picks-list"></div>
+      <div>
+        <div class="eyebrow">부업 · 재테크 · 커리어 실전 전자책 <span id="nbooks">51</span>권</div>
+        <h1><em>하루 저녁</em>이면 다 읽는<br><span style="white-space:nowrap">부업·재테크</span> 실전서</h1>
+        <p class="sub">40~100쪽이라 끝까지 읽혀요. 장마다 다음 날 해볼 체크리스트가 있고, 결제하면 EPUB·PDF를 바로 받아요.</p>
+        <div class="acts">
+          <a class="btn ink" href="#all">51권 둘러보기</a>
+          <button class="tlink" type="button" data-preview="buy-agent" style="border:0;background:none;padding:0">첫 장 무료로 읽어보기</button>
+        </div>
+        <ul class="facts">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>권당 <b id="minp">9,900원</b>부터</li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>모든 책 첫 장 무료</li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>회원가입 없이 바로 다운로드</li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>내려받기 전 7일 전액 환불</li>
+        </ul>
+      </div>
+      <div class="fan" id="fan" aria-label="대표 책 5권"></div>
+    </div>
+  </div>
+
+  <section style="padding-top:28px">
+    <div class="in">
+      <div class="shead"><div><h2>분야별로 둘러보기</h2><p>눌러서 그 분야 책만 모아 보세요.</p></div></div>
+      <div class="shelves" id="shelves"></div>
     </div>
   </section>
 
-  <section class="in" id="how">
-    <h2>고르고, 결제하고, 바로 읽기</h2>
-    <div class="steps">
-      <div class="step"><div class="n">1단계</div><b>책 고르기</b><p>목차를 미리 보고 마음에 드는 책을 장바구니에 담아요.</p></div>
-      <div class="step"><div class="n">2단계</div><b>간편 결제</b><p>카드, 카카오페이, 네이버페이, 토스페이로 결제해요. 회원가입은 필요 없어요.</p></div>
-      <div class="step"><div class="n">3단계</div><b>바로 내려받기</b><p>결제 화면과 이메일에서 바로 파일을 받아요. 구매내역에서 다시 받을 수 있어요.</p></div>
+  <section style="padding-top:0">
+    <div class="in">
+      <div class="shead"><div><h2>뭘 읽을지 모르겠다면</h2><p>바꾸고 싶은 걸 하나 고르면, 읽는 순서대로 3권을 골라 드려요.</p></div></div>
+      <ul class="goals" id="goals"></ul>
+      <div class="gres" id="gres" aria-live="polite"></div>
     </div>
-    <div class="devices"><span>아이폰 · 아이패드 (도서 앱)</span><span>갤럭시 (구글 플레이 북)</span><span>크레마 · 리디페이퍼 · 킨들</span><span>PC (PDF)</span></div>
   </section>
 
-  <section class="alt" id="faq">
+  <section style="padding-top:0">
+    <div class="in">
+      <div class="shead"><div><h2>이번 주 편집부 추천</h2></div></div>
+      <div class="feature" id="feature"></div>
+    </div>
+  </section>
+
+  <section id="all" style="padding-top:0">
+    <div class="in">
+      <div class="shead"><div><h2>전체 책</h2><p id="allsum"></p></div></div>
+      <div class="chips" id="chips" role="group" aria-label="분야"></div>
+      <div class="grid" id="grid"></div>
+      <div class="more" id="more"></div>
+    </div>
+  </section>
+
+  <section class="proof" id="proof">
+    <div class="in">
+      <div class="shead"><div><h2>읽은 사람들이 말해요</h2></div></div>
+      <p class="notice">안내 · 이 영역의 숫자, 후기, 글쓴이 소개는 실제가 아닌 <b>예시</b>예요. 첫 판매 뒤 구매가 확인된 실제 후기와 숫자로 바꿔요.</p>
+      <div class="stats">
+        <div class="stat"><span class="v">1,240명</span><span class="k">누적 독자</span></div>
+        <div class="stat"><span class="v">4.7 / 5</span><span class="k">평균 별점 (후기 312개)</span></div>
+        <div class="stat"><span class="v">82%</span><span class="k">"장 끝 체크리스트를 1개 이상 해봤다"</span></div>
+      </div>
+      <div class="reviews" id="reviews"></div>
+      <div class="author">
+        <svg class="av" viewBox="0 0 96 96" role="img" aria-label="글쓴이 일러스트" id="authav"></svg>
+        <div>
+          <b>정해원</b>
+          <p>회사를 다니며 4년째 해외구매대행 쇼핑몰을 운영해요. 첫 판매까지 걸린 시행착오를 줄이려고 『직장인 해외구매대행 첫 판매』를 썼어요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="in">
+      <div class="shead"><div><h2>고르고, 결제하고, 바로 읽기</h2></div></div>
+      <div class="steps">
+        <div class="step"><div class="n">1단계</div><b>첫 장 읽고 고르기</b><p>모든 책의 첫 장과 목차를 무료로 보고 장바구니에 담아요.</p></div>
+        <div class="step"><div class="n">2단계</div><b>간편 결제</b><p>카드, 카카오페이, 네이버페이, 토스페이. 회원가입은 필요 없어요.</p></div>
+        <div class="step"><div class="n">3단계</div><b>바로 내려받기</b><p>결제 화면과 이메일에서 EPUB·PDF를 받아요. 링크로 언제든 다시 받아요.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
     <div class="in faq">
       <div><h2>사기 전에 궁금한 것</h2></div>
       <div>
-        <details open><summary>어떤 파일로 받나요?<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary><p>EPUB과 PDF 두 가지를 함께 드립니다. 휴대폰이나 리더기는 EPUB, 컴퓨터나 인쇄는 PDF가 편해요.</p></details>
-        <details><summary>회원가입을 해야 하나요?<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary><p>아니요. 이름과 이메일만 적으면 결제하고 바로 받을 수 있습니다.</p></details>
-        <details><summary>환불되나요?<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary><p>내려받기 전이라면 7일 안에 전액 환불됩니다. 내려받은 뒤에는 전자상거래법에 따라 환불이 제한되지만, 파일에 문제가 있으면 교환 또는 환불해 드려요.</p></details>
-        <details><summary>파일을 잃어버렸어요.<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary><p>구매할 때 적은 이메일로 받은 링크에서 언제든 다시 받을 수 있습니다.</p></details>
-        <details><summary>현금영수증이 되나요?<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary><p>네. 결제 화면에서 휴대폰 번호나 사업자번호를 넣으면 자동으로 발행됩니다.</p></details>
+        <details open><summary>어떤 파일로 받나요?</summary><p>EPUB과 PDF 두 가지를 함께 드려요. 휴대폰·리더기는 EPUB, 컴퓨터·인쇄는 PDF가 편해요.</p></details>
+        <details><summary>어떤 기기에서 읽을 수 있나요?</summary><p>아이폰·아이패드(도서 앱), 갤럭시(구글 플레이 북), 크레마·리디페이퍼·킨들, PC에서 읽을 수 있어요.</p></details>
+        <details><summary>환불되나요?</summary><p>내려받기 전이라면 7일 안에 전액 환불돼요. 내려받은 뒤에는 전자상거래법에 따라 환불이 제한되지만, 파일에 문제가 있으면 교환이나 환불해 드려요.</p></details>
+        <details><summary>파일을 잃어버렸어요.</summary><p>구매할 때 적은 이메일의 링크에서 언제든 다시 받을 수 있어요.</p></details>
       </div>
     </div>
   </section>
 
-  <section class="letter">
-    <div class="in">
-      <div><h2>새 책이 나오면 먼저 알려드릴게요</h2><p>한 달에 두 번, 새 책 소식과 구독자 전용 30% 할인 쿠폰을 보내드립니다.</p></div>
-      <div>
-        <form id="lf"><label for="lem" style="position:absolute;left:-9999px">이메일</label><input id="lem" type="email" placeholder="이메일 주소" required><button type="submit">받아보기</button></form>
-        <div class="ok" id="lok" hidden>신청됐어요. (시안이라 실제로 저장되지는 않습니다)</div>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer><div class="in">
@@ -199,11 +358,122 @@ footer b{color:var(--ink)}
   <div>이용약관 · 개인정보처리방침 · 환불정책<br>© 2026 하루한권</div>
 </div></footer>
 
+<div class="scrim" id="scrim" hidden></div>
+<aside class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheet-h"></aside>
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="pv-h"><div class="box" id="pvbox"></div></div>
+<div class="bar" id="bar" hidden><span id="bartxt"></span><button class="btn lamp sm" id="barbtn" type="button">장바구니 보기</button></div>
+<div class="toast" id="toast" hidden role="status"></div>
+
 <script src="/books.js"></script>
 <script>
-const ON_SITE=location.protocol.startsWith("http")&&location.hostname.endsWith("haruhangwon.kr");
-document.getElementById("picks-list").innerHTML=["buy-agent","partners","shorts","side-tax"].map(id=>BOOKS.find(b=>b.id===id)).map(b=>`<a class="pick" href="${ON_SITE?"/b/"+b.id:"https://claude.ai/artifact/NNptiX8fNxzsThEBj39ik2"}"${ON_SITE?"":' target="_blank" rel="noopener"'}><div class="cover">${coverSVG(b)}</div><b>${b.title}</b><span><strong>${won(b.price)}</strong> · ${b.pages}쪽</span></a>`).join("");
-document.getElementById("lf").addEventListener("submit",e=>{e.preventDefault();document.getElementById("lok").hidden=false;e.target.reset()});
+const $=s=>document.querySelector(s);
+const by=id=>BOOKS.find(b=>b.id===id);
+const CHECK='<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>';
+
+/* 분야 진열대: 1권짜리 분야는 합쳐서 5칸 */
+const SOCIAL=["naver-blog","adsense","threads"];
+const SHELVES=[
+  {k:"side",t:"부업",f:b=>b.cat==="부업"&&!SOCIAL.includes(b.id)},
+  {k:"sns",t:"SNS·블로그 수익화",f:b=>b.cat==="SNS 수익화"||SOCIAL.includes(b.id)},
+  {k:"money",t:"재테크·부동산",f:b=>b.cat==="재테크"||b.cat==="부동산"},
+  {k:"sell",t:"내 상품 팔기·창업",f:b=>["창업","온라인 판매","지식창업"].includes(b.cat)},
+  {k:"career",t:"취업·커리어·자기관리",f:b=>["취업","커리어","건강"].includes(b.cat)}
+];
+$("#nbooks").textContent=BOOKS.length;
+$("#minp").textContent=won(Math.min(...BOOKS.map(b=>b.price)));
+document.querySelector('.hero .btn.ink').textContent=`${BOOKS.length}권 둘러보기`;
+
+/* hero fan: 진짜 표지 5권, 움직이지 않음 */
+const FAN=["buy-agent","naver-blog","us-etf","job-pass","shorts"];
+const POS=[[-150,-10,-12],[-75,-25,-6],[0,-35,0],[75,-25,6],[150,-10,12]];
+$("#fan").innerHTML=FAN.map(by).filter(Boolean).map((b,i)=>{const[x,y,r]=POS[i];return `<a href="/b/${b.id}" aria-label="${b.title} 자세히" style="transform:translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) rotate(${r}deg);z-index:${i===2?5:5-Math.abs(i-2)}">${coverSVG(b)}</a>`}).join("");
+
+/* shelves */
+$("#shelves").innerHTML=SHELVES.map(s=>{const bs=BOOKS.filter(s.f);return `<button class="shelf" type="button" data-shelf="${s.k}"><span class="mini" aria-hidden="true">${bs.slice(0,3).map(b=>`<span>${coverSVG(b)}</span>`).join("")}</span><b>${s.t}</b><span class="cnt">${bs.length}권</span></button>`}).join("");
+
+/* goals */
+$("#goals").innerHTML=GOALS.map(g=>`<li><button type="button" aria-pressed="false" data-goal="${g.k}">${g.t}</button></li>`).join("");
+function pickGoal(k){const g=GOALS.find(x=>x.k===k);if(!g)return;
+  document.querySelectorAll("[data-goal]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.goal===k));
+  $("#gres").innerHTML=g.ids.map(by).filter(Boolean).map((b,i)=>`<a href="/b/${b.id}"><span class="cv">${coverSVG(b)}</span><span><span class="st">${i+1}번째로 읽기</span><b style="display:block">${b.title}</b><small>${won(b.price)} · ${readTime(b)}</small></span></a>`).join("")+(()=>{const st=setOf(g);return `<a class="setlink" href="/store#set-${g.k}"><span><b style="display:block">3권 세트로 한 번에 받기</b><small>${won(st.price)} · 따로 사면 ${won(st.sum)}</small></span><span class="go">세트 담기 ›</span></a>`})()}
+pickGoal(GOALS[0].k);
+
+
+/* 저자·후기 일러스트 (직접 그린 SVG, 실제 인물 아님) */
+function avatar(seed,size){
+  const skins=["#F2CDB0","#E7B894","#D9A57F","#F5D9C2"],hairs=["#2B211C","#4A3426","#1E1E24","#6B4A33"],tops=["#2D4FC4","#E8590C","#2F7D4F","#7A4FB8","#C2304A"],bgs=["#FFF4E0","#E8F1FB","#EAF6EE","#F4ECFA","#FDECEF"];
+  const p=a=>a[seed%a.length],sk=p(skins),hr=hairs[(seed*3)%hairs.length],tp=tops[(seed*2+1)%tops.length],bg=bgs[(seed+2)%bgs.length];
+  const style=seed%3;
+  const hair=style===0?`<path d="M28 44c0-14 9-22 20-22s20 8 20 22c-3-7-9-11-20-11s-17 4-20 11z" fill="${hr}"/>`
+    :style===1?`<path d="M26 50c-2-18 8-28 22-28s24 10 22 28c-1 10-4 16-6 18V44c-5-4-10-6-16-6s-11 2-16 6v24c-2-2-5-8-6-18z" fill="${hr}"/>`
+    :`<path d="M29 42c1-12 9-19 19-19 11 0 19 7 19 19-4-3-6-8-8-10-5 5-17 8-30 10z" fill="${hr}"/>`;
+  return `<rect width="96" height="96" rx="48" fill="${bg}"/><clipPath id="c${seed}"><rect width="96" height="96" rx="48"/></clipPath><g clip-path="url(#c${seed})"><path d="M16 96c2-18 15-26 32-26s30 8 32 26z" fill="${tp}"/><rect x="42" y="58" width="12" height="14" rx="5" fill="${sk}"/><ellipse cx="48" cy="46" rx="17" ry="19" fill="${sk}"/>${hair}<circle cx="41.5" cy="47" r="1.8" fill="#2B211C"/><circle cx="54.5" cy="47" r="1.8" fill="#2B211C"/><path d="M43 55c3 2.4 7 2.4 10 0" stroke="#2B211C" stroke-width="1.8" fill="none" stroke-linecap="round"/></g>`;
+}
+$("#authav").innerHTML=avatar(4);
+const REVIEWS=[
+  {n:"김○○",a:"34세 · 회사원",d:"2026.10.14 구매",id:"buy-agent",s:5,t:"마진 계산표를 그대로 따라 해서 첫 상품 3개를 올렸어요. 통관 파트가 제일 도움이 됐어요."},
+  {n:"이○○",a:"29세 · 디자이너",d:"2026.10.22 구매",id:"naver-blog",s:4,t:"하루 저녁에 다 읽었어요. 장 끝 체크리스트대로 글 7개를 예약해 뒀고, 키워드 찾는 부분은 조금 더 자세했으면 해요."},
+  {n:"박○○",a:"41세 · 자영업",d:"2026.11.02 구매",id:"side-tax",s:5,t:"5월 종합소득세 신고 전에 읽었어요. 경비 처리 목록을 보고 빠뜨린 영수증을 챙겼어요."}
+];
+$("#reviews").innerHTML=REVIEWS.map((r,i)=>{const b=by(r.id);return `<article class="rv"><div class="who"><svg viewBox="0 0 96 96" width="44" height="44" role="img" aria-hidden="true">${avatar(i+1)}</svg><span><b>${r.n}</b><small>${r.a} · ${r.d}</small></span></div><div class="stars" aria-label="별점 ${r.s}점">${"★".repeat(r.s)}<span style="opacity:.3">${"★".repeat(5-r.s)}</span></div><q>${r.t}</q><div class="bk">읽은 책: ${b?b.title:""}</div></article>`}).join("");
+
+/* feature */
+function featureHTML(b){return `<div class="l" style="--cbg:${b.cover.bg}"><a class="cv" href="/b/${b.id}" aria-label="${b.title} 자세히">${coverSVG(b)}</a></div>
+<div class="r"><div class="meta">${b.cat} · ${b.chapters}장 · ${b.pages}쪽 · EPUB·PDF</div><h3>${b.title}</h3><p class="lead">${b.sub}</p>
+<ul>${b.summary.slice(0,3).map(t=>`<li>${CHECK}<span>${t}</span></li>`).join("")}</ul>
+<div class="row"><span class="price">${won(b.price)}</span><button class="btn lamp" type="button" data-add="${b.id}">장바구니에 담기</button><button class="btn ghost" type="button" data-preview="${b.id}">첫 장 무료로 읽기</button></div>
+<div class="by"><span>글 <b>하루한권 편집부</b> · <a href="/b/${b.id}">목차와 책 소개 전체 보기</a></span></div></div>`}
+$("#feature").innerHTML=featureHTML(by("buy-agent"));
+
+/* 전체 책: 분야 칩 + 검색 */
+let shelf="all",q="",showAll=false;
+function renderChips(){$("#chips").innerHTML=[{k:"all",t:"전체",n:BOOKS.length},...SHELVES.map(s=>({k:s.k,t:s.t,n:BOOKS.filter(s.f).length}))].map(c=>`<button type="button" data-chip="${c.k}" aria-pressed="${c.k===shelf}">${c.t}<small>${c.n}</small></button>`).join("")}
+function match(b){if(shelf!=="all"&&!SHELVES.find(s=>s.k===shelf).f(b))return false;if(!q)return true;const h=(b.title+" "+b.sub+" "+b.cat+" "+b.cover.hook).toLowerCase();return q.toLowerCase().split(/\s+/).every(w=>h.includes(w))}
+function renderGrid(){const list=BOOKS.filter(match);const lim=showAll||q||shelf!=="all"?list.length:12;
+  $("#allsum").textContent=q?`"${q}" 검색 결과 ${list.length}권`:`${list.length}권 · 모두 첫 장 무료`;
+  $("#grid").innerHTML=list.length?list.slice(0,lim).map(b=>`<div class="card"><a class="cv" href="/b/${b.id}" aria-label="${b.title} 자세히">${coverSVG(b)}</a><a href="/b/${b.id}" style="text-decoration:none"><b>${b.title}</b></a><span class="pp"><strong>${won(b.price)}</strong> · ${b.pages}쪽 · ${readTime(b)}</span><button class="add" type="button" data-add="${b.id}" aria-pressed="${cart.includes(b.id)}">${cart.includes(b.id)?"담김":"담기"}</button></div>`).join(""):`<p class="empty">"${q}"에 맞는 책이 없어요. 다른 말로 찾거나 분야를 눌러 보세요.</p>`;
+  $("#more").innerHTML=list.length>lim?`<button class="btn ghost" type="button" id="moreb">${list.length-lim}권 더 보기</button>`:"";}
+
+/* cart (시안: 이 페이지에만) */
+let cart=[];try{cart=JSON.parse(localStorage.getItem("hr-cart")||"[]").filter(id=>BOOKS.some(b=>b.id===id))}catch(e){}
+const saveCart=()=>{try{localStorage.setItem("hr-cart",JSON.stringify(cart))}catch(e){}};
+const BUMP=()=>{try{return localStorage.getItem("hr-bump")}catch(e){return null}};
+function syncCart(){saveCart();$("#cc").textContent=cart.length;const tot=cartDeals(cart,BUMP()).total;
+  $("#bar").hidden=!cart.length;$("#bartxt").textContent=`${cart.length}권 · ${won(tot)}`;
+  document.querySelectorAll("[data-add]").forEach(b=>{const on=cart.includes(b.dataset.add);if(b.classList.contains("add")){b.setAttribute("aria-pressed",on);b.textContent=on?"담김":"담기"}else{b.textContent=on?"담겼어요 · 장바구니 보기":"장바구니에 담기"}});
+  if(!$("#sheet").hidden)renderSheet();}
+function toast(t){const el=$("#toast");el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,1800)}
+function renderSheet(){const d=cartDeals(cart,BUMP()),tot=d.total;
+  $("#sheet").innerHTML=`<h3 id="sheet-h">장바구니 ${cart.length}권<button class="x" type="button" data-close aria-label="닫기">×</button></h3>
+  <ul>${cart.length?cart.map(id=>{const b=by(id);return `<li><span class="cv">${coverSVG(b)}</span><span><b>${b.title}</b><br>${won(b.price)}</span><button type="button" data-rm="${id}">빼기</button></li>`}).join(""):`<li style="display:block;color:var(--muted)">아직 담은 책이 없어요.</li>`}</ul>
+  ${d.lines.map(l=>`<div class="tot" style="font-size:14px;font-weight:400;color:var(--sale)"><span>${l.t}</span><span>−${won(l.off)}</span></div>`).join("")}<div class="tot"><span>합계</span><span>${won(tot)}</span></div>
+  ${cart.length?`<a class="btn lamp" href="/store#buy-${cart[cart.length-1]}">${won(tot)} 결제하러 가기</a>`:""}`}
+let lastFocus=null;
+function openLayer(id){lastFocus=document.activeElement;$("#scrim").hidden=false;$(id).hidden=false;const f=$(id).querySelector("button");f&&f.focus()}
+function closeLayers(){["#scrim","#sheet","#modal"].forEach(s=>$(s).hidden=true);lastFocus&&lastFocus.focus&&lastFocus.focus()}
+function openPreview(id){const b=by(id);if(!b)return;
+  $("#pvbox").innerHTML=`<div class="lbl">첫 장 무료 미리보기 · ${b.pages}쪽 중 일부</div><h3 id="pv-h">${b.toc[0][0]}<button class="x" type="button" data-close aria-label="닫기">×</button></h3><p class="txt">${b.preview}</p>
+  <div><b style="font-size:14px">이어지는 목차</b><ol>${b.toc.slice(1,5).map(c=>`<li>${c[0]}</li>`).join("")}<li>…외 ${Math.max(0,b.toc.length-5)}개 장</li></ol></div>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span class="price" style="font-size:20px">${won(b.price)}</span><button class="btn lamp" type="button" data-add="${b.id}">장바구니에 담기</button><a class="tlink" href="/b/${b.id}">책 소개 전체 보기</a></div>`;
+  openLayer("#modal");syncCart()}
+
+document.addEventListener("click",e=>{const t=e.target.closest("[data-add],[data-preview],[data-shelf],[data-chip],[data-goal],[data-close],[data-rm],#moreb,#cartb,#barbtn,#scrim,#sbtn");if(!t)return;
+  if(t.matches("[data-preview]")){e.preventDefault();openPreview(t.dataset.preview)}
+  else if(t.matches("[data-add]")){const id=t.dataset.add;if(cart.includes(id)){if(!t.classList.contains("add")){closeLayers();renderSheet();openLayer("#sheet");return}cart=cart.filter(x=>x!==id);toast("장바구니에서 뺐어요")}else{cart.push(id);toast(`담았어요 · ${by(id).title}`)}syncCart()}
+  else if(t.matches("[data-shelf],[data-chip]")){shelf=t.dataset.shelf||t.dataset.chip;showAll=false;renderChips();renderGrid();if(t.dataset.shelf)$("#all").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"})}
+  else if(t.matches("[data-goal]"))pickGoal(t.dataset.goal);
+  else if(t.matches("#moreb")){showAll=true;renderGrid()}
+  else if(t.matches("#cartb,#barbtn")){renderSheet();openLayer("#sheet")}
+  else if(t.matches("[data-rm]")){cart=cart.filter(x=>x!==t.dataset.rm);syncCart()}
+  else if(t.matches("#sbtn")){const h=$("#top");const o=h.classList.toggle("open");t.setAttribute("aria-expanded",o);if(o)$("#q").focus()}
+  else if(t.matches("[data-close],#scrim"))closeLayers();
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLayers()});
+$("#q").addEventListener("input",e=>{q=e.target.value.trim();renderGrid()});
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"){$("#all").scrollIntoView({behavior:"smooth"})}});
+$("#q").addEventListener("focus",()=>{if(window.scrollY<$("#all").offsetTop-200&&$("#q").value)$("#all").scrollIntoView()});
+renderChips();renderGrid();syncCart();
 </script>
+
 </body>
 </html>
