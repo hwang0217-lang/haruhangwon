@@ -238,7 +238,7 @@ const STORE=location.protocol.startsWith("http")&&!location.hostname.endsWith("c
 function priceHtml(b){return `<div class="price">${b.was?`<span class="off">${off(b)}%</span>`:""}<span class="now">${won(b.price)}</span><span class="once">${b.was?`<s>${won(b.was)}</s>`:""}<span>한 번 결제 · 평생 소장</span></span></div>`}
 const chHtml=(c,i)=>`<div class="ch"><div class="no">${String(i+1).padStart(2,"0")}</div><div><b>${c[0]}</b><ul>${c.slice(1).map(t=>`<li>${t}</li>`).join("")}</ul></div></div>`;
 function render(){
-  const id=(location.hash||"").slice(1);
+  const id=(location.hash||"").slice(1)||window.BOOK_ID||"";
   const b=BOOKS.find(x=>x.id===id)||BOOKS[0];
   document.title=b.title+" | 하루한권";
   const buyHref=STORE==="#"?"#"+b.id:"/store#buy-"+b.id;
@@ -310,7 +310,7 @@ function render(){
     </section>
     <section>
       <h2>같은 분야 다른 책</h2>
-      <div class="more">${BOOKS.filter(x=>x.id!==b.id).sort((x,y)=>(y.cat===b.cat)-(x.cat===b.cat)).slice(0,3).map(x=>`<a href="#${x.id}"><div class="cover">${coverSVG(x)}</div><b>${x.title}</b><span>${won(x.price)}</span></a>`).join("")}</div>
+      <div class="more">${BOOKS.filter(x=>x.id!==b.id).sort((x,y)=>(y.cat===b.cat)-(x.cat===b.cat)).slice(0,3).map(x=>`<a href="${STORE==="#"?"#"+x.id:"/b/"+x.id}"><div class="cover">${coverSVG(x)}</div><b>${x.title}</b><span>${won(x.price)}</span></a>`).join("")}</div>
     </section>
   </article>`;
   bar.innerHTML=`<span class="thumb">${coverSVG(b)}</span><span class="pb"><b>${b.was?`<span>${off(b)}%</span>`:""}${won(b.price)}</b><small>EPUB·PDF 즉시 · 7일 환불</small></span><button class="wish" type="button" data-w aria-pressed="${WISH.has(b.id)}" aria-label="찜하기">${HEART}</button><a class="btn primary" href="${buyHref}">바로 받기</a>`;
