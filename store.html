@@ -7,6 +7,13 @@
 <meta property="og:title" content="하루한권 스토어">
 <meta property="og:description" content="하루한권 전자책 전체 목록. 목차를 미리 보고 바로 구매하세요.">
 <meta property="og:url" content="https://haruhangwon.kr/store">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="하루한권">
+<meta property="og:image" content="https://haruhangwon.kr/og/home.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://haruhangwon.kr/store">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%23141C2B%27/%3E%3Crect x=%278%27 y=%277%27 width=%2716%27 height=%2718%27 rx=%272%27 fill=%27%23F2B84B%27/%3E%3C/svg%3E">
 <style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>하루한권 스토어</title>
@@ -222,7 +229,7 @@ const FEATURE=BOOKS.find(b=>b.id==="buy-agent")||BOOKS[0];
 const card=(b,tag="")=>`<div class="item"><button class="book" type="button" data-id="${b.id}">${cover(b)}<div class="meta">${tag}<b>${b.t}</b>${priceHtml(b)}<span class="sub">${b.pages}쪽 · ${readTime(b)}</span></div></button><button class="add" type="button" data-add="${b.id}" aria-pressed="${cart.includes(b.id)}">${cart.includes(b.id)?"담았어요 ✓":"장바구니 담기"}</button><button class="wish" type="button" data-w="${b.id}" aria-pressed="${WISH.has(b.id)}" aria-label="${b.t} 찜하기">${HEART}</button></div>`;
 function renderFeature(){
   const f=FEATURE;feature.hidden=cat!=="전체";
-  feature.innerHTML=`<section class="feature" aria-label="이번 주 추천"><div><div class="eyebrow">이번 주 추천 · ${f.cat}</div><h2>${f.t}</h2><p>${f.sub}</p>${priceHtml(f)}<div class="acts"><button class="btn primary" type="button" data-buy="${f.id}">바로 받기</button>${ON_SITE?`<a class="btn ghost" href="/book#${f.id}">미리보기</a>`:`<button class="btn ghost" type="button" data-open="${f.id}">자세히</button>`}</div></div>${cover(f)}</section>`;
+  feature.innerHTML=`<section class="feature" aria-label="이번 주 추천"><div><div class="eyebrow">이번 주 추천 · ${f.cat}</div><h2>${f.t}</h2><p>${f.sub}</p>${priceHtml(f)}<div class="acts"><button class="btn primary" type="button" data-buy="${f.id}">바로 받기</button>${ON_SITE?`<a class="btn ghost" href="/b/${f.id}">미리보기</a>`:`<button class="btn ghost" type="button" data-open="${f.id}">자세히</button>`}</div></div>${cover(f)}</section>`;
 }
 function renderGrid(){
   renderFeature();
@@ -256,7 +263,7 @@ function openDetail(id){
   open(`<div class="detail-top">${cover(b)}<div style="display:grid;gap:8px;min-width:0"><span class="sub">${b.cat}</span><h2>${b.t}</h2>${priceHtml(b)}<div class="facts"><span>EPUB</span><span>PDF</span><span>${b.pages}쪽</span><span>${readTime(b)}</span><span>바로 다운로드</span></div></div></div>
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" type="button" id="buyNow">바로 구매</button><button class="btn" type="button" id="addCart">${inCart?"장바구니에 있음":"장바구니 담기"}</button><button class="wish big" type="button" id="wishD" aria-pressed="${WISH.has(id)}">${HEART}<span>찜</span></button></div>
   <div class="toc"><b>이런 내용을 담았어요</b><ol>${b.toc.map(t=>`<li>${t[0]}</li>`).join("")}</ol></div>
-  ${ON_SITE?`<a class="btn" href="/book#${b.id}">상세페이지 전체 보기</a>`:""}
+  ${ON_SITE?`<a class="btn" href="/b/${b.id}">상세페이지 전체 보기</a>`:""}
   <p class="note">결제 후 이메일로 내려받기 링크가 발송되며, 구매내역에서 언제든 다시 받을 수 있습니다.</p>`);
   wishD.onclick=()=>{wishD.setAttribute("aria-pressed",WISH.toggle(id));renderChips();renderGrid()};
   addCart.onclick=()=>{if(!cart.includes(id)){cart.push(id);save()}addCart.textContent="장바구니에 있음"};
