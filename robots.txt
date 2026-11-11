@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /factory
+Disallow: /api/
+
+Sitemap: https://haruhangwon.kr/sitemap.xml

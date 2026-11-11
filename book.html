@@ -304,7 +304,7 @@ function render(){
       ${b.notice?`<p class="notice">${b.notice}</p>`:""}
     </section>
     <section>
-      <h2>함께 많이 보는 책</h2>
+      <h2>같은 분야 다른 책</h2>
       <div class="more">${BOOKS.filter(x=>x.id!==b.id).sort((x,y)=>(y.cat===b.cat)-(x.cat===b.cat)).slice(0,3).map(x=>`<a href="#${x.id}"><div class="cover">${coverSVG(x)}</div><b>${x.title}</b><span>${won(x.price)}</span></a>`).join("")}</div>
     </section>
   </article>`;
@@ -312,6 +312,8 @@ function render(){
   if(window.IntersectionObserver){if(window._io)_io.disconnect();window._io=new IntersectionObserver(([e])=>bar.classList.toggle("show",!e.isIntersecting));_io.observe(document.querySelector("#buybox .btn.primary"))}else bar.classList.add("show");
   document.querySelectorAll("[data-w]").forEach(w=>w.onclick=()=>{const on=WISH.toggle(b.id);document.querySelectorAll("[data-w]").forEach(x=>x.setAttribute("aria-pressed",on))});
 }
+// 페이지 안 이동(목차·FAQ 탭)은 주소의 #책id를 바꾸지 않고 스크롤만 함. 새로고침·공유 때 다른 책이 뜨는 문제 방지.
+document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const id=a.getAttribute("href").slice(1);if(!id||BOOKS.some(b=>b.id===id))return;const t=document.getElementById(id);if(!t)return;e.preventDefault();t.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})});
 window.addEventListener("hashchange",()=>{const id=location.hash.slice(1);if(BOOKS.some(b=>b.id===id)){render();window.scrollTo(0,0)}});
 render();
 </script>
