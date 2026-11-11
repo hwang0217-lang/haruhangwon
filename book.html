@@ -78,6 +78,9 @@ header nav a{text-decoration:none}
 .facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;font-size:13px;color:var(--muted);margin:0}
 .facts dt{float:left;margin-right:6px}.facts dd{margin:0;color:var(--ink);font-weight:600}
 .facts div{display:flex;gap:6px}
+.setbox{display:grid;gap:4px;border:1px dashed var(--line);border-radius:10px;padding:10px 12px;font-size:13px;text-decoration:none;color:var(--ink)}
+.setbox:hover{border-color:var(--ink)}
+.setbox b{font-size:14px}.setbox s{color:var(--muted)}
 .main{min-width:0;display:grid;gap:64px}
 .intro{display:grid;gap:12px}
 .cat{font-size:14px;font-weight:600;color:var(--accent)}
@@ -245,15 +248,16 @@ function render(){
       <div class="cat">${b.cat}</div>
       <h1>${b.title}</h1>
       <p class="subtitle">${b.sub}</p>
-      <ul class="metaline"><li>${b.chapters}장 · ${b.pages}쪽</li><li>EPUB · PDF</li><li>결제 즉시 받기</li></ul>
+      <ul class="metaline"><li>${b.chapters}장 · ${b.pages}쪽</li><li>${readTime(b)}이면 다 읽어요</li><li>EPUB · PDF</li><li>결제 즉시 받기</li></ul>
     </div>
   </section>
   <aside class="side">
     <div class="buy" id="buybox">
       <div class="head"><div class="cover">${coverSVG(b)}</div><b>${b.title}</b></div>
       ${priceHtml(b)}
-      <dl class="facts"><div><dt>형식</dt><dd>EPUB · PDF</dd></div><div><dt>분량</dt><dd>${b.pages}쪽</dd></div><div><dt>구성</dt><dd>${b.chapters}장</dd></div><div><dt>받는 시간</dt><dd>결제 즉시</dd></div></dl>
+      <dl class="facts"><div><dt>형식</dt><dd>EPUB · PDF</dd></div><div><dt>분량</dt><dd>${b.pages}쪽</dd></div><div><dt>구성</dt><dd>${b.chapters}장</dd></div><div><dt>읽는 시간</dt><dd>${readTime(b)}</dd></div></dl>
       <a class="btn primary" href="${buyHref}">${won(b.price)} 바로 받기 ${ARROW}</a>
+      ${(()=>{const g=goalOfBook(b.id);if(!g)return "";const st=setOf(g);return `<a class="setbox" href="${STORE==="#"?"#"+b.id:"/store#set-"+g.k}"><b>3권 세트로 사면 ${won(st.sum-st.price)} 아껴요</b><span>${g.t} 세트 ${won(st.price)} <s>${won(st.sum)}</s> ›</span></a>`})()}
       <ul class="badges"><li>${CHECK}결제 즉시 다운로드</li><li>${CHECK}EPUB · PDF</li><li>${CHECK}7일 환불</li></ul>
       <button class="wish" type="button" data-w aria-pressed="${WISH.has(b.id)}">${HEART}<span>찜하기</span></button>
       <div class="gethead">${LOCK}<span>결제하면 바로 열리는 파일 2개</span></div>
