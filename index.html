@@ -110,6 +110,8 @@ header.top .in{display:flex;align-items:center;gap:20px;height:64px}
 .gres{margin-top:20px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .gres a{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;text-decoration:none}
 .gres .cv{width:64px;aspect-ratio:1600/2400;border-radius:3px;overflow:hidden}
+.gres a.setlink{grid-column:1/-1;grid-template-columns:minmax(0,1fr) auto;background:var(--lamp-soft);border-color:var(--lamp)}
+.gres .setlink .go{font-weight:700;white-space:nowrap}
 .gres .cv svg{display:block;width:100%;height:100%}
 .gres small{color:var(--muted);display:block}
 .gres .st{font-size:12px;font-weight:700;color:var(--accent)}
@@ -386,7 +388,7 @@ $("#shelves").innerHTML=SHELVES.map(s=>{const bs=BOOKS.filter(s.f);return `<butt
 $("#goals").innerHTML=GOALS.map(g=>`<li><button type="button" aria-pressed="false" data-goal="${g.k}">${g.t}</button></li>`).join("");
 function pickGoal(k){const g=GOALS.find(x=>x.k===k);if(!g)return;
   document.querySelectorAll("[data-goal]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.goal===k));
-  $("#gres").innerHTML=g.ids.map(by).filter(Boolean).map((b,i)=>`<a href="/book#${b.id}"><span class="cv">${coverSVG(b)}</span><span><span class="st">${i+1}번째로 읽기</span><b style="display:block">${b.title}</b><small>${won(b.price)} · ${b.pages}쪽</small></span></a>`).join("")}
+  $("#gres").innerHTML=g.ids.map(by).filter(Boolean).map((b,i)=>`<a href="/book#${b.id}"><span class="cv">${coverSVG(b)}</span><span><span class="st">${i+1}번째로 읽기</span><b style="display:block">${b.title}</b><small>${won(b.price)} · ${readTime(b)}</small></span></a>`).join("")+(()=>{const st=setOf(g);return `<a class="setlink" href="/store#set-${g.k}"><span><b style="display:block">3권 세트로 한 번에 받기</b><small>${won(st.price)} · 따로 사면 ${won(st.sum)}</small></span><span class="go">세트 담기 ›</span></a>`})()}
 pickGoal(GOALS[0].k);
 
 
@@ -422,21 +424,22 @@ function renderChips(){$("#chips").innerHTML=[{k:"all",t:"전체",n:BOOKS.length
 function match(b){if(shelf!=="all"&&!SHELVES.find(s=>s.k===shelf).f(b))return false;if(!q)return true;const h=(b.title+" "+b.sub+" "+b.cat+" "+b.cover.hook).toLowerCase();return q.toLowerCase().split(/\s+/).every(w=>h.includes(w))}
 function renderGrid(){const list=BOOKS.filter(match);const lim=showAll||q||shelf!=="all"?list.length:12;
   $("#allsum").textContent=q?`"${q}" 검색 결과 ${list.length}권`:`${list.length}권 · 모두 첫 장 무료`;
-  $("#grid").innerHTML=list.length?list.slice(0,lim).map(b=>`<div class="card"><a class="cv" href="/book#${b.id}" aria-label="${b.title} 자세히">${coverSVG(b)}</a><a href="/book#${b.id}" style="text-decoration:none"><b>${b.title}</b></a><span class="pp"><strong>${won(b.price)}</strong> · ${b.pages}쪽</span><button class="add" type="button" data-add="${b.id}" aria-pressed="${cart.includes(b.id)}">${cart.includes(b.id)?"담김":"담기"}</button></div>`).join(""):`<p class="empty">"${q}"에 맞는 책이 없어요. 다른 말로 찾거나 분야를 눌러 보세요.</p>`;
+  $("#grid").innerHTML=list.length?list.slice(0,lim).map(b=>`<div class="card"><a class="cv" href="/book#${b.id}" aria-label="${b.title} 자세히">${coverSVG(b)}</a><a href="/book#${b.id}" style="text-decoration:none"><b>${b.title}</b></a><span class="pp"><strong>${won(b.price)}</strong> · ${b.pages}쪽 · ${readTime(b)}</span><button class="add" type="button" data-add="${b.id}" aria-pressed="${cart.includes(b.id)}">${cart.includes(b.id)?"담김":"담기"}</button></div>`).join(""):`<p class="empty">"${q}"에 맞는 책이 없어요. 다른 말로 찾거나 분야를 눌러 보세요.</p>`;
   $("#more").innerHTML=list.length>lim?`<button class="btn ghost" type="button" id="moreb">${list.length-lim}권 더 보기</button>`:"";}
 
 /* cart (시안: 이 페이지에만) */
 let cart=[];try{cart=JSON.parse(localStorage.getItem("hr-cart")||"[]").filter(id=>BOOKS.some(b=>b.id===id))}catch(e){}
 const saveCart=()=>{try{localStorage.setItem("hr-cart",JSON.stringify(cart))}catch(e){}};
-function syncCart(){saveCart();$("#cc").textContent=cart.length;const tot=cart.reduce((s,id)=>s+by(id).price,0);
+const BUMP=()=>{try{return localStorage.getItem("hr-bump")}catch(e){return null}};
+function syncCart(){saveCart();$("#cc").textContent=cart.length;const tot=cartDeals(cart,BUMP()).total;
   $("#bar").hidden=!cart.length;$("#bartxt").textContent=`${cart.length}권 · ${won(tot)}`;
   document.querySelectorAll("[data-add]").forEach(b=>{const on=cart.includes(b.dataset.add);if(b.classList.contains("add")){b.setAttribute("aria-pressed",on);b.textContent=on?"담김":"담기"}else{b.textContent=on?"담겼어요 · 장바구니 보기":"장바구니에 담기"}});
   if(!$("#sheet").hidden)renderSheet();}
 function toast(t){const el=$("#toast");el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,1800)}
-function renderSheet(){const tot=cart.reduce((s,id)=>s+by(id).price,0);
+function renderSheet(){const d=cartDeals(cart,BUMP()),tot=d.total;
   $("#sheet").innerHTML=`<h3 id="sheet-h">장바구니 ${cart.length}권<button class="x" type="button" data-close aria-label="닫기">×</button></h3>
   <ul>${cart.length?cart.map(id=>{const b=by(id);return `<li><span class="cv">${coverSVG(b)}</span><span><b>${b.title}</b><br>${won(b.price)}</span><button type="button" data-rm="${id}">빼기</button></li>`}).join(""):`<li style="display:block;color:var(--muted)">아직 담은 책이 없어요.</li>`}</ul>
-  <div class="tot"><span>합계</span><span>${won(tot)}</span></div>
+  ${d.lines.map(l=>`<div class="tot" style="font-size:14px;font-weight:400;color:var(--sale)"><span>${l.t}</span><span>−${won(l.off)}</span></div>`).join("")}<div class="tot"><span>합계</span><span>${won(tot)}</span></div>
   ${cart.length?`<a class="btn lamp" href="/store#buy-${cart[cart.length-1]}">${won(tot)} 결제하러 가기</a>`:""}`}
 let lastFocus=null;
 function openLayer(id){lastFocus=document.activeElement;$("#scrim").hidden=false;$(id).hidden=false;const f=$(id).querySelector("button");f&&f.focus()}
