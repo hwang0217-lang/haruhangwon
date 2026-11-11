@@ -112,6 +112,18 @@ button{font:inherit;cursor:pointer}
 .pickbar{background:var(--accent-soft);border-radius:14px;padding:16px 18px;margin-bottom:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}
 .pickbar b{font-family:var(--f-book);font-size:18px}
 .pickbar a{color:var(--accent);font-weight:600;font-size:14px;text-decoration:none}
+.sets{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,1fr);gap:14px;overflow-x:auto;padding-bottom:8px;scrollbar-width:thin}
+.set{display:grid;gap:10px;align-content:start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.set .covers{display:flex}.set .covers .mini{width:52px;aspect-ratio:5/8;border-radius:2px 4px 4px 2px;overflow:hidden;box-shadow:0 4px 10px -4px rgba(0,0,0,.35)}
+.set .covers .mini+.mini{margin-left:-14px}
+.set b{font-family:var(--f-book);font-size:17px;line-height:1.35}
+.set .btn{justify-self:start;border-radius:999px}
+.setoffer{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.deal{display:flex;justify-content:space-between;font-size:14px;color:var(--sale);font-variant-numeric:tabular-nums}
+.bump{display:flex;gap:12px;align-items:center;border:2px dashed var(--lamp);background:var(--lamp-soft);border-radius:12px;padding:12px;cursor:pointer}
+.bump .mini{width:40px;flex:none;aspect-ratio:5/8;border-radius:2px 4px 4px 2px;overflow:hidden}
+.bump .grow{flex:1;min-width:0;font-size:14px}.bump .grow b{display:block}
+.bump .was{text-decoration:line-through;color:var(--muted);margin-right:6px}
 .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent-ink);background:var(--accent);border-radius:999px;padding:1px 8px;justify-self:start}
 /* overlays */
 .scrim{position:fixed;inset:0;background:rgba(10,14,20,.5);z-index:20}
@@ -181,9 +193,10 @@ footer b{color:var(--ink)}
 <script>
 
 BOOKS.forEach(b=>{b.p=b.price;b.w=b.was;b.t=b.title;b.a="하루한권 편집부"});
-let cat="전체", cart=[], payMethod="카드";
-try{cart=JSON.parse(localStorage.getItem("hr-cart")||"[]").filter(id=>BOOKS.some(b=>b.id===id))}catch(e){cart=[]}
-const save=()=>{try{localStorage.setItem("hr-cart",JSON.stringify(cart))}catch(e){} document.getElementById("cartCount").textContent=cart.length;document.querySelectorAll(".add").forEach(x=>{const on=cart.includes(x.dataset.add);x.setAttribute("aria-pressed",on);x.textContent=on?"담았어요 ✓":"장바구니 담기"})};
+let cat="전체", cart=[], payMethod="카드", bump=null;
+try{cart=JSON.parse(localStorage.getItem("hr-cart")||"[]").filter(id=>BOOKS.some(b=>b.id===id));bump=localStorage.getItem("hr-bump")}catch(e){cart=[]}
+const addSet=k=>{const g=GOAL_OF(k);if(!g)return;g.ids.forEach(id=>{if(!cart.includes(id))cart.push(id)});save();openCart()};
+const save=()=>{if(bump&&!cart.includes(bump))bump=null;try{localStorage.setItem("hr-cart",JSON.stringify(cart));bump?localStorage.setItem("hr-bump",bump):localStorage.removeItem("hr-bump")}catch(e){} document.getElementById("cartCount").textContent=cart.length;document.querySelectorAll(".add").forEach(x=>{const on=cart.includes(x.dataset.add);x.setAttribute("aria-pressed",on);x.textContent=on?"담았어요 ✓":"장바구니 담기"})};
 const cover=(b,cls="cover")=>`<div class="${cls}">${coverSVG(b)}</div>`;
 const ON_SITE=location.protocol.startsWith("http")&&!location.hostname.endsWith("claude.ai")&&!location.hostname.includes("claudeusercontent");
 const priceHtml=b=>`<div class="price">${b.w?`<span class="off">${Math.round((1-b.p/b.w)*100)}%</span>`:""}<span class="now">${won(b.p)}</span>${b.w?`<span class="was">${won(b.w)}</span>`:""}</div>`;
@@ -206,7 +219,7 @@ function renderChips(){
     +`<button class="chip" type="button" aria-pressed="${cat==="찜한 책"}" data-c="찜한 책">찜한 책 ${w}</button>`;
 }
 const FEATURE=BOOKS.find(b=>b.id==="buy-agent")||BOOKS[0];
-const card=(b,tag="")=>`<div class="item"><button class="book" type="button" data-id="${b.id}">${cover(b)}<div class="meta">${tag}<b>${b.t}</b>${priceHtml(b)}<span class="sub">EPUB · PDF · ${b.pages}쪽</span></div></button><button class="add" type="button" data-add="${b.id}" aria-pressed="${cart.includes(b.id)}">${cart.includes(b.id)?"담았어요 ✓":"장바구니 담기"}</button><button class="wish" type="button" data-w="${b.id}" aria-pressed="${WISH.has(b.id)}" aria-label="${b.t} 찜하기">${HEART}</button></div>`;
+const card=(b,tag="")=>`<div class="item"><button class="book" type="button" data-id="${b.id}">${cover(b)}<div class="meta">${tag}<b>${b.t}</b>${priceHtml(b)}<span class="sub">${b.pages}쪽 · ${readTime(b)}</span></div></button><button class="add" type="button" data-add="${b.id}" aria-pressed="${cart.includes(b.id)}">${cart.includes(b.id)?"담았어요 ✓":"장바구니 담기"}</button><button class="wish" type="button" data-w="${b.id}" aria-pressed="${WISH.has(b.id)}" aria-label="${b.t} 찜하기">${HEART}</button></div>`;
 function renderFeature(){
   const f=FEATURE;feature.hidden=cat!=="전체";
   feature.innerHTML=`<section class="feature" aria-label="이번 주 추천"><div><div class="eyebrow">이번 주 추천 · ${f.cat}</div><h2>${f.t}</h2><p>${f.sub}</p>${priceHtml(f)}<div class="acts"><button class="btn primary" type="button" data-buy="${f.id}">바로 받기</button>${ON_SITE?`<a class="btn ghost" href="/book#${f.id}">미리보기</a>`:`<button class="btn ghost" type="button" data-open="${f.id}">자세히</button>`}</div></div>${cover(f)}</section>`;
@@ -215,19 +228,21 @@ function renderGrid(){
   renderFeature();
   if(cat==="전체"){pickbar.hidden=true;grid.className="";
     const cats=[...new Set(BOOKS.map(b=>b.cat))];
-    grid.innerHTML=cats.map(c=>{const bs=BOOKS.filter(b=>b.cat===c);return `<section class="shelf"><div class="shelf-h"><h3>${c} <span class="sub">${bs.length}권</span></h3><button type="button" data-cat="${c}">모두 보기 ›</button></div><div class="row-scroll">${bs.map(b=>card(b)).join("")}</div></section>`}).join("");
+    const sets=`<section class="shelf" id="sets"><div class="shelf-h"><h3>목표별 3권 세트 <span class="sub">따로 사는 것보다 약 20% 싸요</span></h3></div><div class="sets">${GOALS.map(g=>{const st=setOf(g);return `<div class="set"><div class="covers">${st.bs.map(b=>cover(b,"mini")).join("")}</div><b>${g.t}</b><span class="sub">${st.bs.map(b=>b.t).join(" → ")}</span><div class="price"><span class="now">${won(st.price)}</span><span class="was">${won(st.sum)}</span></div><button class="btn primary" type="button" data-set="${g.k}">세트 담기</button></div>`}).join("")}</div></section>`;
+    grid.innerHTML=sets+cats.map(c=>{const bs=BOOKS.filter(b=>b.cat===c);return `<section class="shelf"><div class="shelf-h"><h3>${c} <span class="sub">${bs.length}권</span></h3><button type="button" data-cat="${c}">모두 보기 ›</button></div><div class="row-scroll">${bs.map(b=>card(b)).join("")}</div></section>`}).join("");
     return}
   grid.className="grid";
   const g=cat.startsWith("goal-")?GOAL_OF(cat.slice(5)):null;
   pickbar.hidden=!g&&cat!=="찜한 책";
-  if(g)pickbar.innerHTML=`<b>${g.t}: 앞의 3권부터 순서대로 읽어 보세요</b><a href="/#goal">목표 다시 고르기</a>`;
+  if(g){const st=setOf(g);pickbar.innerHTML=`<b>${g.t}: 앞의 3권부터 순서대로 읽어 보세요</b><span class="setoffer"><span class="price"><span class="now">3권 세트 ${won(st.price)}</span><span class="was">${won(st.sum)}</span></span><button class="btn primary" type="button" data-set="${g.k}">세트 담기</button><a href="/#goal">목표 다시 고르기</a></span>`}
   else if(cat==="찜한 책")pickbar.innerHTML=`<b>${WISH.all().length?"찜한 책을 한 번에 담아 보세요":"아직 찜한 책이 없어요. 표지의 하트를 눌러 보세요"}</b>${WISH.all().length?'<button class="btn primary" type="button" id="wishAll">모두 장바구니에 담기</button>':""}`;
   grid.innerHTML=list().map((b,i)=>card(b,g&&i<3?`<span class="tag">${i+1}번째로 읽기</span>`:"")).join("");
   const wa=document.getElementById("wishAll");if(wa)wa.onclick=()=>{WISH.all().forEach(id=>{if(!cart.includes(id))cart.push(id)});save();openCart()};
 }
 chips.onclick=e=>{const c=e.target.closest(".chip");if(!c)return;cat=c.dataset.c;renderChips();renderGrid()};
 feature.onclick=e=>{const by=e.target.closest("[data-buy]");if(by){const id=by.dataset.buy;if(!cart.includes(id)){cart.push(id);save()}openCart();return}const o=e.target.closest("[data-open]");if(o)openDetail(o.dataset.open)};
-grid.onclick=e=>{const sc=e.target.closest("[data-cat]");if(sc){cat=sc.dataset.cat;renderChips();renderGrid();chips.scrollIntoView({block:"start"});return}
+pickbar.addEventListener("click",e=>{const st=e.target.closest("[data-set]");if(st)addSet(st.dataset.set)});
+grid.onclick=e=>{const st=e.target.closest("[data-set]");if(st){addSet(st.dataset.set);return}const sc=e.target.closest("[data-cat]");if(sc){cat=sc.dataset.cat;renderChips();renderGrid();chips.scrollIntoView({block:"start"});return}
   const ad=e.target.closest(".add");if(ad){const id=ad.dataset.add;if(cart.includes(id)){openCart();return}cart.push(id);save();ad.setAttribute("aria-pressed","true");ad.textContent="담았어요 ✓";return}
   const w=e.target.closest(".wish");if(w){w.setAttribute("aria-pressed",WISH.toggle(w.dataset.w));renderChips();if(cat==="찜한 책")renderGrid();return}
   const b=e.target.closest(".book");if(b)openDetail(b.dataset.id)};
@@ -238,7 +253,7 @@ scrim.onclick=close;document.addEventListener("keydown",e=>{if(e.key==="Escape")
 
 function openDetail(id){
   const b=BOOKS.find(x=>x.id===id), inCart=cart.includes(id);
-  open(`<div class="detail-top">${cover(b)}<div style="display:grid;gap:8px;min-width:0"><span class="sub">${b.cat}</span><h2>${b.t}</h2>${priceHtml(b)}<div class="facts"><span>EPUB</span><span>PDF</span><span>${b.pages}쪽</span><span>바로 다운로드</span></div></div></div>
+  open(`<div class="detail-top">${cover(b)}<div style="display:grid;gap:8px;min-width:0"><span class="sub">${b.cat}</span><h2>${b.t}</h2>${priceHtml(b)}<div class="facts"><span>EPUB</span><span>PDF</span><span>${b.pages}쪽</span><span>${readTime(b)}</span><span>바로 다운로드</span></div></div></div>
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" type="button" id="buyNow">바로 구매</button><button class="btn" type="button" id="addCart">${inCart?"장바구니에 있음":"장바구니 담기"}</button><button class="wish big" type="button" id="wishD" aria-pressed="${WISH.has(id)}">${HEART}<span>찜</span></button></div>
   <div class="toc"><b>이런 내용을 담았어요</b><ol>${b.toc.map(t=>`<li>${t[0]}</li>`).join("")}</ol></div>
   ${ON_SITE?`<a class="btn" href="/book#${b.id}">상세페이지 전체 보기</a>`:""}
@@ -250,9 +265,13 @@ function openDetail(id){
 function openCart(){
   const items=cart.map(id=>BOOKS.find(b=>b.id===id)).filter(Boolean);
   if(!items.length){open(`<h2>장바구니</h2><p class="sub">담긴 책이 없습니다. 마음에 드는 책을 눌러 담아 보세요.</p>`);return}
-  const sum=items.reduce((s,b)=>s+b.p,0);
+  const d=cartDeals(cart,bump), sum=d.total;
+  const cand=bump&&cart.includes(bump)?null:BOOKS.find(b=>b.id===bumpPick(cart));
+  const bumpHtml=cand&&cart.length<6?`<label class="bump" for="bumpck"><input id="bumpck" type="checkbox"> ${cover(cand,"mini")}<span class="grow"><b>이 책도 함께 받기</b>${cand.t}<br><span class="was">${won(cand.p)}</span><strong>${won(cand.p-BUMP_OFF)}</strong> · 지금 같이 담을 때만</span></label>`:"";
   open(`<h2>장바구니 · 결제</h2>
-  <div>${items.map(b=>`<div class="row">${cover(b,"mini")}<div class="grow"><b>${b.t}</b><div class="sub">${won(b.p)} · EPUB·PDF</div></div><button type="button" data-rm="${b.id}">빼기</button></div>`).join("")}</div>
+  <div>${items.map(b=>`<div class="row">${cover(b,"mini")}<div class="grow"><b>${b.t}</b><div class="sub">${won(b.p)} · EPUB·PDF${b.id===bump?" · 함께 사기":""}</div></div><button type="button" data-rm="${b.id}">빼기</button></div>`).join("")}</div>
+  ${bumpHtml}
+  ${d.lines.length?`<div style="display:grid;gap:4px"><div class="deal" style="color:var(--muted)"><span>상품 금액</span><span>${won(d.sum)}</span></div>${d.lines.map(l=>`<div class="deal"><span>${l.t}</span><span>−${won(l.off)}</span></div>`).join("")}</div>`:""}
   <div class="total"><span>결제 금액</span><span>${won(sum)}</span></div>
   <form id="f" style="display:grid;gap:12px">
     <label for="nm">이름<input id="nm" type="text" required value="홍길동"></label>
@@ -264,6 +283,7 @@ function openCart(){
     <p class="note">시안이라 실제 결제는 일어나지 않습니다.</p>
   </form>`);
   sheet.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{cart=cart.filter(i=>i!==b.dataset.rm);save();openCart()});
+  const bk=document.getElementById("bumpck");if(bk)bk.onchange=()=>{if(bk.checked){cart.push(cand.id);bump=cand.id;save();openCart()}};
   sheet.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{payMethod=b.dataset.m;sheet.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
   f.onsubmit=e=>{e.preventDefault();const email=em.value;const bought=items;cart=[];save();
     open(`<div class="done"><div class="mark"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h2>결제가 완료됐어요</h2><p class="sub">${email} 로 내려받기 링크를 보냈습니다. (시안)</p></div>
@@ -273,6 +293,7 @@ function openCart(){
 cartBtn.onclick=openCart;
 {const h=decodeURIComponent(location.hash.slice(1));if(h.startsWith("goal-")&&GOAL_OF(h.slice(5)))cat=h;}
 renderChips();renderGrid();save();
+{const sm=location.hash.match(/^#set-(.+)$/);if(sm&&GOAL_OF(sm[1]))addSet(sm[1])}
 const m=location.hash.match(/^#buy-(.+)$/);if(m&&BOOKS.some(b=>b.id===m[1])){if(!cart.includes(m[1])){cart.push(m[1]);save()}openCart()}
 </script>
 </body>

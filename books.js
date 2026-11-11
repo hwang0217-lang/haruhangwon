@@ -441,6 +441,31 @@ const GOALS=[
   {k:"career",t:"취업하고 연봉 올리기",s:"자소서·면접·연봉 협상",ids:["job-pass","salary-up","quit-money"],cats:["취업","커리어"]}
 ];
 
+/* 예상 읽는 시간: 실전서 1쪽 약 1.5분, 10분 단위로 반올림 */
+const readMin=b=>Math.max(30,Math.round(b.pages*1.5/10)*10);
+const readTime=b=>{const m=readMin(b),h=Math.floor(m/60),r=m%60;return "약 "+(h?h+"시간":"")+(h&&r?" ":"")+(r?r+"분":"")};
+
+/* 목표별 3권 세트: 따로 살 때 합계에서 약 20% 할인 (끝자리 900원) */
+const setOf=g=>{const bs=g.ids.map(id=>BOOKS.find(b=>b.id===id)).filter(Boolean);const sum=bs.reduce((s,b)=>s+b.price,0);return {g,bs,sum,price:Math.floor(sum*0.8/1000)*1000-100}};
+const goalOfBook=id=>GOALS.find(g=>g.ids.includes(id));
+
+/* 장바구니 할인 계산: 세트 3권이 다 담기면 세트 할인, '함께 사기'로 담은 책은 3,000원 할인 (같은 책에 두 번 안 겹침) */
+const BUMP_OFF=3000;
+function cartDeals(ids,bump){
+  const lines=[],covered=new Set();
+  GOALS.forEach(g=>{const s=setOf(g);if(s.bs.length===g.ids.length&&g.ids.every(id=>ids.includes(id)&&!covered.has(id))){g.ids.forEach(id=>covered.add(id));lines.push({t:`${g.t} 세트 할인`,off:s.sum-s.price})}});
+  if(bump&&ids.includes(bump)&&!covered.has(bump))lines.push({t:"함께 사기 할인",off:BUMP_OFF});
+  const sum=ids.map(id=>BOOKS.find(b=>b.id===id)).filter(Boolean).reduce((s,b)=>s+b.price,0);
+  const off=lines.reduce((s,l)=>s+l.off,0);
+  return {sum,lines,off,total:sum-off};
+}
+/* 결제창에서 권할 한 권: 담은 책과 같은 목표 세트의 다음 책, 없으면 같은 분류의 책 */
+function bumpPick(ids){
+  for(const id of ids){const g=goalOfBook(id);if(g){const n=g.ids.find(x=>!ids.includes(x));if(n)return n}}
+  for(const id of ids){const b=BOOKS.find(x=>x.id===id);const n=b&&BOOKS.find(x=>x.cat===b.cat&&!ids.includes(x.id));if(n)return n.id}
+  return null;
+}
+
 /* 찜 목록 (브라우저에만 저장) */
 const WISH={
   all(){try{return JSON.parse(localStorage.getItem("hr-wish")||"[]")}catch(e){return []}},
