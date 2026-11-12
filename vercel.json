@@ -1,9 +1,14 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "functions": { "api/factory/claude.js": { "maxDuration": 300 } },
+  "functions": {
+    "api/factory/claude.js": { "maxDuration": 300 },
+    "api/pay/*.js": { "includeFiles": "{exam/data.json,paid/**}" }
+  },
   "headers": [
     { "source": "/factory(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
-    { "source": "/api/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
+    { "source": "/api/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
+    { "source": "/pay", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
+    { "source": "/paid/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
   ]
 }
