@@ -1,4 +1,11 @@
 <!doctype html>
+<!--
+  ★ 이 글자가 보이면 지금은 '미리보기' 화면이에요. 문제를 풀 수 없어요.
+  1. 컴퓨터: zip 압축을 풀고, 풀린 .html 파일을 더블클릭해요(크롬·엣지·사파리).
+  2. 안드로이드폰: 파일을 저장 → '내 파일'에서 파일을 눌러 'Chrome' 또는 '삼성 인터넷'으로 열어요.
+  3. 아이폰·아이패드: 파일로는 열리지 않아요. 컴퓨터에서 열어 주세요.
+-->
+
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -142,6 +149,32 @@ main.wrap{padding-block:22px 72px;display:flex;flex-direction:column;gap:18px}
 </style>
 </head>
 <body>
+<div id="hg-envguard" style="background:#fff4d6;color:#4a3500;border-bottom:3px solid #e0a800;padding:14px 16px;font:16px/1.6 -apple-system,'Malgun Gothic','Apple SD Gothic Neo',sans-serif">
+<b style="font-size:18px">⚠️ 지금은 '미리보기' 화면이라 문제를 풀 수 없어요</b><br>
+아래처럼 <b>브라우저</b>로 열어 주세요.
+<ol style="margin:6px 0 0;padding-left:22px">
+<li><b>컴퓨터(윈도우·맥)</b>: zip을 마우스 오른쪽 버튼 → <b>압축 풀기</b> → 풀린 폴더의 <b>.html</b> 파일을 더블클릭 (크롬·엣지·사파리).</li>
+<li><b>안드로이드폰</b>: 카톡에서 파일 <b>저장</b> → <b>내 파일 → Download</b>에서 파일을 누르고 <b>Chrome</b> 또는 <b>삼성 인터넷</b>을 골라요.</li>
+<li><b>아이폰·아이패드</b>: 파일 미리보기로는 작동하지 않아요. 컴퓨터에서 열어 주세요.</li>
+</ol></div>
+<div id="hg-envbar" hidden style="background:#ffe1e1;color:#5a0000;border-bottom:3px solid #d33;padding:12px 44px 12px 16px;font:15px/1.6 -apple-system,'Malgun Gothic','Apple SD Gothic Neo',sans-serif;position:relative"></div>
+<script>
+(function(){
+var g=document.getElementById('hg-envguard');if(g)g.parentNode.removeChild(g);
+var bar=document.getElementById('hg-envbar'),msgs=[],ua=navigator.userAgent||'',href='';
+try{href=decodeURIComponent(location.href)}catch(e){href=location.href}
+var ok=false;try{var k='hg_envtest';localStorage.setItem(k,'1');ok=localStorage.getItem(k)==='1';localStorage.removeItem(k)}catch(e){ok=false}
+if(/KAKAOTALK|NAVER\(inapp|Instagram|FBAN|FBAV|Line\/|DaumApps|everytimeApp|BAND\//i.test(ua))
+ msgs.push('<b>카카오톡(앱) 안에서 열렸어요.</b> 여기서 풀면 기록이 사라질 수 있어요.<ol style="margin:4px 0 0;padding-left:22px"><li>화면 위나 아래의 <b>⋮ 또는 공유</b> 버튼을 눌러요.</li><li><b>다른 브라우저로 열기</b>를 눌러요.</li><li><b>Chrome · 삼성 인터넷 · Safari</b> 중 하나를 골라요.</li></ol>');
+if(!ok)
+ msgs.push('<b>이 화면에서는 기록이 저장되지 않아요.</b> 창을 닫으면 푼 기록이 사라져요.<ol style="margin:4px 0 0;padding-left:22px"><li>시크릿(비공개) 창이면 <b>일반 창</b>으로 열어요.</li><li>컴퓨터에서 <b>크롬·엣지</b>로 열어요.</li><li>안드로이드폰이면 <b>삼성 인터넷</b>이나 <b>Chrome</b>으로 다시 열어요.</li></ol>');
+if(/^file:/i.test(href)&&(/\/Temp\d*_[^\/]*\.zip\//i.test(href)||/\.zip\//i.test(href)||/\/AppData\/Local\/Temp\//i.test(href)))
+ msgs.push('<b>압축을 풀지 않고 열었어요.</b> 다음에 파일을 찾기 어려우니 이렇게 해 주세요.<ol style="margin:4px 0 0;padding-left:22px"><li>창을 닫아요.</li><li>zip 파일을 마우스 오른쪽 버튼 → <b>모두 압축 풀기</b>.</li><li>풀린 폴더의 .html 파일을 <b>바탕화면</b>에 두고 더블클릭해요.</li></ol>');
+if(msgs.length){bar.innerHTML=msgs.join('<hr style="border:0;border-top:1px solid #f0b0b0;margin:8px 0">')+'<button type="button" style="position:absolute;top:8px;right:10px;font-size:18px;background:none;border:0;cursor:pointer;color:inherit" aria-label="닫기">✕</button>';bar.hidden=false;bar.querySelector('button').onclick=function(){bar.hidden=true};}
+window.HG_ENV={storage:ok,msgs:msgs.length};
+})();
+</script>
+
 <header class="top"><div class="wrap"><a class="brand" href="#home" id="brand"></a><nav class="nav" id="nav"><a href="#home" data-v="home">대시보드</a><a href="#book" data-v="book">교재</a><a href="#tests" data-v="tests">모의고사</a><a href="#wrong" data-v="wrong">오답노트</a></nav></div></header>
 <div id="trialbar" hidden style="background:var(--pencil);color:var(--pencil-ink);text-align:center;font-weight:700;padding:8px 12px;font-size:.92rem">무료 체험판 · 과목별 모의고사 1회와 교재 첫 단원을 풀어 볼 수 있어요</div>
 <div id="app"></div>
