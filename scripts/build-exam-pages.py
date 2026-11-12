@@ -112,6 +112,33 @@ def how(x):
 
 CSS = open(os.path.join(ROOT, 'scripts/exam-page.css'), encoding='utf-8').read()
 
+def won(n):
+    return f'{n:,}원'
+
+def value(x):
+    tot = x['book'] + x['course']; me = x['krw']
+    if tot > me:
+        save = (tot - me) // 10000
+        cmp = f'''<div class="cmp" role="img" aria-label="교재와 강의를 따로 사면 약 {won(tot)}, 합격플랜은 {won(me)}">
+<div class="row"><span class="lb">교재 + 인강·학원 강의</span><span class="bar"><i style="width:100%"></i></span><b>약 {won(tot)}</b></div>
+<div class="row me"><span class="lb">{E(x["name"])} 합격플랜</span><span class="bar"><i style="width:{max(6, round(me / tot * 100))}%"></i></span><b>{won(me)}</b></div>
+<p class="save">따로 사는 것보다 <b>약 {save}만 원</b> 덜 들어요.</p>
+<p class="est">교재 {won(x["book"])} + 대표 강의 {won(x["course"])} 기준, 2026년 11월 온라인 판매가를 조사한 추정값이에요. 학원·강의마다 다를 수 있어요.</p></div>'''
+    else:
+        cmp = f'''<div class="cmp free"><p class="save">공식 자료는 무료지만, 대부분 영어이거나 문제만 있어요.</p>
+<p>합격플랜은 <b>쉬운 한국어 해설 교재</b>와 <b>실전 모의고사, 자동 채점, 약점 분석</b>을 파일 하나에 묶었어요. 학원이나 과외를 따로 찾지 않아도 혼자 끝까지 준비할 수 있어요.</p></div>'''
+    inc = [('교재', f'{x["units"]}단원', '쉬운 설명 + 핵심 형광펜'), ('모의고사', x['mocks'], f'총 {x["qn"]}문항, 회차끼리 안 겹쳐요'),
+           ('타이머', '실제 시험 시간' if x['id'] != 'us-citizen' else '인터뷰 방식', '실전처럼 풀어요' if x['id'] != 'us-citizen' else '한 문제씩 질문처럼'),
+           ('채점', '바로 채점', '실제 합격선 + 약점 단원 안내')]
+    tiles = ''.join(f'<li><span>{a}</span><b>{b}</b><small>{c}</small></li>' for a, b, c in inc)
+    return f'''<section class="value" aria-labelledby="vh">
+<p class="eye">{E(x["name"])} 혼자 준비하기</p>
+<h2 id="vh">학원 안 가도 됩니다.</h2>
+<p class="vsub">교재부터 모의고사 10회까지 다 들어 있어요.</p>
+<div class="vgrid">{cmp}<ul class="inc">{tiles}</ul></div>
+<div class="vcta"><a class="btn lamp" href="/trial/{x["id"]}.html" target="_blank" rel="noopener">무료 체험판 바로 풀어 보기</a><a class="btn ghostd" href="#buy">가격 보기</a></div>
+</section>'''
+
 def page(x):
     secs = ''.join(f'<section><h2>{E(h)}</h2>{block(t)}</section>' for h, t in x['secs'])
     buy = f'<a class="btn buy" href="{E(x["buy"])}" rel="noopener">구매하기</a>' if x.get('buy') else '<a class="btn buy" aria-disabled="true">결제 준비 중</a>'
@@ -128,7 +155,8 @@ def page(x):
 <header><div class="in"><a class="logo" href="/">하루<b>한권</b></a><nav><a href="/">전자책</a><a href="/exams">합격플랜</a></nav></div></header>
 <main class="in">
 <p class="crumb"><a href="/exams">합격플랜</a> › {E(x["name"])}</p>
-<div class="top"><div class="cover">{fig(x["pics"][0], t)}</div>
+{value(x)}
+<div class="top" id="buy"><div class="cover">{fig(x["pics"][0], t)}</div>
 <div class="buybox"><h1>{title_html(x)}</h1><p class="lead">{E(x["one"])}</p>
 <div class="price"><span>{x["krw"]:,}원</span><small>해외 결제 ${x["usd"]}</small></div>
 <div class="acts">{buy}<a class="btn" href="/trial/{x["id"]}.html" target="_blank" rel="noopener">체험판 바로 풀어 보기</a><a class="btn" href="/trial/{x["id"]}.html" download="{x["name"].replace(" ","")}_무료체험판.html">체험판 파일 받기</a></div>
