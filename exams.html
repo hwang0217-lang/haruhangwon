@@ -28,7 +28,7 @@ nav a{color:var(--muted);text-decoration:none;font-weight:600;margin-left:16px}
 h2{font-size:18px;margin:36px 0 12px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px}
-.card b{font-size:17px}.card .d{color:var(--muted);font-size:14px;flex:1}
+.card b{font-size:17px}.nm{text-decoration:none;color:inherit;display:grid;gap:10px}.nm img{width:100%;height:auto;border-radius:10px;border:1px solid var(--line)}.card .d{color:var(--muted);font-size:14px;flex:1}
 .price{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
 .acts{display:flex;gap:8px;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:9px 16px;font-weight:700;font-size:14px;text-decoration:none;border:1.5px solid var(--line);color:inherit;background:var(--card)}
@@ -57,7 +57,7 @@ const fmt=x=>cur==="usd"?"$"+x.usd:x.krw.toLocaleString("ko-KR")+"원";
 function render(){
   document.querySelectorAll(".cur button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.c===cur));
   const groups=["국내 자격증","검정고시","해외·이민"];
-  document.getElementById("list").innerHTML=groups.map(g=>`<h2>${g}</h2><div class="grid">${EXAMS.filter(x=>x.g===g).map(x=>`<div class="card" id="${x.id}"><b>${x.name}</b><span class="d">${x.desc}</span><span class="price">${fmt(x)}</span><div class="acts"><a class="btn" href="/trial/${x.id}.html" download>무료 체험판</a>${x.buy?`<a class="btn buy" href="${x.buy}" rel="noopener">구매하기</a>`:`<a class="btn buy" aria-disabled="true">결제 준비 중</a>`}</div></div>`).join("")}</div>`).join("");
+  document.getElementById("list").innerHTML=groups.map(g=>`<h2>${g}</h2><div class="grid">${EXAMS.filter(x=>x.g===g).map(x=>`<div class="card" id="${x.id}"><a class="nm" href="/exam/${x.id}"><img src="/exam/img/${x.id}-0.webp" alt="" width="1304" height="976" loading="lazy"><b>${x.name}</b></a><span class="d">${x.desc}</span><span class="price">${fmt(x)}</span><div class="acts"><a class="btn" href="/exam/${x.id}">자세히 보기</a><a class="btn" href="/trial/${x.id}.html" download="${x.name.replace(/ /g,"")}_무료체험판.html">무료 체험판</a>${x.buy?`<a class="btn buy" href="${x.buy}" rel="noopener">구매하기</a>`:`<a class="btn buy" aria-disabled="true">결제 준비 중</a>`}</div></div>`).join("")}</div>`).join("");
 }
 document.querySelector(".cur").onclick=e=>{const b=e.target.closest("button");if(!b)return;cur=b.dataset.c;try{localStorage.setItem("exam-cur",cur)}catch(e){}render()};
 render();
