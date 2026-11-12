@@ -21,7 +21,7 @@ h2{font-size:22px;margin:0 0 12px}h3{font-size:18px;margin:0 0 8px}
 .how{margin-top:48px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px}
 @media (max-width:640px){.how{padding:20px 16px}}
 .steps{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:28px}.steps ul{padding-left:20px;margin:8px 0}.steps li li{margin:4px 0}
-.env{margin-top:28px;padding:18px 20px;border-radius:14px;background:var(--soft)}.env ul{padding-left:20px;margin:0}
+.env{margin-top:28px;padding:18px 20px;border-radius:14px;background:var(--soft)}.env ul,.env ol{padding-left:22px;margin:0 0 10px}.env p{margin:10px 0 4px}
 .desc section{margin-top:40px}.desc ul{padding-left:20px}
 .tw{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:480px;font-size:14px}th,td{border:1px solid var(--line);padding:8px 10px;text-align:center}th{background:var(--soft)}td:first-child,th:first-child{text-align:left}
 .note{color:var(--muted);font-size:13px;margin:48px 0;border-top:1px solid var(--line);padding-top:16px}
