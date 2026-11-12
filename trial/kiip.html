@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>사회통합프로그램 종합평가 합격플랜 (무료 체험판)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+ --bg:#F2F4F3;--surface:#FFFFFF;--sunk:#F7F8F7;--ink:#172026;--muted:#5A666C;--line:#D8DEDB;--accent:#1D5C4D;--accent-ink:#FFFFFF;--pencil:#E3B126;--pencil-ink:#3B2E05;--hl:#FFE27A;
+ --good:#1E7B4E;--mid:#B57A12;--bad:#C2402F;--good-bg:#E3F2EA;--bad-bg:#FBE9E6;--mid-bg:#FBF1DC;--gichul:#6B4FA0;--gichul-bg:#EFEAF8;
+ --f-display:'Space Grotesk','Noto Sans KR',system-ui,sans-serif;--f-body:'Inter','Noto Sans KR',system-ui,sans-serif;--f-mono:'IBM Plex Mono',ui-monospace,monospace;
+ --r:10px;--fs:16px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#101416;--surface:#192024;--sunk:#141A1D;--ink:#E5EBE8;--muted:#9AA7A4;--line:#2B3539;--accent:#5CC0A2;--accent-ink:#0C1A16;--pencil:#E8BE48;--pencil-ink:#2A2003;--hl:rgba(232,190,72,.38);--good:#5CC795;--mid:#E2AE4A;--bad:#F07A68;--good-bg:#173027;--bad-bg:#3A1E1A;--mid-bg:#352A14;--gichul:#B9A2E8;--gichul-bg:#2A2340;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#101416;--surface:#192024;--sunk:#141A1D;--ink:#E5EBE8;--muted:#9AA7A4;--line:#2B3539;--accent:#5CC0A2;--accent-ink:#0C1A16;--pencil:#E8BE48;--pencil-ink:#2A2003;--hl:rgba(232,190,72,.38);--good:#5CC795;--mid:#E2AE4A;--bad:#F07A68;--good-bg:#173027;--bad-bg:#3A1E1A;--mid-bg:#352A14;--gichul:#B9A2E8;--gichul-bg:#2A2340;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{font-size:var(--fs)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+.wrap{max-width:1000px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em;line-height:1.25}
+h1{font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.12}
+h2{font-size:1.2rem}h3{font-size:1.05rem}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--pencil);outline-offset:2px}
+.muted{color:var(--muted)}.small{font-size:.85rem}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+/* top nav */
+.top{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;gap:6px;min-height:52px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:700;margin-right:auto;text-decoration:none;color:var(--ink);font-size:1rem;padding:6px 0}
+.nav a{display:inline-block;padding:7px 12px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:600;font-size:.92rem}
+.nav a.on{background:var(--ink);color:var(--surface)}
+body.in-exam .top .nav{display:none}
+.hero{background:var(--surface);border-bottom:1px solid var(--line);padding-block:28px 24px}
+.hero .lead{max-width:64ch;color:var(--muted);margin:10px 0 0}
+main.wrap{padding-block:22px 72px;display:flex;flex-direction:column;gap:18px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.panel>h2{margin-bottom:10px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.card{display:block;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;border-top:5px solid var(--sc,var(--accent))}
+.card:hover{border-color:var(--sc,var(--accent))}
+.card h3{margin-bottom:4px}
+.btn,.primary,.ghost{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:10px 18px;font-weight:600;text-decoration:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:.95rem}
+.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.sm{padding:6px 12px;font-size:.85rem}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.next{display:flex;gap:16px;align-items:center;flex-wrap:wrap;border:2px solid var(--accent);background:var(--surface);border-radius:var(--r);padding:18px 20px}
+.next .what{flex:1 1 260px}.next .what b{font-size:1.15rem;display:block;font-family:var(--f-display)}
+.stat{display:flex;gap:22px;flex-wrap:wrap}.stat div{min-width:90px}.stat b{display:block;font-size:1.6rem;font-family:var(--f-display)}
+.bar{display:grid;grid-template-columns:minmax(120px,1.4fr) 2fr auto;gap:10px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line)}
+.bar:last-child{border-bottom:0}
+.track{height:10px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.fill{height:100%;background:var(--good)}.fill.mid{background:var(--mid)}.fill.bad{background:var(--bad)}
+.num{font-family:var(--f-mono);font-size:.85rem;color:var(--muted);white-space:nowrap}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--sunk);border:1px solid var(--line);color:var(--muted);vertical-align:middle}
+.tag.good{background:var(--good-bg);color:var(--good);border-color:transparent}.tag.bad{background:var(--bad-bg);color:var(--bad);border-color:transparent}.tag.mid{background:var(--mid-bg);color:var(--mid);border-color:transparent}
+.lv{display:inline-block;font-size:.66rem;font-weight:700;padding:1px 6px;border-radius:4px;vertical-align:middle;margin-left:6px;border:1px solid var(--line);color:var(--muted)}.lv0{color:var(--good);border-color:var(--good)}.lv1{color:var(--mid);border-color:var(--mid)}.lv2{color:var(--bad);border-color:var(--bad)}
+.gichul{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.02em;padding:1px 6px;border-radius:4px;background:var(--gichul-bg);color:var(--gichul);vertical-align:middle;margin-left:6px}
+/* tests list */
+.tests{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.tcard{display:flex;flex-direction:column;gap:2px;text-align:left;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;background:var(--surface)}
+.tcard .tn{font-weight:700;font-family:var(--f-display);font-size:1.05rem}
+.tcard.pass{border-color:var(--good);background:var(--good-bg)}.tcard.fail{border-color:var(--bad);background:var(--bad-bg)}
+/* exam */
+.exhead{position:sticky;top:0;z-index:15;background:var(--surface);border-bottom:1px solid var(--line)}
+.exhead .wrap{display:flex;align-items:center;gap:12px;min-height:54px;flex-wrap:wrap;padding-block:6px}
+.exhead .t{font-weight:700;margin-right:auto}
+.timer{font-family:var(--f-mono);font-weight:600;padding:4px 10px;border-radius:6px;background:var(--sunk);border:1px solid var(--line)}
+.timer.low{background:var(--bad-bg);color:var(--bad)}
+.prog{height:4px;background:var(--line)}.prog i{display:block;height:100%;background:var(--accent)}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.qmeta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px;font-size:.85rem;color:var(--muted)}
+.qmeta .qn{font-family:var(--f-mono);font-weight:600;color:var(--ink)}
+.passage{background:var(--sunk);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:14px 16px;margin-bottom:14px;white-space:pre-line}
+.au{margin:0 0 14px}.fig{margin:6px 0 14px;text-align:center}.fig svg:not([width]){width:100%;max-width:640px;height:auto}.fig svg{max-width:100%}
+.fig figcaption{font-size:.8rem;color:var(--muted)}
+.qtext{font-size:1.12rem;font-weight:600;margin:0 0 4px}
+.qko{color:var(--muted);margin:0 0 14px;font-size:.95rem}
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:12px 14px}
+.opt:hover{border-color:var(--accent)}
+.opt .bub{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--muted);display:grid;place-items:center;font-family:var(--f-mono);font-size:.8rem;font-weight:700}
+.opt.sel{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface))}
+.opt.sel .bub{background:var(--pencil);border-color:var(--pencil);color:var(--pencil-ink)}
+.opt.right{border-color:var(--good);background:var(--good-bg)}.opt.right .bub{background:var(--good);border-color:var(--good);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}.opt.wrong .bub{background:var(--bad);border-color:var(--bad);color:#fff}
+.opt small{display:block;color:var(--muted);font-size:.85rem}
+.exnav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:16px}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:6px}
+.qgrid button{height:38px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-family:var(--f-mono);font-size:.85rem}
+.qgrid button.done{background:var(--sunk);font-weight:700}
+.qgrid button.cur{outline:2px solid var(--accent)}
+.qgrid button.flag{border-color:var(--pencil);box-shadow:inset 0 -4px 0 var(--pencil)}
+.qgrid button.ok{background:var(--good-bg);color:var(--good);border-color:var(--good)}.qgrid button.no{background:var(--bad-bg);color:var(--bad);border-color:var(--bad)}
+.expl{margin-top:14px;padding:12px 14px;border-radius:8px;background:var(--sunk);border:1px solid var(--line);font-size:.95rem}
+.expl b{font-family:var(--f-display)}
+/* result */
+.score{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.score .big{font-family:var(--f-display);font-size:3rem;font-weight:700;line-height:1}
+.verdict{font-weight:700;padding:6px 14px;border-radius:999px}
+.verdict.pass{background:var(--good-bg);color:var(--good)}.verdict.fail{background:var(--bad-bg);color:var(--bad)}
+.tips{padding-left:20px;margin:0}.tips li{margin:8px 0}
+.rv{border-top:1px solid var(--line);padding:16px 0}
+.rv:first-child{border-top:0}
+/* book */
+.chlist{list-style:none;padding:0;margin:0}
+.chlist li a{display:flex;gap:12px;align-items:center;padding:12px 4px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit}
+.chlist .no{font-family:var(--f-mono);color:var(--muted);width:2.4em;flex:none}
+.chlist .nm{flex:1}.chlist .nm small{display:block;color:var(--muted)}
+.chk{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:.8rem}
+.chk.on{background:var(--good);border-color:var(--good);color:#fff}
+.goal{background:var(--mid-bg);border-radius:8px;padding:12px 14px;margin-bottom:12px}
+.goal b{display:block;font-size:.8rem;color:var(--mid);margin-bottom:2px}
+.terms{width:100%;border-collapse:collapse;font-size:.95rem}
+.terms td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.terms td:first-child{font-weight:600;width:42%}
+.sec h3{margin:18px 0 6px}
+.sec p{margin:6px 0}
+.sec ul,.sec ol{margin:6px 0;padding-left:22px}
+.sec table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.93rem}
+.sec th,.sec td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+.sec th{background:var(--sunk)}
+.en{font-weight:600}
+.ko{color:var(--muted)}
+.callout{border-left:4px solid var(--accent);background:var(--sunk);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0}
+.terms td:first-child b,.terms td:first-child>span,.sec li b,.sec p b,mark.hl{background:linear-gradient(transparent 52%,var(--hl) 52%);color:inherit;padding:0 2px;border-radius:2px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.trap{border-left:4px solid var(--bad);background:var(--bad-bg);padding:10px 14px;border-radius:0 8px 8px 0;margin:8px 0}
+.mini{border:1px solid var(--line);border-radius:10px;padding:14px;margin:10px 0}
+.crumb{font-size:.88rem;margin-bottom:10px}.crumb a{text-decoration:none}
+.chnav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.switch{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{border:0;background:var(--surface);padding:6px 12px;font-size:.88rem}
+.seg button.on{background:var(--ink);color:var(--surface)}
+.foot{font-size:.8rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:620px){.fig{overflow-x:auto}.fig svg:not([width]){min-width:520px}.bar{grid-template-columns:1fr auto}.bar .track{grid-column:1/-1;grid-row:2}.qcard{padding:16px}.score .big{font-size:2.4rem}}
+@media print{.top,.exhead,.actions,.exnav{display:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="#home" id="brand"></a><nav class="nav" id="nav"><a href="#home" data-v="home">대시보드</a><a href="#book" data-v="book">교재</a><a href="#tests" data-v="tests">모의고사</a><a href="#wrong" data-v="wrong">오답노트</a></nav></div></header>
+<div id="trialbar" hidden style="background:var(--pencil);color:var(--pencil-ink);text-align:center;font-weight:700;padding:8px 12px;font-size:.92rem">무료 체험판 · 과목별 모의고사 1회와 교재 첫 단원을 풀어 볼 수 있어요</div>
+<div id="app"></div>
+<script>
+const D={"id":"kiip-v1","title":"사회통합프로그램 종합평가 합격플랜","short":"KIIP 합격플랜","eyebrow":"KIIP Level 5 · 종합평가 객관식 36문항 + 작문·구술 대비","lead":"한국사회이해 내용을 쉬운 한국어와 영어 용어로 정리한 교재, 객관식 모의고사 10회(360문항 모두 다름), 작문·구술 예시 답. 채점 즉시 약한 영역과 공부할 단원을 알려 드려요.","about":"<p>사회통합프로그램 종합평가는 객관식 36문항, 작문 4문항, 구술 5문항이고 <b>100점 중 60점 이상<\/b>이면 합격이에요. 이 앱은 객관식을 10회 연습하고, 작문·구술은 교재 마지막 단원에서 연습해요.<\/p><p class=\"small muted\">문항은 모두 공개된 시험 형식과 교재 범위에 맞춰 새로 만든 것이며 실제 시험 문제가 아니에요. 제도와 숫자는 2026년 11월 기준이니 시험 전에 하이코리아·사회통합정보망에서 확인하세요.<\/p>","foot":"이 자료는 법무부 및 사회통합프로그램 운영 기관과 무관한 개인 제작 학습 자료입니다. 구매자 1인(1가구) 학습용이며 무단 복제·재배포를 금합니다.","subjects":[{"k":"k","ko":"종합평가 객관식","en":"Comprehensive Test","color":"#2F5DA8","min":50,"n":36,"topics":{"VOC":["어휘와 문법","Vocabulary & Grammar","빈칸 앞뒤의 연결 표현(-아서, -지만, -는데)을 먼저 보세요.",4],"READ":["읽기","Reading","선택지를 먼저 읽고, 글에서 숫자·요일·장소를 하나씩 확인하세요.",4],"POL":["정치와 민주주의","Politics & Democracy","삼권분립 그림과 임기 표(대통령 5년, 국회의원 4년)를 외우세요.",5],"LAW":["법과 체류 생활","Law & Residence","긴급 전화번호 표(112·119·1345·1366)를 외우세요.",3],"ECO":["경제와 일","Economy & Work","4대 보험 그림과 최저임금·근로시간을 외우세요.",4],"SOC":["사회·교육·복지","Society, Education & Welfare","학제(6-3-3-4)와 복지 기관 이름을 외우세요.",4],"CUL":["문화와 전통","Culture & Traditions","명절 음식 표(설-떡국, 추석-송편)를 외우세요.",4],"HIS":["한국의 역사","Korean History","연표 그림의 순서(고조선→삼국→고려→조선→일제→광복)를 외우세요.",5],"GEO":["지리와 나라 상징","Geography & Symbols","태극기 그림과 국경일 5개를 외우세요.",3]},"real":"36문항 50분"}],"pass":{"mode":"pct","cut":60,"note":"종합평가 60점 이상"},"book":{"k":[{"id":"INTRO","ko":"시험 안내와 공부 순서","en":"About the Test","goal":"종합평가 구성과 합격 기준을 알고 공부 순서를 정한다.","terms":[["종합평가","5단계 수료 시험"],["필기","written"],["작문","writing"],["구술","speaking"]],"secs":[["종합평가 구성","<table><tr><th>구분<\/th><th>문항<\/th><th>시간<\/th><th>배점<\/th><\/tr><tr><td>객관식<\/td><td>36<\/td><td>50분<\/td><td>65점<\/td><\/tr><tr><td>작문(200자)<\/td><td>4<\/td><td>10분<\/td><td>10점<\/td><\/tr><tr><td>구술(면접)<\/td><td>5<\/td><td>10분<\/td><td>25점<\/td><\/tr><\/table><p><b>100점 중 60점 이상<\/b>이면 합격이에요. 이 앱의 모의고사는 객관식 36문항이고, 60%를 합격선으로 보여 줘요. 작문·구술은 마지막 단원에서 연습해요.<\/p>"],["공부 순서","<ol><li>모의고사 1회로 진단<\/li><li>60% 아래 단원 공부<\/li><li>2~8회 연습, 9~10회는 시간 재기<\/li><li>오답노트 다시 풀기<\/li><li>작문·구술 예시 답을 소리 내어 읽기<\/li><\/ol>"]],"traps":[],"quiz":[]},{"id":"VOC","ko":"어휘와 문법","en":"Vocabulary & Grammar","goal":"빈칸 앞뒤의 연결 표현(-아서, -지만, -는데)을 먼저 보세요.","terms":[["전혀","not at all (부정과 함께)"],["높임말","honorifics"],["관용 표현","idiom"]],"secs":[["자주 나오는 연결 표현","<table><tr><th>표현<\/th><th>뜻<\/th><th>예<\/th><\/tr><tr><td>-아/어서<\/td><td>이유·순서 (명령문 X)<\/td><td>피곤해서 잤어요<\/td><\/tr><tr><td>-(으)니까<\/td><td>이유 (명령문 O)<\/td><td>비가 오니까 우산을 가져가세요<\/td><\/tr><tr><td>-지만<\/td><td>반대<\/td><td>예쁘지만 비싸요<\/td><\/tr><tr><td>-(으)려고<\/td><td>의도<\/td><td>이사하려고 집을 봐요<\/td><\/tr><tr><td>-기 위해서<\/td><td>목적<\/td><td>잘하기 위해서 공부해요<\/td><\/tr><tr><td>-에 따르면<\/td><td>출처<\/td><td>뉴스에 따르면<\/td><\/tr><\/table>"],["높임말","<table><tr><th>보통<\/th><th>높임<\/th><\/tr><tr><td>먹다<\/td><td>드시다·잡수시다<\/td><\/tr><tr><td>자다<\/td><td>주무시다<\/td><\/tr><tr><td>있다<\/td><td>계시다<\/td><\/tr><tr><td>주다<\/td><td>드리다<\/td><\/tr><tr><td>나이 / 집 / 밥 / 말<\/td><td>연세 / 댁 / 진지 / 말씀<\/td><\/tr><\/table>"],["관용 표현","<table><tr><td>손이 크다<\/td><td>넉넉하게 쓴다<\/td><\/tr><tr><td>발이 넓다<\/td><td>아는 사람이 많다<\/td><\/tr><tr><td>눈이 높다<\/td><td>기준이 높다<\/td><\/tr><tr><td>입이 무겁다<\/td><td>비밀을 잘 지킨다<\/td><\/tr><tr><td>미역국을 먹다<\/td><td>시험에 떨어지다<\/td><\/tr><\/table>"]],"traps":[],"nquiz":4,"quiz":[{"q":"\"눈이 높다\"의 뜻으로 알맞은 것은?","o":["시력이 좋다","잘 운다","키가 크다","좋은 것만 찾는다"],"a":3,"e":"눈이 높다 = 기준이 높다."},{"q":"물건이 마음에 들지 않으면 일주일 안에 (    )할 수 있어요.","o":["교육","교류","교환","교통"],"a":2,"e":"다른 물건으로 바꾸다 = 교환."},{"q":"약속 시간에 늦을 것 같아서 친구에게 (    ).","o":["준비했어요","결정했어요","연습했어요","연락했어요"],"a":3,"e":"늦을 때는 연락해요."},{"q":"\"입이 무겁다\"의 뜻으로 알맞은 것은?","o":["비밀을 잘 지킨다","음식을 많이 먹는다","말을 많이 한다","노래를 못한다"],"a":0,"e":"입이 무겁다 = 말을 함부로 옮기지 않는다."}]},{"id":"READ","ko":"읽기","en":"Reading","goal":"","terms":[],"secs":[],"traps":[],"quiz":[],"locked":1},{"id":"POL","ko":"정치와 민주주의","en":"Politics & Democracy","goal":"","terms":[],"secs":[],"traps":[],"quiz":[],"locked":1},{"id":"LAW","ko":"법과 체류 생활","en":"Law & Residence","goal":"","terms":[],"secs":[],"traps":[],"quiz":[],"locked":1},{"id":"ECO","ko":"경제와 일","en":"Economy & Work","goal":"","terms":[],"secs":[],"traps":[],"quiz":[],"locked":1},{"id":"SOC","ko":"사회·교육·복지","en":"Society, Education & Welfare","goal":"","terms":[],"secs":[],"traps":[],"quiz":[],"locked":1},{"id":"CUL","ko":"문화와 전통","en":"Culture & Traditions","goal":"","terms":[],"secs":[],"traps":[],"quiz":[],"locked":1},{"id":"HIS","ko":"한국의 역사","en":"Korean History","goal":"","terms":[],"secs":[],"traps":[],"quiz":[],"locked":1},{"id":"GEO","ko":"지리와 나라 상징","en":"Geography & Symbols","goal":"","terms":[],"secs":[],"traps":[],"quiz":[],"locked":1},{"id":"ORAL","ko":"작문·구술 대비","en":"Writing & Interview","goal":"","terms":[],"secs":[],"traps":[],"quiz":[],"locked":1}]},"figs":{"flag":"<svg viewBox=\"0 0 360 240\" width=\"360\" role=\"img\" aria-label=\"태극기\"><rect width=\"360\" height=\"240\" fill=\"#fff\" stroke=\"#999\"/><path d=\"M180 75 a45 45 0 0 1 0 90 a22.5 22.5 0 0 1 0 -45 a22.5 22.5 0 0 0 0 -45z\" fill=\"#003478\"/><path d=\"M180 75 a45 45 0 0 0 0 90 a22.5 22.5 0 0 1 0 -45 a22.5 22.5 0 0 0 0 -45z\" fill=\"#C60C30\"/><g transform=\"rotate(-33.7 76 58)\"><rect x=\"56\" y=\"46\" width=\"40\" height=\"6\" fill=\"#111\"/><rect x=\"56\" y=\"55\" width=\"40\" height=\"6\" fill=\"#111\"/><rect x=\"56\" y=\"64\" width=\"40\" height=\"6\" fill=\"#111\"/><\/g><g transform=\"rotate(33.7 284 58)\"><rect x=\"264\" y=\"46\" width=\"18\" height=\"6\" fill=\"#111\"/><rect x=\"286\" y=\"46\" width=\"18\" height=\"6\" fill=\"#111\"/><rect x=\"264\" y=\"55\" width=\"40\" height=\"6\" fill=\"#111\"/><rect x=\"264\" y=\"64\" width=\"18\" height=\"6\" fill=\"#111\"/><rect x=\"286\" y=\"64\" width=\"18\" height=\"6\" fill=\"#111\"/><\/g><g transform=\"rotate(33.7 76 182)\"><rect x=\"56\" y=\"170\" width=\"40\" height=\"6\" fill=\"#111\"/><rect x=\"56\" y=\"179\" width=\"18\" height=\"6\" fill=\"#111\"/><rect x=\"78\" y=\"179\" width=\"18\" height=\"6\" fill=\"#111\"/><rect x=\"56\" y=\"188\" width=\"40\" height=\"6\" fill=\"#111\"/><\/g><g transform=\"rotate(-33.7 284 182)\"><rect x=\"264\" y=\"170\" width=\"18\" height=\"6\" fill=\"#111\"/><rect x=\"286\" y=\"170\" width=\"18\" height=\"6\" fill=\"#111\"/><rect x=\"264\" y=\"179\" width=\"18\" height=\"6\" fill=\"#111\"/><rect x=\"286\" y=\"179\" width=\"18\" height=\"6\" fill=\"#111\"/><rect x=\"264\" y=\"188\" width=\"18\" height=\"6\" fill=\"#111\"/><rect x=\"286\" y=\"188\" width=\"18\" height=\"6\" fill=\"#111\"/><\/g><\/svg><figcaption>그림: 태극기 — 흰 바탕, 가운데 태극(빨강·파랑), 네 모서리 건(☰)·곤(☷)·감(☵)·리(☲)<\/figcaption>","branches":"<svg viewBox=\"0 0 600 230\" role=\"img\" aria-label=\"삼권분립\" font-family=\"sans-serif\" fill=\"currentColor\"><g transform=\"translate(15,20)\"><rect width=\"170\" height=\"120\" rx=\"12\" fill=\"#2F5DA8\" opacity=\".15\" stroke=\"#2F5DA8\" stroke-width=\"2\"/><text x=\"85\" y=\"35\" text-anchor=\"middle\" font-size=\"20\" font-weight=\"700\">국회<\/text><text x=\"85\" y=\"62\" text-anchor=\"middle\" font-size=\"15\">입법부<\/text><text x=\"85\" y=\"88\" text-anchor=\"middle\" font-size=\"13\">법을 만들어요<\/text><text x=\"85\" y=\"108\" text-anchor=\"middle\" font-size=\"12\">국회의원 300명·4년<\/text><\/g><g transform=\"translate(215,20)\"><rect width=\"170\" height=\"120\" rx=\"12\" fill=\"#1F7A6C\" opacity=\".15\" stroke=\"#1F7A6C\" stroke-width=\"2\"/><text x=\"85\" y=\"35\" text-anchor=\"middle\" font-size=\"20\" font-weight=\"700\">정부<\/text><text x=\"85\" y=\"62\" text-anchor=\"middle\" font-size=\"15\">행정부<\/text><text x=\"85\" y=\"88\" text-anchor=\"middle\" font-size=\"13\">법대로 나라 살림<\/text><text x=\"85\" y=\"108\" text-anchor=\"middle\" font-size=\"12\">대통령 5년 단임<\/text><\/g><g transform=\"translate(415,20)\"><rect width=\"170\" height=\"120\" rx=\"12\" fill=\"#A8552F\" opacity=\".15\" stroke=\"#A8552F\" stroke-width=\"2\"/><text x=\"85\" y=\"35\" text-anchor=\"middle\" font-size=\"20\" font-weight=\"700\">법원<\/text><text x=\"85\" y=\"62\" text-anchor=\"middle\" font-size=\"15\">사법부<\/text><text x=\"85\" y=\"88\" text-anchor=\"middle\" font-size=\"13\">재판을 해요<\/text><text x=\"85\" y=\"108\" text-anchor=\"middle\" font-size=\"12\">3심제<\/text><\/g><text x=\"300\" y=\"185\" text-anchor=\"middle\" font-size=\"15\">서로 견제하고 균형을 이뤄요 (삼권분립)<\/text><text x=\"300\" y=\"210\" text-anchor=\"middle\" font-size=\"13\">+ 헌법재판소: 법이 헌법에 맞는지 판단<\/text><\/svg><figcaption>그림: 삼권분립<\/figcaption>","timeline":"<svg viewBox=\"0 0 640 170\" role=\"img\" aria-label=\"한국사 연표\" font-family=\"sans-serif\" fill=\"currentColor\"><line x1=\"20\" y1=\"70\" x2=\"620\" y2=\"70\" stroke=\"currentColor\" stroke-width=\"3\"/><circle cx=\"35\" cy=\"70\" r=\"7\" fill=\"#1F7A6C\"/><text x=\"35\" y=\"100\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">고조선<\/text><text x=\"35\" y=\"118\" text-anchor=\"middle\" font-size=\"11\">단군<\/text><circle cx=\"110\" cy=\"70\" r=\"7\" fill=\"#1F7A6C\"/><text x=\"110\" y=\"45\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">삼국<\/text><text x=\"110\" y=\"27\" text-anchor=\"middle\" font-size=\"11\">고구려·백제·신라<\/text><circle cx=\"185\" cy=\"70\" r=\"7\" fill=\"#1F7A6C\"/><text x=\"185\" y=\"100\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">통일신라·발해<\/text><text x=\"185\" y=\"118\" text-anchor=\"middle\" font-size=\"11\">676~<\/text><circle cx=\"265\" cy=\"70\" r=\"7\" fill=\"#1F7A6C\"/><text x=\"265\" y=\"45\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">고려<\/text><text x=\"265\" y=\"27\" text-anchor=\"middle\" font-size=\"11\">918 왕건<\/text><circle cx=\"345\" cy=\"70\" r=\"7\" fill=\"#1F7A6C\"/><text x=\"345\" y=\"100\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">조선<\/text><text x=\"345\" y=\"118\" text-anchor=\"middle\" font-size=\"11\">1392 이성계<\/text><circle cx=\"420\" cy=\"70\" r=\"7\" fill=\"#1F7A6C\"/><text x=\"420\" y=\"45\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">세종 한글<\/text><text x=\"420\" y=\"27\" text-anchor=\"middle\" font-size=\"11\">1443<\/text><circle cx=\"480\" cy=\"70\" r=\"7\" fill=\"#1F7A6C\"/><text x=\"480\" y=\"100\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">일제 강점<\/text><text x=\"480\" y=\"118\" text-anchor=\"middle\" font-size=\"11\">1910<\/text><circle cx=\"540\" cy=\"70\" r=\"7\" fill=\"#1F7A6C\"/><text x=\"540\" y=\"45\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">광복<\/text><text x=\"540\" y=\"27\" text-anchor=\"middle\" font-size=\"11\">1945<\/text><circle cx=\"605\" cy=\"70\" r=\"7\" fill=\"#1F7A6C\"/><text x=\"605\" y=\"100\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">6·25<\/text><text x=\"605\" y=\"118\" text-anchor=\"middle\" font-size=\"11\">1950<\/text><text x=\"320\" y=\"160\" text-anchor=\"middle\" font-size=\"13\">고조선 → 삼국 → 통일신라·발해 → 고려 → 조선 → 일제 강점기 → 광복 → 대한민국<\/text><\/svg><figcaption>그림: 한국사 큰 흐름<\/figcaption>","ins4":"<svg viewBox=\"0 0 600 150\" role=\"img\" aria-label=\"4대 보험\" font-family=\"sans-serif\" fill=\"currentColor\"><g transform=\"translate(10,15)\"><rect width=\"138\" height=\"110\" rx=\"12\" fill=\"#2F5DA8\" opacity=\".12\" stroke=\"#2F5DA8\"/><text x=\"69\" y=\"38\" text-anchor=\"middle\" font-size=\"26\">👵<\/text><text x=\"69\" y=\"68\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\">국민연금<\/text><text x=\"69\" y=\"92\" text-anchor=\"middle\" font-size=\"12\">늙었을 때 연금<\/text><\/g><g transform=\"translate(158,15)\"><rect width=\"138\" height=\"110\" rx=\"12\" fill=\"#2F5DA8\" opacity=\".12\" stroke=\"#2F5DA8\"/><text x=\"69\" y=\"38\" text-anchor=\"middle\" font-size=\"26\">🏥<\/text><text x=\"69\" y=\"68\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\">건강보험<\/text><text x=\"69\" y=\"92\" text-anchor=\"middle\" font-size=\"12\">병원비 일부<\/text><\/g><g transform=\"translate(306,15)\"><rect width=\"138\" height=\"110\" rx=\"12\" fill=\"#2F5DA8\" opacity=\".12\" stroke=\"#2F5DA8\"/><text x=\"69\" y=\"38\" text-anchor=\"middle\" font-size=\"26\">💼<\/text><text x=\"69\" y=\"68\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\">고용보험<\/text><text x=\"69\" y=\"92\" text-anchor=\"middle\" font-size=\"12\">실업급여<\/text><\/g><g transform=\"translate(454,15)\"><rect width=\"138\" height=\"110\" rx=\"12\" fill=\"#2F5DA8\" opacity=\".12\" stroke=\"#2F5DA8\"/><text x=\"69\" y=\"38\" text-anchor=\"middle\" font-size=\"26\">⛑<\/text><text x=\"69\" y=\"68\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\">산재보험<\/text><text x=\"69\" y=\"92\" text-anchor=\"middle\" font-size=\"12\">일하다 다치면<\/text><\/g><\/svg><figcaption>그림: 4대 보험<\/figcaption>","school":"<svg viewBox=\"0 0 600 120\" role=\"img\" aria-label=\"학제\" font-family=\"sans-serif\" fill=\"currentColor\"><rect x=\"10\" y=\"20\" width=\"210\" height=\"50\" rx=\"8\" fill=\"#1F7A6C\" opacity=\".2\" stroke=\"#1F7A6C\"/><text x=\"115.0\" y=\"43\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"700\">초등학교<\/text><text x=\"115.0\" y=\"62\" text-anchor=\"middle\" font-size=\"12\">6년<\/text><rect x=\"225\" y=\"20\" width=\"110\" height=\"50\" rx=\"8\" fill=\"#1F7A6C\" opacity=\".2\" stroke=\"#1F7A6C\"/><text x=\"280.0\" y=\"43\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"700\">중학교<\/text><text x=\"280.0\" y=\"62\" text-anchor=\"middle\" font-size=\"12\">3년<\/text><rect x=\"340\" y=\"20\" width=\"110\" height=\"50\" rx=\"8\" fill=\"#2F5DA8\" opacity=\".2\" stroke=\"#2F5DA8\"/><text x=\"395.0\" y=\"43\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"700\">고등학교<\/text><text x=\"395.0\" y=\"62\" text-anchor=\"middle\" font-size=\"12\">3년<\/text><rect x=\"455\" y=\"20\" width=\"135\" height=\"50\" rx=\"8\" fill=\"#A8552F\" opacity=\".2\" stroke=\"#A8552F\"/><text x=\"522.5\" y=\"43\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"700\">대학교<\/text><text x=\"522.5\" y=\"62\" text-anchor=\"middle\" font-size=\"12\">4년<\/text><path d=\"M10 85 h325\" stroke=\"#1F7A6C\" stroke-width=\"3\"/><text x=\"172\" y=\"108\" text-anchor=\"middle\" font-size=\"13\">의무교육 9년<\/text><\/svg><figcaption>그림: 한국의 학제 6-3-3-4<\/figcaption>","holidays":"<svg viewBox=\"0 0 600 170\" role=\"img\" aria-label=\"명절과 국경일\" font-family=\"sans-serif\" fill=\"currentColor\"><g transform=\"translate(10,10)\"><rect width=\"138\" height=\"70\" rx=\"10\" fill=\"#A8552F\" opacity=\".1\" stroke=\"#A8552F\"/><text x=\"69\" y=\"26\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"700\">설날<\/text><text x=\"69\" y=\"46\" text-anchor=\"middle\" font-size=\"12\">음력 1.1<\/text><text x=\"69\" y=\"62\" text-anchor=\"middle\" font-size=\"12\">떡국·세배<\/text><\/g><g transform=\"translate(158,10)\"><rect width=\"138\" height=\"70\" rx=\"10\" fill=\"#A8552F\" opacity=\".1\" stroke=\"#A8552F\"/><text x=\"69\" y=\"26\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"700\">추석<\/text><text x=\"69\" y=\"46\" text-anchor=\"middle\" font-size=\"12\">음력 8.15<\/text><text x=\"69\" y=\"62\" text-anchor=\"middle\" font-size=\"12\">송편·성묘<\/text><\/g><g transform=\"translate(306,10)\"><rect width=\"138\" height=\"70\" rx=\"10\" fill=\"#A8552F\" opacity=\".1\" stroke=\"#A8552F\"/><text x=\"69\" y=\"26\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"700\">동지<\/text><text x=\"69\" y=\"46\" text-anchor=\"middle\" font-size=\"12\">12월 22일경<\/text><text x=\"69\" y=\"62\" text-anchor=\"middle\" font-size=\"12\">팥죽<\/text><\/g><g transform=\"translate(454,10)\"><rect width=\"138\" height=\"70\" rx=\"10\" fill=\"#A8552F\" opacity=\".1\" stroke=\"#A8552F\"/><text x=\"69\" y=\"26\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"700\">정월대보름<\/text><text x=\"69\" y=\"46\" text-anchor=\"middle\" font-size=\"12\">음력 1.15<\/text><text x=\"69\" y=\"62\" text-anchor=\"middle\" font-size=\"12\">부럼·오곡밥<\/text><\/g><g transform=\"translate(10,90)\"><rect width=\"138\" height=\"70\" rx=\"10\" fill=\"#A8552F\" opacity=\".1\" stroke=\"#A8552F\"/><text x=\"69\" y=\"26\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"700\">삼일절<\/text><text x=\"69\" y=\"46\" text-anchor=\"middle\" font-size=\"12\">3월 1일<\/text><text x=\"69\" y=\"62\" text-anchor=\"middle\" font-size=\"12\">국경일<\/text><\/g><g transform=\"translate(158,90)\"><rect width=\"138\" height=\"70\" rx=\"10\" fill=\"#A8552F\" opacity=\".1\" stroke=\"#A8552F\"/><text x=\"69\" y=\"26\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"700\">광복절<\/text><text x=\"69\" y=\"46\" text-anchor=\"middle\" font-size=\"12\">8월 15일<\/text><text x=\"69\" y=\"62\" text-anchor=\"middle\" font-size=\"12\">국경일<\/text><\/g><g transform=\"translate(306,90)\"><rect width=\"138\" height=\"70\" rx=\"10\" fill=\"#A8552F\" opacity=\".1\" stroke=\"#A8552F\"/><text x=\"69\" y=\"26\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"700\">개천절<\/text><text x=\"69\" y=\"46\" text-anchor=\"middle\" font-size=\"12\">10월 3일<\/text><text x=\"69\" y=\"62\" text-anchor=\"middle\" font-size=\"12\">국경일<\/text><\/g><g transform=\"translate(454,90)\"><rect width=\"138\" height=\"70\" rx=\"10\" fill=\"#A8552F\" opacity=\".1\" stroke=\"#A8552F\"/><text x=\"69\" y=\"26\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"700\">한글날<\/text><text x=\"69\" y=\"46\" text-anchor=\"middle\" font-size=\"12\">10월 9일<\/text><text x=\"69\" y=\"62\" text-anchor=\"middle\" font-size=\"12\">국경일<\/text><\/g><\/svg><figcaption>그림: 명절 음식과 국경일 (국경일 5개 = 삼일절·제헌절(7.17)·광복절·개천절·한글날)<\/figcaption>","recycle":"<svg viewBox=\"0 0 600 130\" role=\"img\" aria-label=\"분리배출\" font-family=\"sans-serif\" fill=\"currentColor\"><g transform=\"translate(10,10)\"><rect width=\"107\" height=\"100\" rx=\"10\" fill=\"#1F7A6C\" opacity=\".1\" stroke=\"#1F7A6C\"/><text x=\"53\" y=\"38\" text-anchor=\"middle\" font-size=\"26\">🗑<\/text><text x=\"53\" y=\"66\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">종량제 봉투<\/text><text x=\"53\" y=\"86\" text-anchor=\"middle\" font-size=\"11\">일반 쓰레기<\/text><\/g><g transform=\"translate(127,10)\"><rect width=\"107\" height=\"100\" rx=\"10\" fill=\"#1F7A6C\" opacity=\".1\" stroke=\"#1F7A6C\"/><text x=\"53\" y=\"38\" text-anchor=\"middle\" font-size=\"26\">🍚<\/text><text x=\"53\" y=\"66\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">음식물<\/text><text x=\"53\" y=\"86\" text-anchor=\"middle\" font-size=\"11\">물기 빼기<\/text><\/g><g transform=\"translate(244,10)\"><rect width=\"107\" height=\"100\" rx=\"10\" fill=\"#1F7A6C\" opacity=\".1\" stroke=\"#1F7A6C\"/><text x=\"53\" y=\"38\" text-anchor=\"middle\" font-size=\"26\">🧴<\/text><text x=\"53\" y=\"66\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">플라스틱<\/text><text x=\"53\" y=\"86\" text-anchor=\"middle\" font-size=\"11\">라벨 떼기<\/text><\/g><g transform=\"translate(361,10)\"><rect width=\"107\" height=\"100\" rx=\"10\" fill=\"#1F7A6C\" opacity=\".1\" stroke=\"#1F7A6C\"/><text x=\"53\" y=\"38\" text-anchor=\"middle\" font-size=\"26\">📦<\/text><text x=\"53\" y=\"66\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">종이<\/text><text x=\"53\" y=\"86\" text-anchor=\"middle\" font-size=\"11\">펴서 묶기<\/text><\/g><g transform=\"translate(478,10)\"><rect width=\"107\" height=\"100\" rx=\"10\" fill=\"#1F7A6C\" opacity=\".1\" stroke=\"#1F7A6C\"/><text x=\"53\" y=\"38\" text-anchor=\"middle\" font-size=\"26\">🥫<\/text><text x=\"53\" y=\"66\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">캔·병<\/text><text x=\"53\" y=\"86\" text-anchor=\"middle\" font-size=\"11\">헹구기<\/text><\/g><\/svg><figcaption>그림: 쓰레기 분리배출<\/figcaption>"},"realtime":"필기 객관식 36문항 50분(+작문·구술)","score":{"type":"pts","max":65,"cut":39,"note":"객관식 65점 (+작문 10점, 구술 25점 = 100점 중 60점 이상 합격). 객관식 39점이면 60% 수준"},"bank":{"ki0010":{"id":"ki0010","s":"k","t":"READ","q":"다음 글의 내용과 같은 것을 고르십시오.","o":["음식물 쓰레기는 물에 담가 버린다.","페트병은 라벨을 붙인 채 버린다.","조개껍데기는 음식물 쓰레기로 버린다.","음식물 쓰레기는 물기를 빼서 버린다."],"a":3,"e":"정답: \"음식물 쓰레기는 물기를 빼서 버린다.\" — 나머지는 글과 달라요.","p":"〈분리배출 안내〉 음식물 쓰레기는 물기를 빼고 전용 봉투나 수거함에 버립니다. 동물 뼈, 조개껍데기, 달걀 껍데기는 일반 쓰레기(종량제 봉투)로 버려야 합니다. 페트병은 라벨을 떼고 납작하게 눌러 버립니다.","d":1},"ki0024":{"id":"ki0024","s":"k","t":"READ","q":"다음 글의 내용과 다른 것을 고르십시오.","o":["주민센터에서 신고할 수 있다.","체류지를 옮기면 신고해야 한다.","신고는 원래 살던 동네에서만 한다.","신고하지 않으면 과태료를 낼 수 있다."],"a":2,"e":"글과 다른 것: \"신고는 원래 살던 동네에서만 한다.\".","p":"〈전입신고 안내〉 외국인이 체류지를 옮기면 정해진 기간 안에 새 주소지의 주민센터나 출입국·외국인관서에 신고해야 합니다. 신고하지 않으면 과태료가 나올 수 있습니다. 하이코리아 누리집에서도 신고할 수 있습니다.","d":1},"ki0035":{"id":"ki0035","s":"k","t":"READ","q":"다음 글의 내용과 같은 것을 고르십시오.","o":["실을 잡으면 공부를 잘한다고 한다.","돌잡이 상에는 음식만 올린다.","돌잡이에서 연필을 잡으면 부자가 된다고 한다.","돌잡이 상에는 여러 물건을 올린다."],"a":3,"e":"정답: \"돌잡이 상에는 여러 물건을 올린다.\".","p":"한국에서는 아이가 태어난 지 1년이 되면 돌잔치를 합니다. 돌잡이 상에 실, 연필, 돈 등을 올려 두고 아이가 무엇을 잡는지 보며 아이의 미래를 즐겁게 상상합니다. 실을 잡으면 오래 산다고 합니다.","d":1},"ki0042":{"id":"ki0042","s":"k","t":"READ","q":"다음 글의 내용과 다른 것을 고르십시오.","o":["지하철에는 노약자를 위한 자리가 있다.","노약자석은 버스에만 있다.","필요한 사람을 위해 자리를 비워 두면 좋다.","지하철에서 큰 소리로 통화하지 않는 것이 좋다."],"a":1,"e":"글과 다른 것: \"노약자석은 버스에만 있다.\".","p":"지하철에는 노약자, 장애인, 임산부를 위한 자리가 있습니다. 이 자리가 비어 있어도 필요한 사람이 탈 수 있도록 비워 두는 것이 좋습니다. 또 지하철 안에서는 큰 소리로 통화하지 않는 것이 예절입니다.","d":2},"ki0053":{"id":"ki0053","s":"k","t":"VOC","q":"은행에서 통장을 만들 때 외국인등록증이 (    ).","o":["복잡해요","유명해요","필요해요","중요해요"],"a":2,"e":"서류가 있어야 할 때 = 필요하다.","d":1},"ki0057":{"id":"ki0057","s":"k","t":"VOC","q":"선생님께서 교실에 (    ).","o":["들어와","들어갔다","들어오셨어요","들어왔어요"],"a":2,"e":"선생님은 높임: -(으)시-.","d":0},"ki0075":{"id":"ki0075","s":"k","t":"VOC","q":"면접을 보기 전에 너무 (    ) 손에 땀이 났어요.","o":["심심해서","긴장해서","편안해서","배불러서"],"a":1,"e":"긴장하면 손에 땀이 나요.","d":2},"ki0079":{"id":"ki0079","s":"k","t":"VOC","q":"다음 중 반대말이 바르게 연결되지 않은 것은?","o":["빌리다 – 돌려주다","출발하다 – 도착하다","따뜻하다 – 덥다","늘다 – 줄다"],"a":2,"e":"따뜻하다의 반대는 시원하다/춥다예요.","d":2},"ki0107":{"id":"ki0107","s":"k","t":"POL","q":"정치와 민주주의에 대한 설명으로 옳은 것은?","o":["외국인은 어떤 선거에도 투표할 수 없다.","대통령의 임기는 4년이고 두 번까지 할 수 있다.","국무총리는 대통령을 돕고 행정 각부를 관리한다.","헌법재판소는 행정부에 속한다."],"a":2,"e":"틀린 보기 바로잡기: \"대통령의 임기는 4년이고 두 번까지 할 수 있다.\" → 대통령은 5년 단임이에요. / \"헌법재판소는 행정부에 속한다.\" → 헌법재판소는 독립된 헌법 기관이에요. / \"외국인은 어떤 선거에도 투표할 수 없다.\" → 영주 자격 3년이 지난 외국인은 지방선거에 투표할 수 있어요.","d":1},"ki0113":{"id":"ki0113","s":"k","t":"POL","q":"정치와 민주주의에 대한 설명으로 옳은 것은?","o":["지방선거는 4년마다 열린다.","법원은 법을 만드는 기관이다.","대통령은 국회의원들이 뽑는다.","헌법재판소는 행정부에 속한다."],"a":0,"e":"틀린 보기 바로잡기: \"헌법재판소는 행정부에 속한다.\" → 헌법재판소는 독립된 헌법 기관이에요. / \"대통령은 국회의원들이 뽑는다.\" → 국민이 직접 뽑아요. / \"법원은 법을 만드는 기관이다.\" → 법원은 재판하는 사법부예요.","d":0},"ki0116":{"id":"ki0116","s":"k","t":"POL","q":"정치와 민주주의에 대한 설명으로 옳지 않은 것은?","o":["헌법재판소는 행정부에 속한다.","지방선거는 4년마다 열린다.","국회의원의 임기는 4년이다.","대한민국의 주권은 국민에게 있다."],"a":0,"e":"옳지 않은 것: \"헌법재판소는 행정부에 속한다.\" → 바른 내용: 헌법재판소는 독립된 헌법 기관이에요.","d":1},"ki0130":{"id":"ki0130","s":"k","t":"POL","q":"정치와 민주주의에 대한 설명으로 옳지 않은 것은?","o":["국회의원의 임기는 5년이다.","국회의원의 임기는 4년이다.","대한민국은 민주공화국이다.","법원은 재판을 하는 사법부이다."],"a":0,"e":"옳지 않은 것: \"국회의원의 임기는 5년이다.\" → 바른 내용: 국회의원은 4년이에요.","d":1},"ki0133":{"id":"ki0133","s":"k","t":"POL","q":"정치와 민주주의에 대한 설명으로 옳은 것은?","o":["외국인은 어떤 선거에도 투표할 수 없다.","지방자치단체장은 대통령이 임명한다.","대통령의 임기는 4년이고 두 번까지 할 수 있다.","국무총리는 대통령을 돕고 행정 각부를 관리한다."],"a":3,"e":"틀린 보기 바로잡기: \"지방자치단체장은 대통령이 임명한다.\" → 주민이 선거로 뽑아요. / \"외국인은 어떤 선거에도 투표할 수 없다.\" → 영주 자격 3년이 지난 외국인은 지방선거에 투표할 수 있어요. / \"대통령의 임기는 4년이고 두 번까지 할 수 있다.\" → 대통령은 5년 단임이에요.","d":1},"ki0137":{"id":"ki0137","s":"k","t":"LAW","q":"외국인종합안내센터(외국어 상담)의 전화번호는?","o":["1345","112","119","1366"],"a":0,"e":"1345 = 외국인 종합 안내.","d":0},"ki0141":{"id":"ki0141","s":"k","t":"LAW","q":"한국에 90일을 넘게 머물 외국인이 해야 하는 일은?","o":["주민등록","출생신고","혼인신고","외국인등록"],"a":3,"e":"외국인등록 → 외국인등록증 발급.","d":0},"ki0155":{"id":"ki0155","s":"k","t":"LAW","q":"법과 체류 생활에 대한 설명으로 옳은 것은?","o":["가정 안의 폭력은 가족 일이라 처벌하지 않는다.","뒷자리에 탄 사람은 안전띠를 매지 않아도 된다.","불이 나거나 응급 환자가 있을 때는 119에 전화한다.","일반귀화는 한국에 1년만 살면 신청할 수 있다."],"a":2,"e":"틀린 보기 바로잡기: \"뒷자리에 탄 사람은 안전띠를 매지 않아도 된다.\" → 모든 좌석에서 매야 해요. / \"가정 안의 폭력은 가족 일이라 처벌하지 않는다.\" → 가정폭력도 범죄예요. / \"일반귀화는 한국에 1년만 살면 신청할 수 있다.\" → 원칙적으로 5년 이상이에요.","d":1},"ki0174":{"id":"ki0174","s":"k","t":"ECO","q":"정해진 기간 동안 매달 같은 돈을 넣는 은행 상품은?","o":["대출","보험","예금","적금"],"a":3,"e":"적금 = 매달 쌓기.","d":0},"ki0179":{"id":"ki0179","s":"k","t":"ECO","q":"경제와 일에 대한 설명으로 옳은 것을 <b>모두<\/b> 고른 것은?","o":["ㄷ","ㄷ, ㄹ","ㄱ, ㄷ, ㄹ","ㄴ, ㄷ, ㄹ"],"a":1,"e":"ㄱ(X) → 1년 이상 일해야 받아요. / ㄴ(X) → 그것은 월세예요. / ㄷ(O) / ㄹ(O)","p":"ㄱ. 퇴직금은 3개월만 일해도 받는다.<br>ㄴ. 전세는 매달 집세를 내는 방식이다.<br>ㄷ. 물건을 살 때 영수증을 받아 두면 교환이나 환불에 도움이 된다.<br>ㄹ. 근로계약서는 일을 시작하기 전에 쓰는 것이 원칙이다.","fixed":true,"d":2},"ki0182":{"id":"ki0182","s":"k","t":"ECO","q":"경제와 일에 대한 설명으로 옳지 않은 것은?","o":["소득이 많을수록 소득세를 더 많이 낸다.","최저임금보다 적은 임금을 주는 것은 법 위반이다.","소득이 많아도 세금은 모두 똑같이 낸다.","신용카드를 너무 많이 쓰면 빚이 늘 수 있다."],"a":2,"e":"옳지 않은 것: \"소득이 많아도 세금은 모두 똑같이 낸다.\" → 바른 내용: 소득이 많을수록 더 내요(누진세).","d":1},"ki0193":{"id":"ki0193","s":"k","t":"ECO","q":"경제와 일에 대한 설명으로 옳은 것은?","o":["최저임금보다 적은 임금을 주는 것은 법 위반이다.","소득이 많아도 세금은 모두 똑같이 낸다.","전세는 매달 집세를 내는 방식이다.","물건 피해 상담 번호는 1345이다."],"a":0,"e":"틀린 보기 바로잡기: \"물건 피해 상담 번호는 1345이다.\" → 소비자상담센터는 1372예요. / \"소득이 많아도 세금은 모두 똑같이 낸다.\" → 소득이 많을수록 더 내요(누진세). / \"전세는 매달 집세를 내는 방식이다.\" → 그것은 월세예요.","d":0},"ki0208":{"id":"ki0208","s":"k","t":"SOC","q":"한국의 의무교육 기간은?","o":["4년","12년","9년(초등·중학교)","6년"],"a":2,"e":"초 6 + 중 3.","fig":"school","d":0},"ki0222":{"id":"ki0222","s":"k","t":"SOC","q":"사회·교육·복지에 대한 설명으로 옳지 않은 것은?","o":["유치원은 보건복지부가 담당한다.","초등학교와 중학교 9년은 의무교육이다.","쓰레기는 종량제 봉투에 담아 버린다.","아이는 정해진 시기에 국가 예방접종을 받는다."],"a":0,"e":"옳지 않은 것: \"유치원은 보건복지부가 담당한다.\" → 바른 내용: 유치원은 교육부, 어린이집은 보건복지부예요.","d":1},"ki0233":{"id":"ki0233","s":"k","t":"SOC","q":"사회·교육·복지에 대한 설명으로 옳은 것은?","o":["대학 입학을 위해 많은 학생이 대학수학능력시험을 본다.","한국의 학제는 초등 5년, 중등 4년이다.","건강보험이 있으면 병원비를 전혀 내지 않는다.","한국의 의무교육은 고등학교까지 12년이다."],"a":0,"e":"틀린 보기 바로잡기: \"한국의 학제는 초등 5년, 중등 4년이다.\" → 6-3-3-4예요. / \"건강보험이 있으면 병원비를 전혀 내지 않는다.\" → 일부(본인부담금)는 내요. / \"한국의 의무교육은 고등학교까지 12년이다.\" → 초등 6 + 중 3 = 9년이에요.","d":1},"ki0234":{"id":"ki0234","s":"k","t":"SOC","q":"사회·교육·복지에 대한 설명으로 옳지 않은 것은?","o":["초등학교와 중학교 9년은 의무교육이다.","건강보험이 있으면 병원비의 일부만 낸다.","한국의 학제는 초등 5년, 중등 4년이다.","공공 도서관은 누구나 무료로 이용할 수 있다."],"a":2,"e":"옳지 않은 것: \"한국의 학제는 초등 5년, 중등 4년이다.\" → 바른 내용: 6-3-3-4예요.","d":1},"ki0247":{"id":"ki0247","s":"k","t":"CUL","q":"설날에 먹는 음식은?","o":["삼계탕","팥죽","송편","떡국"],"a":3,"e":"설날 = 떡국.","fig":"holidays","d":1},"ki0249":{"id":"ki0249","s":"k","t":"CUL","q":"생일에 먹는 국은?","o":["된장국","떡국","북엇국","미역국"],"a":3,"e":"미역국.","d":0},"ki0265":{"id":"ki0265","s":"k","t":"CUL","q":"문화와 전통에 대한 설명으로 옳은 것은?","o":["돌잔치는 아이가 태어난 지 100일에 한다.","추석은 양력 8월 15일이다.","명절 아침에 조상에게 지내는 제사를 차례라고 한다.","한국 집에 들어갈 때 신발을 신고 들어간다."],"a":2,"e":"틀린 보기 바로잡기: \"추석은 양력 8월 15일이다.\" → 음력 8월 15일이에요. / \"한국 집에 들어갈 때 신발을 신고 들어간다.\" → 신발을 벗어요. / \"돌잔치는 아이가 태어난 지 100일에 한다.\" → 돌은 첫 번째 생일, 100일은 백일잔치예요.","d":1},"ki0278":{"id":"ki0278","s":"k","t":"CUL","q":"문화와 전통에 대한 설명으로 옳지 않은 것은?","o":["김장 문화는 유네스코 인류무형문화유산이다.","한국 집에 들어갈 때 신발을 신고 들어간다.","명절 아침에 조상에게 지내는 제사를 차례라고 한다.","설날에는 떡국을 먹고 웃어른께 세배를 한다."],"a":1,"e":"옳지 않은 것: \"한국 집에 들어갈 때 신발을 신고 들어간다.\" → 바른 내용: 신발을 벗어요.","d":2},"ki0292":{"id":"ki0292","s":"k","t":"HIS","q":"1919년 일제에 맞서 전국에서 만세를 부른 운동은?","o":["3·1운동","동학농민운동","4·19혁명","6월 민주항쟁"],"a":0,"e":"삼일절.","d":0},"ki0294":{"id":"ki0294","s":"k","t":"HIS","q":"6·25전쟁이 일어난 해는?","o":["1953년","1950년","1945년","1960년"],"a":1,"e":"1950 시작, 1953 정전.","fig":"timeline","d":1},"ki0305":{"id":"ki0305","s":"k","t":"HIS","q":"한국의 역사에 대한 설명으로 옳은 것은?","o":["3·1운동은 1945년에 일어났다.","고구려가 삼국을 통일하였다.","한국의 첫 번째 나라는 고려이다.","대조영은 발해를 세웠다."],"a":3,"e":"틀린 보기 바로잡기: \"고구려가 삼국을 통일하였다.\" → 삼국을 통일한 나라는 신라예요. / \"3·1운동은 1945년에 일어났다.\" → 1919년이에요. / \"한국의 첫 번째 나라는 고려이다.\" → 첫 나라는 고조선이에요.","d":0},"ki0317":{"id":"ki0317","s":"k","t":"HIS","q":"한국의 역사에 대한 설명으로 옳은 것은?","o":["1910년 일본에 나라를 빼앗겼다.","조선을 세운 사람은 왕건이다.","한국의 첫 번째 나라는 고려이다.","대한민국 임시정부는 서울에 세워졌다."],"a":0,"e":"틀린 보기 바로잡기: \"조선을 세운 사람은 왕건이다.\" → 조선은 이성계, 고려는 왕건이에요. / \"대한민국 임시정부는 서울에 세워졌다.\" → 중국 상하이에 세워졌어요. / \"한국의 첫 번째 나라는 고려이다.\" → 첫 나라는 고조선이에요.","d":0},"ki0323":{"id":"ki0323","s":"k","t":"HIS","q":"한국의 역사에 대한 설명으로 옳은 것은?","o":["6·25전쟁은 1919년에 일어났다.","3·1운동은 1945년에 일어났다.","광복절은 1950년 8월 15일이다.","1910년 일본에 나라를 빼앗겼다."],"a":3,"e":"틀린 보기 바로잡기: \"6·25전쟁은 1919년에 일어났다.\" → 1950년이에요. / \"광복절은 1950년 8월 15일이다.\" → 광복은 1945년 8월 15일이에요. / \"3·1운동은 1945년에 일어났다.\" → 1919년이에요.","d":1},"ki0351":{"id":"ki0351","s":"k","t":"GEO","q":"지리와 나라 상징에 대한 설명으로 옳은 것은?","o":["대한민국의 국가(나라 노래)는 애국가이다.","대한민국의 국화는 장미이다.","한국에서 가장 큰 섬은 울릉도이다.","한국의 나라 노래는 아리랑이다."],"a":0,"e":"틀린 보기 바로잡기: \"대한민국의 국화는 장미이다.\" → 국화는 무궁화예요. / \"한국의 나라 노래는 아리랑이다.\" → 국가는 애국가예요. / \"한국에서 가장 큰 섬은 울릉도이다.\" → 제주도예요.","d":1},"ki0364":{"id":"ki0364","s":"k","t":"GEO","q":"지리와 나라 상징에 대한 설명으로 옳지 않은 것은?","o":["남한에서 가장 높은 산은 한라산이다.","남한에서 가장 높은 산은 설악산이다.","대한민국의 국화(나라꽃)는 무궁화이다.","여름에는 비가 많이 오는 장마가 있다."],"a":1,"e":"옳지 않은 것: \"남한에서 가장 높은 산은 설악산이다.\" → 바른 내용: 한라산(1,947m)이에요.","d":2},"ki0366":{"id":"ki0366","s":"k","t":"GEO","q":"지리와 나라 상징에 대한 설명으로 옳지 않은 것은?","o":["개천절은 한글을 만든 날을 기념한다.","대한민국의 국가(나라 노래)는 애국가이다.","한국의 광역자치단체는 모두 17개이다.","여름에는 비가 많이 오는 장마가 있다."],"a":0,"e":"옳지 않은 것: \"개천절은 한글을 만든 날을 기념한다.\" → 바른 내용: 개천절은 고조선 건국, 한글날은 10월 9일이에요.","d":2}},"tests":{"k":[["ki0053","ki0057","ki0075","ki0079","ki0010","ki0024","ki0035","ki0042","ki0107","ki0113","ki0116","ki0130","ki0133","ki0137","ki0141","ki0155","ki0174","ki0179","ki0182","ki0193","ki0208","ki0222","ki0233","ki0234","ki0247","ki0249","ki0265","ki0278","ki0292","ki0294","ki0305","ki0317","ki0323","ki0351","ki0364","ki0366"],[],[],[],[],[],[],[],[],[]],"_":[["ki0053","ki0057","ki0075","ki0079","ki0010","ki0024","ki0035","ki0042","ki0107","ki0113","ki0116","ki0130","ki0133","ki0137","ki0141","ki0155","ki0174","ki0179","ki0182","ki0193","ki0208","ki0222","ki0233","ki0234","ki0247","ki0249","ki0265","ki0278","ki0292","ki0294","ki0305","ki0317","ki0323","ki0351","ki0364","ki0366"],[],[],[],[],[],[],[],[],[]]},"trial":1,"ntests":10};
+(function(){
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const SK='hg_'+D.id;
+let DB;try{DB=JSON.parse(localStorage.getItem(SK))||{}}catch(e){DB={}}
+DB.att=DB.att||{};DB.done=DB.done||{};DB.set=Object.assign({ko:1,fs:D.fs||16,tmr:1},DB.set||{});
+function save(){try{localStorage.setItem(SK,JSON.stringify(DB))}catch(e){}}
+const SUB={};D.subjects.forEach(s=>SUB[s.k]=s);
+const Q=D.bank;
+const S={view:'home'};
+function applySet(){document.documentElement.style.setProperty('--fs',DB.set.fs+'px');}
+applySet();
+try{speechSynthesis.getVoices();speechSynthesis.addEventListener('voiceschanged',()=>{try{vNote()}catch(e){}});}catch(e){}
+$('#brand').textContent=D.short||D.title;if(D.trial)$('#trialbar').hidden=false;
+document.title=D.title;
+
+/* ---------- scoring ---------- */
+/* 실제 시험 점수 척도: D.score = {type, cut, fail, lo, hi, pts, note}, 과목별 덮어쓰기 SUB[k].sc */
+function SC(k){return Object.assign({type:'pct',max:100,cut:D.pass.cut||60},D.score||{},(SUB[k]||{}).sc||{});}
+function interp(p,pts){for(let i=1;i<pts.length;i++){if(p<=pts[i][0]){const a=pts[i-1],b=pts[i];return a[1]+(b[1]-a[1])*(p-a[0])/(b[0]-a[0]);}}return pts[pts.length-1][1];}
+function sval(c,N,k){const s=SC(k),p=N?c/N:0;
+ if(s.type==='scale')return Math.round(interp(p,s.pts));
+ if(s.type==='ap')return p>=s.pts[3]?5:p>=s.pts[2]?4:p>=s.pts[1]?3:p>=s.pts[0]?2:1;
+ if(s.type==='pf')return Math.round(p*100);
+ return Math.round(p*s.max);}
+function need(sub,N){const p=D.pass;if(p.mode==='count')return Math.ceil(p.need*N/p.of-1e-9);let c=0;while(c<N&&sval(c,N,sub)<SC(sub).cut)c++;return c;}
+function scoreTxt(c,N,k){if(D.pass.mode==='count')return `${c}/${N}`;const s=SC(k),v=sval(c,N,k);
+ if(s.type==='scale')return `${v}점<small class="muted" style="font-size:.5em"> (${s.lo}~${s.hi}점 척도)</small>`;
+ if(s.type==='ap')return `${v}점<small class="muted" style="font-size:.5em"> (1~5점)</small>`;
+ if(s.type==='pf')return `정답률 ${v}%`;
+ return `${v}점<small class="muted" style="font-size:.5em"> / ${s.max}점</small>`;}
+function cutTxt(sub,N){if(D.pass.mode==='count')return `${need(sub,N)}개 이상 맞히면 합격`;const s=SC(sub);
+ return s.note||`${s.cut}점 이상 합격`;}
+const isPass=(c,N,sub)=>D.pass.mode==='count'?c>=need(sub,N):sval(c,N,sub)>=SC(sub).cut;
+const isFail=(c,N,sub)=>D.pass.mode!=='count'&&SC(sub).fail!=null&&sval(c,N,sub)<SC(sub).fail;
+const cls=p=>p<0.6?'bad':p<0.8?'mid':'good';
+function attList(k){return Object.entries(DB.att[k]||{}).map(([n,a])=>Object.assign({n:+n},a)).sort((a,b)=>a.ts-b.ts);}
+function latest(k){const l=attList(k);return l[l.length-1]||null;}
+function topicStats(k){const tp={};attList(k).forEach(a=>{for(const t in a.tp){tp[t]=tp[t]||[0,0];tp[t][0]+=a.tp[t][0];tp[t][1]+=a.tp[t][1];}});return tp;}
+function chDone(k,t){return DB.done[k+'-'+t]||0;}
+function bar(label,p,num){return `<div class="bar"><div>${label}</div><div class="track"><div class="fill ${cls(p)}" style="width:${Math.round(p*100)}%"></div></div><div class="num">${num}</div></div>`;}
+const chHref=(k,t)=>`#ch-${k}-${t}`;
+const hasCh=(k,t)=>(D.book[k]||[]).some(c=>c.id===t);
+const tLabel=(k,t)=>{const x=SUB[k].topics[t];const nm=x[0];return hasCh(k,t)?`<a href="${chHref(k,t)}">${esc(nm)}</a>`:esc(nm);};
+const NT=k=>D.tests[k].length;
+
+
+/* ---------- recommendation ---------- */
+function nextStep(){
+ const cands=[];
+ D.subjects.forEach((s,i)=>{const l=latest(s.k),tests=D.tests[s.k];
+  if(!l){cands.push({pr:0,i,k:s.k,title:`${s.ko} 1회 진단 모의고사`,why:'먼저 실력을 확인해요. 결과에 따라 공부할 단원을 골라 드려요.',href:`#exam-${s.k}-1`,btn:'진단 시작'});return;}
+  const weak=Object.entries(l.tp).filter(([t,v])=>v[1]&&v[0]/v[1]<0.6&&hasCh(s.k,t)&&chDone(s.k,t)<l.ts).sort((a,b)=>a[1][0]/a[1][1]-b[1][0]/b[1][1]);
+  if(weak.length){const t=weak[0][0];cands.push({pr:1,i,k:s.k,sc:l.c/l.N,title:`교재 「${SUB[s.k].topics[t][0]}」 단원 공부`,why:`최근 ${l.n}회에서 이 영역 정답률이 ${Math.round(weak[0][1][0]/weak[0][1][1]*100)}%였어요. 단원을 읽고 '다 읽었어요'를 눌러 주세요.`,href:chHref(s.k,t),btn:'공부하러 가기'});return;}
+  const undone=tests.map((_,j)=>j+1).find(n=>!(DB.att[s.k]||{})[n]);
+  if(undone){cands.push({pr:undone>=tests.length-1?3:2,i,k:s.k,sc:l.c/l.N,title:`${s.ko} ${undone}회 ${undone>=tests.length-1?'실전':'연습'} 모의고사`,why:undone>=tests.length-1?'실전처럼 시간 제한을 켜고 풀어 보세요.':'약한 부분이 나아졌는지 확인해요.',href:`#exam-${s.k}-${undone}`,btn:'풀기'});return;}
+  cands.push({pr:4,i,k:s.k,sc:l.c/l.N,title:`${s.ko} 오답 다시 풀기`,why:'10회를 다 풀었어요. 틀린 문제만 모아 다시 풀어 보세요.',href:'#wrong',btn:'오답노트'});
+ });
+ cands.sort((a,b)=>a.pr-b.pr||(a.sc||0)-(b.sc||0)||a.i-b.i);return cands[0];
+}
+
+/* ---------- views ---------- */
+function setNav(v){document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===v));}
+function vLock(what){return hero('Full Version','정식판에서 열려요',`무료 체험판은 과목별 <b>모의고사 1회</b>와 <b>교재 첫 단원</b>만 볼 수 있어요. 정식판에는 과목별 모의고사 ${D.ntests||10}회와 교재 전체가 들어 있어요.`)+`<main class="wrap"><div class="actions"><a class="primary" href="#home">대시보드로</a><a class="btn" href="#tests">모의고사 1회 풀기</a></div></main>`;}
+function hero(eb,h,lead){return `<section class="hero"><div class="wrap"><p class="eyebrow">${eb}</p><h1>${h}</h1>${lead?`<p class="lead">${lead}</p>`:''}</div></section>`;}
+function totals(){let ch=0,chd=0,t=0,td=0;D.subjects.forEach(s=>{(D.book[s.k]||[]).forEach(c=>{ch++;if(chDone(s.k,c.id))chd++;});t+=D.tests[s.k].length;td+=Object.keys(DB.att[s.k]||{}).length;});return{ch,chd,t,td};}
+
+function vHome(){setNav('home');const T=totals(),nx=nextStep();
+ let weakAll=[];D.subjects.forEach(s=>{const tp=topicStats(s.k);for(const t in tp)if(tp[t][1])weakAll.push({k:s.k,t,p:tp[t][0]/tp[t][1],v:tp[t]});});
+ weakAll.sort((a,b)=>a.p-b.p);
+ const subjCards=D.subjects.map(s=>{const l=latest(s.k),best=attList(s.k).reduce((m,a)=>Math.max(m,a.c/a.N),0);
+  return `<a class="card" style="--sc:${s.color}" href="#tests-${s.k}"><h3>${esc(s.ko)}</h3><p class="small muted" style="margin:0 0 8px">${esc(s.en)} · ${D.tests[s.k].length}회 × ${s.n}문항</p>${l?`<div>최근 ${l.n}회 <b>${scoreTxt(l.c,l.N,s.k)}</b> <span class="tag ${isPass(l.c,l.N,s.k)?'good':'bad'}">${isPass(l.c,l.N,s.k)?'합격선 통과':'합격선 미달'}</span></div><div class="small muted">최고 ${Math.round(best*100)}% · ${Object.keys(DB.att[s.k]||{}).length}/${D.tests[s.k].length}회 완료</div>`:`<div class="muted small">아직 푼 시험이 없어요</div>`}</a>`;}).join('');
+ return hero(D.eyebrow,esc(D.title),D.lead)+`<main class="wrap">
+ <div class="next"><div class="what"><p class="eyebrow" style="margin:0">지금 할 일</p><b>${esc(nx.title)}</b><span class="muted">${nx.why}</span></div><a class="primary" href="${nx.href}">${nx.btn} →</a></div>
+ <section class="panel"><h2>진도</h2><div class="stat"><div><b>${T.td}/${T.t}</b><span class="muted small">모의고사</span></div><div><b>${T.chd}/${T.ch}</b><span class="muted small">교재 단원</span></div><div><b>${wrongIds().length}</b><span class="muted small">오답노트 문제</span></div></div></section>
+ ${D.subjects.some(s=>(D.book[s.k]||[]).length)?`<section class="panel"><h2>혼공 교재로 공부하기</h2><p class="muted small" style="margin-top:0">단원마다 그림, 꼭 알아야 할 내용, 헷갈리는 내용 바로잡기, 확인 문제가 있어요. 위 메뉴의 <b>교재</b>에서도 볼 수 있어요.</p><div class="grid">${D.subjects.filter(s=>(D.book[s.k]||[]).length).map(s=>{const chs=D.book[s.k],d=chs.filter(c=>chDone(s.k,c.id)).length,nc=chs.find(c=>!chDone(s.k,c.id))||chs[0];return `<a class="card" style="--sc:${s.color}" href="${chHref(s.k,nc.id)}"><h3>${esc(s.ko)} 교재</h3><p class="small muted" style="margin:0 0 8px">${chs.length}단원 · ${d}단원 읽음</p><div><b>${d?'이어서 읽기':'1단원부터 읽기'} →</b> <span class="muted">${esc(nc.ko)}</span></div></a>`;}).join('')}</div></section>`:''}
+ <section class="panel"><h2>모의고사</h2><div class="grid">${subjCards}</div></section>
+ ${weakAll.length?`<section class="panel"><h2>약한 영역</h2><p class="muted small" style="margin-top:0">푼 시험을 모두 합쳐 정답률이 낮은 순서예요. 이름을 누르면 교재 단원으로 가요.</p>${weakAll.slice(0,8).map(w=>bar(tLabel(w.k,w.t)+(D.subjects.length>1?` <small class="muted">${esc(SUB[w.k].ko)}</small>`:''),w.p,`${w.v[0]}/${w.v[1]}`)).join('')}</section>`:''}
+ ${D.about?`<section class="panel"><h2>이 시험은요</h2><div class="sec">${D.about}</div></section>`:''}
+ <section class="panel"><h2>설정</h2>
+  <div class="switch"><span>글자 크기</span><span class="seg" id="fsSeg">${[[16,'보통'],[18,'크게'],[21,'아주 크게']].map(([v,l])=>`<button data-fs="${v}" class="${DB.set.fs==v?'on':''}">${l}</button>`).join('')}</span></div>
+  <div class="switch"><span>문제 한글 해석</span><span class="seg" id="koSeg"><button data-ko="1" class="${DB.set.ko?'on':''}">보이기</button><button data-ko="0" class="${DB.set.ko?'':'on'}">숨기기</button></span></div>
+  <div class="switch"><span>시간 제한</span><span class="seg" id="tmSeg"><button data-tm="1" class="${DB.set.tmr?'on':''}">켜기</button><button data-tm="0" class="${DB.set.tmr?'':'on'}">끄기</button></span><span class="muted small">기본으로 켜져 있어요. 시간은 실제 시험 속도에 맞췄어요</span></div>
+  <div class="actions"><button class="btn sm" id="copyRes">결과 복사하기</button><button class="btn sm" id="resetAll">기록 모두 지우기</button></div>
+ </section>
+ <p class="foot">${D.foot||''}</p></main>`;}
+
+function vBook(){setNav('book');
+ return hero('Self-Study Book','혼공 교재','영어 원어와 한글 설명을 함께 실었어요. 단원은 모의고사 영역과 똑같이 나뉘어 있어서, 모의고사에서 약한 영역을 누르면 바로 여기로 와요.')+`<main class="wrap">${D.subjects.map(s=>{const chs=D.book[s.k]||[];if(!chs.length)return '';const tp=topicStats(s.k);
+ return `<section class="panel" style="border-top:5px solid ${s.color}"><h2>${esc(s.ko)} <small class="muted">${esc(s.en)}</small></h2><ul class="chlist">${chs.map((c,i)=>{const v=tp[c.id];return `<li><a href="${chHref(s.k,c.id)}"><span class="no">${String(i+1).padStart(2,'0')}</span><span class="nm">${esc(c.ko)}<small>${esc(c.en)}</small></span>${v&&v[1]?`<span class="tag ${cls(v[0]/v[1])}">${Math.round(v[0]/v[1]*100)}%</span>`:''}<span class="chk ${chDone(s.k,c.id)?'on':''}">${chDone(s.k,c.id)?'✓':''}</span></a></li>`;}).join('')}</ul></section>`;}).join('')}</main>`;}
+
+function figHtml(f){if(!f)return '';const svg=D.figs&&D.figs[f]?D.figs[f]:f;return `<figure class="fig">${svg}</figure>`;}
+const NUMRE=/(?<![\w.\-])\d[\d,.]*\s?(?:년|세|일|개월|주|시간|분|초|점|%|퍼센트|명|개국|개|회|배|성급|급|층|km|kg|cm|mg|mL|m|°C|℃|달러|만원|원|(?:years?|days?|months?|hours?|minutes?|percent|questions?)\b)/g;
+function hl(h){return String(h).replace(/==((?:[^=<>]|=(?!=))+?)==/g,'<mark class="hl">$1</mark>');}
+function hlNum(h){return String(h).split(/(<svg[\s\S]*?<\/svg>|<td class="x">[\s\S]*?<\/td>|<mark[\s\S]*?<\/mark>)/).map((part,i)=>i%2?part:part.replace(/>([^<]+)</g,(m,t)=>'>'+t.replace(NUMRE,'<mark class="hl">$&</mark>')+'<')).join('');}
+function rich(h){return hlNum('<i></i>'+hl(String(h)).replace(/\{\{fig:([\w-]+)\}\}/g,(m,n)=>figHtml(n)));}
+
+function vChapter(k,t){setNav('book');const chs=D.book[k],i=chs.findIndex(c=>c.id===t),c=chs[i],s=SUB[k];if(!c)return vBook();if(c.locked)return vLock();
+ const tp=topicStats(k)[t];
+ const quiz=(c.quiz||[]).map((q,qi)=>`<div class="mini" data-mq="${qi}">${q.au?auHtml(q.au,false):''}${q.p?`<div class="passage">${q.p}</div>`:''}<p class="qtext" style="font-size:1rem">${qi+1}. ${q.q}${q.src?`<span class="gichul" title="${esc(q.src)}">기출</span>`:''}</p>${q.qk&&DB.set.ko?`<p class="qko">${q.qk}</p>`:''}${figHtml(q.fig)}<div class="opts">${q.o.map((o,oi)=>`<button class="opt" data-mo="${oi}"><span class="bub">${'ABCDE'[oi]}</span><span>${o}${q.ok&&DB.set.ko?`<small>${q.ok[oi]}</small>`:''}</span></button>`).join('')}</div><div class="expl" hidden>${q.e||''}</div></div>`).join('');
+ return `<section class="hero" style="border-top:6px solid ${s.color}"><div class="wrap"><nav class="crumb"><a href="#book">교재</a> › ${esc(s.ko)} › ${i+1}단원</nav><h1>${esc(c.ko)}</h1><p class="lead" style="margin-top:4px">${esc(c.en)}</p></div></section>
+ <main class="wrap">
+ <section class="panel">${c.goal?`<div class="goal"><b>이 단원의 목표</b>${hl(c.goal)}</div>`:''}
+ ${tp&&tp[1]?`<p class="small">모의고사 이 영역 정답률 <span class="tag ${cls(tp[0]/tp[1])}">${Math.round(tp[0]/tp[1]*100)}% (${tp[0]}/${tp[1]})</span></p>`:`<p class="small muted">아직 이 영역의 모의고사 기록이 없어요.</p>`}
+ ${c.terms&&c.terms.length?`<h2 style="margin-top:14px">핵심 용어</h2><table class="terms">${c.terms.map(x=>`<tr><td><span>${x[0]}</span></td><td>${x[1]}</td></tr>`).join('')}</table>`:''}</section>
+ <section class="panel sec">${c.secs.map(x=>`<h3>${x[0]}</h3>${rich(x[1])}`).join('')}</section>
+ ${c.traps&&c.traps.length?`<section class="panel"><h2>자주 틀리는 함정</h2>${c.traps.map(x=>`<div class="trap">${hl(x).replace(/ → (.*)$/,' → <mark class="hl">$1</mark>')}</div>`).join('')}</section>`:''}
+ ${quiz?`<section class="panel" id="mq"><h2>확인 문제</h2><p class="muted small" style="margin-top:0">고르면 바로 정답과 해설이 나와요.</p>${quiz}</section>`:''}
+ <section class="panel"><div class="actions" style="margin-top:0"><button class="${chDone(k,t)?'btn':'primary'}" id="doneBtn" data-k="${k}" data-t="${t}">${chDone(k,t)?'✓ 다 읽었어요 (취소하려면 누르기)':'다 읽었어요'}</button><a class="btn" href="#tests-${k}">${esc(s.ko)} 모의고사 →</a></div></section>
+ <nav class="chnav">${i>0?`<a class="btn" href="${chHref(k,chs[i-1].id)}">← ${esc(chs[i-1].ko)}</a>`:'<span></span>'}${i<chs.length-1?`<a class="btn" href="${chHref(k,chs[i+1].id)}">${esc(chs[i+1].ko)} →</a>`:`<a class="btn" href="#book">교재 목록</a>`}</nav>
+ </main>`;}
+
+function vTests(){setNav('tests');
+ if(D.subjects.length===1)return vTestList(D.subjects[0].k);
+ return hero('Practice Tests','모의고사','과목을 고르세요. 1회는 진단, 마지막 2회는 실전용이에요.'+(D.realtime?' 실제 시험 '+D.realtime+' 기준으로, 모의고사 시간도 문항 수에 맞춰 똑같은 속도로 맞췄어요.':''))+`<main class="wrap"><div class="grid">${D.subjects.map(s=>`<a class="card" style="--sc:${s.color}" href="#tests-${s.k}"><h3>${esc(s.ko)}</h3><p class="small muted" style="margin:0">${esc(s.en)} · ${s.n}문항 · ${tmTxt(s)}</p><p class="small" style="margin:6px 0 0">${Object.keys(DB.att[s.k]||{}).length}/${D.tests[s.k].length}회 완료</p></a>`).join('')}</div></main>`;}
+function vTestList(k){setNav('tests');const s=SUB[k],tests=D.tests[k],at=DB.att[k]||{},tp=topicStats(k);
+ return hero(esc(s.en)+' · '+tests.length+' Tests',esc(s.ko)+' 모의고사',`${s.n}문항 · ${tmTxt(s)} · ${cutTxt(k,s.n)}. 1회는 진단, 2–${tests.length-2}회는 연습, ${tests.length-1}–${tests.length}회는 실전용이에요.`)+`<main class="wrap">
+ ${D.subjects.length>1?`<a href="#tests" class="small">← 과목 목록</a>`:''}
+ <div class="tests">${tests.map((_,j)=>{const n=j+1,a=at[n];if(D.trial&&n>1)return `<a class="tcard" href="#exam-${k}-${n}" style="opacity:.45"><span class="tn">${n}회</span><span class="small">🔒 정식판</span></a>`;return `<a class="tcard ${a?(isPass(a.c,a.N,k)?'pass':'fail'):''}" href="#exam-${k}-${n}"><span class="tn">${n}회 <small class="muted">${n===1?'진단':n>=tests.length-1?'실전':'연습'}</small></span><span class="small">${a?`${scoreTxt(a.c,a.N,k)} · ${a.date}`:'안 풂'}</span></a>`;}).join('')}</div>
+ <section class="panel"><h2>영역별 누적 정답률</h2><p class="muted small" style="margin-top:0">영역 이름을 누르면 교재 단원으로 가요.</p>${Object.keys(s.topics).map(t=>{const v=tp[t];return v&&v[1]?bar(tLabel(k,t)+` <small class="muted">${esc(s.topics[t][1])}</small>`,v[0]/v[1],`${v[0]}/${v[1]}`):bar(tLabel(k,t)+` <small class="muted">${esc(s.topics[t][1])}</small>`,0,'기록 없음');}).join('')}</section></main>`;}
+
+/* ---------- exam ---------- */
+function tmTxt(s){return s.notime?'시간 제한 없음':`제한 ${s.min}분`;}
+function tmNote(s){return s.notime?'실제 시험이 시간 제한 없는 면접이라 타이머를 쓰지 않아요.':s.real?`실제 시험(${s.real})과 같은 속도로 ${s.n}문항 ${s.min}분이에요. 시간이 끝나면 자동으로 제출돼요.`:'';}
+function startExam(k,n,ids){const s=SUB[k];const qs=ids||D.tests[k][n-1];
+ const timed=!ids&&!s.notime&&(DB.set.tmr||n>=D.tests[k].length-1);
+ S.ex={k,n,qs,ans:new Array(qs.length).fill(-1),flag:new Array(qs.length).fill(false),cur:0,left:Math.round(s.min*60*qs.length/s.n),timed,wrong:!!ids};
+ S.view='exam';}
+const LV=['쉬움','보통','어려움'];function lvHtml(q){return q.d==null?'':`<span class="lv lv${q.d}">${LV[q.d]}</span>`;}
+function qBlock(q,sel,reveal,idx){const ko=DB.set.ko;
+ return `<div class="qmeta"><span class="qn">Q${idx+1}</span><span>${esc(SUB[q.s].topics[q.t][0])}</span>${lvHtml(q)}${q.src?`<span class="gichul" title="${esc(q.src)}">기출</span>`:''}</div>
+ ${q.p?`<div class="passage">${q.p}</div>`:''}${q.au?auHtml(q.au,reveal):''}${figHtml(q.fig)}
+ <p class="qtext">${q.q}</p>${q.qk&&ko?`<p class="qko">${q.qk}</p>`:''}
+ <div class="opts">${q.o.map((o,oi)=>{let c='';if(reveal){if(oi===q.a)c='right';else if(oi===sel)c='wrong';}else if(oi===sel)c='sel';
+  return `<button class="opt ${c}" data-o="${oi}" ${reveal?'disabled':''}><span class="bub">${'ABCDE'[oi]}</span><span>${o}${q.ok&&ko&&q.ok[oi]?`<small>${q.ok[oi]}</small>`:''}</span></button>`;}).join('')}</div>`;}
+function auHtml(au,reveal){return `<div class="au"><button class="primary" data-au="${esc(au)}">▶ 듣기</button> <span class="muted small">2번까지 들을 수 있어요</span><p class="small muted vnote" style="margin:6px 0 0"></p>${reveal?`<div class="passage" style="margin-top:10px">${esc(au)}</div>`:`<details class="small muted" style="margin-top:6px"><summary>소리가 안 나오면 대본 보기</summary><div class="passage">${esc(au)}</div></details>`}</div>`;}
+const MALE=/injoon|hyunsu|bongjin|gookmin|\bmale\b|남성/i,FEMALE=/sunhi|heami|jimin|seohyeon|yujin|yuna|female|여성|google/i;
+function koVoices(){try{return speechSynthesis.getVoices().filter(v=>/^ko/i.test(v.lang));}catch(e){return[];}}
+function pickVoice(g){const vs=koVoices().slice().sort((a,b)=>(/natural|online|neural/i.test(b.name)?1:0)-(/natural|online|neural/i.test(a.name)?1:0));if(!vs.length)return null;
+ if(g==='m')return vs.find(v=>MALE.test(v.name))||null;
+ return vs.find(v=>FEMALE.test(v.name)&&!MALE.test(v.name))||vs.find(v=>!MALE.test(v.name))||vs[0];}
+function vNote(){const has=!!pickVoice('m');document.querySelectorAll('.vnote').forEach(e=>e.textContent=has?'':'이 브라우저에는 한국어 남자 음성이 없어서 남자 대사도 여자 목소리로 나와요. Microsoft Edge로 이 파일을 열면 남자 목소리가 나와요.');}
+function speak(txt){const ss=window.speechSynthesis;if(!ss){alert('이 브라우저는 음성 재생을 지원하지 않아요. 대본을 보세요.');return;}ss.cancel();
+ const vs=koVoices(),fv=pickVoice('f'),mv=pickVoice('m');
+ txt.split('\n').forEach(line=>{const m=line.match(/^\s*(남자|여자|남|여)\s*[:：]\s*/);const t=m?line.slice(m[0].length):line;if(!t.trim())return;
+  const male=m&&m[1][0]==='남';const u=new SpeechSynthesisUtterance(t);u.lang='ko-KR';u.rate=0.92;u.pitch=1;u.volume=1;
+  const v=male?(mv||fv):fv;if(v)u.voice=v;
+  if(male&&!mv)u.rate=0.85;
+  ss.speak(u);});
+ vNote();
+ if(!vs.length)setTimeout(()=>{if(!ss.speaking)alert('한국어 음성이 없어 소리가 안 날 수 있어요. 대본 보기를 눌러 주세요.');},1200);}
+function vExam(){setNav('tests');const E=S.ex,s=SUB[E.k],qid=E.qs[E.cur],q=Q[qid],answered=E.ans.filter(a=>a>=0).length;
+ document.body.classList.add('in-exam');
+ return `<div class="exhead"><div class="wrap"><span class="t">${esc(s.ko)} ${E.wrong?'오답 다시 풀기':E.n+'회'}</span>${E.timed?`<span class="timer" id="timer"></span>`:''}<span class="num">${answered}/${E.qs.length} 답함</span><button class="btn sm" id="quit">나가기</button><button class="primary" id="submit">제출</button></div><div class="prog"><i style="width:${answered/E.qs.length*100}%"></i></div></div>
+ <main class="wrap">${E.timed&&E.cur===0&&s.real?`<p class="muted small" style="margin:0 0 8px">⏱ ${tmNote(s)}</p>`:''}<div class="qcard">${qBlock(q,E.ans[E.cur],false,E.cur)}
+ <div class="exnav"><button class="btn" id="prev" ${E.cur?'':'disabled'}>← 이전</button><button class="btn" id="flag">${E.flag[E.cur]?'★ 표시 해제':'☆ 나중에 다시 보기'}</button><button class="${E.cur<E.qs.length-1?'primary':'btn'}" id="nextQ" ${E.cur<E.qs.length-1?'':'disabled'}>다음 →</button></div></div>
+ <section class="panel"><h2>문항 이동</h2><div class="qgrid">${E.qs.map((_,i)=>`<button data-g="${i}" class="${E.ans[i]>=0?'done':''} ${i===E.cur?'cur':''} ${E.flag[i]?'flag':''}">${i+1}</button>`).join('')}</div></section></main>`;}
+function tick(){const el=$('#timer');if(!el||!S.ex)return;const L=S.ex.left;el.textContent=`${Math.floor(L/60)}:${String(L%60).padStart(2,'0')}`;el.classList.toggle('low',L<120);}
+function grade(){const E=S.ex,s=SUB[E.k];let c=0;const tp={};const wrong=[];
+ E.qs.forEach((id,i)=>{const q=Q[id];tp[q.t]=tp[q.t]||[0,0];tp[q.t][1]++;if(E.ans[i]===q.a){c++;tp[q.t][0]++;}else wrong.push(id);});
+ const r={c,N:E.qs.length,tp,ans:E.ans.slice(),date:new Date().toISOString().slice(0,10),ts:Date.now(),wrong};
+ if(!E.wrong){DB.att[E.k]=DB.att[E.k]||{};DB.att[E.k][E.n]=r;}
+ DB.w=DB.w||{};E.qs.forEach((id,i)=>{if(E.ans[i]===Q[id].a){if(DB.w[id])DB.w[id].fix=1;}else DB.w[id]={k:E.k,ts:Date.now(),fix:0};});
+ save();S.res=r;S.view='result';}
+function vResult(){setNav('tests');const E=S.ex,R=S.res,s=SUB[E.k],pass=isPass(R.c,R.N,E.k);document.body.classList.remove('in-exam');
+ const rows=Object.entries(R.tp).map(([t,v])=>({t,v,p:v[0]/v[1]})).sort((a,b)=>a.p-b.p);
+ const weak=rows.filter(r=>r.p<0.6);
+ return hero(esc(s.en)+(E.wrong?' · Review':' · Test '+E.n),`${esc(s.ko)} ${E.wrong?'오답 다시 풀기':E.n+'회'} 결과`,'')+`<main class="wrap">
+ <section class="panel"><div class="score"><span class="big">${scoreTxt(R.c,R.N,E.k)}</span><span class="verdict ${pass?'pass':'fail'}">${pass?'합격선 통과':isFail(R.c,R.N,E.k)?`과락 (${SC(E.k).fail}점 미만)`:'합격선 미달'}</span><span class="muted">${R.c}문제 맞힘 / ${R.N}문제 · ${cutTxt(E.k,R.N)}</span></div>
+ <div class="actions">${weak.length&&hasCh(E.k,weak[0].t)?`<a class="primary" href="${chHref(E.k,weak[0].t)}">약한 단원부터 공부하기 →</a>`:''}<a class="${weak.length?'btn':'primary'}" href="#home">대시보드에서 다음 할 일 보기</a>${!E.wrong&&E.n<D.tests[E.k].length?`<a class="btn" href="#exam-${E.k}-${E.n+1}">${E.n+1}회 풀기 →</a>`:''}<a class="btn" href="#tests-${E.k}">회차 목록</a></div></section>
+ ${(()=>{const L=[[0,0],[0,0],[0,0]];E.qs.forEach((id,i)=>{const q=Q[id];if(q.d==null)return;L[q.d][1]++;if(R.ans[i]===q.a)L[q.d][0]++;});return L.some(x=>x[1])?`<section class="panel"><h2>난이도별 점수</h2>${L.map((v,d)=>v[1]?bar(LV[d],v[0]/v[1],`${v[0]}/${v[1]}`):'').join('')}</section>`:'';})()}
+ <section class="panel"><h2>영역별 점수</h2>${rows.map(r=>bar(tLabel(E.k,r.t),r.p,`${r.v[0]}/${r.v[1]}`)).join('')}</section>
+ ${weak.length?`<section class="panel"><h2>약점 분석</h2><ul class="tips">${weak.map(r=>`<li><b>${esc(s.topics[r.t][0])}</b> ${r.v[0]}/${r.v[1]}<br>${s.topics[r.t][2]||''}${hasCh(E.k,r.t)?`<br><a href="${chHref(E.k,r.t)}">교재 「${esc(s.topics[r.t][0])}」 단원 공부하기 →</a>`:''}</li>`).join('')}</ul></section>`:''}
+ <section class="panel"><h2>문제 다시 보기</h2><p class="muted small" style="margin-top:0">틀린 문제는 오답노트에 자동으로 모여요.</p>${E.qs.map((id,i)=>{const q=Q[id];return `<div class="rv">${qBlock(q,R.ans[i],true,i)}<div class="expl"><b>${R.ans[i]===q.a?'✓ 정답':'✗ 오답'}</b> · 정답 ${'ABCDE'[q.a]}<br>${q.e||''}</div></div>`;}).join('')}</section></main>`;}
+
+function wrongIds(){return Object.entries(DB.w||{}).filter(([id,v])=>!v.fix&&Q[id]).sort((a,b)=>b[1].ts-a[1].ts).map(x=>x[0]);}
+function vWrong(){setNav('wrong');const ids=wrongIds();
+ const by={};ids.forEach(id=>{const k=Q[id].s;(by[k]=by[k]||[]).push(id);});
+ return hero('Wrong-Answer Notes','오답노트','모의고사에서 틀린 문제가 자동으로 모여요. 다시 풀어서 맞히면 목록에서 빠져요.')+`<main class="wrap">${ids.length?D.subjects.filter(s=>by[s.k]).map(s=>`<section class="panel"><h2>${esc(s.ko)} <span class="tag bad">${by[s.k].length}문제</span></h2><div class="actions" style="margin-top:0"><button class="primary" data-wr="${s.k}">오답만 다시 풀기 (${Math.min(by[s.k].length,s.n)}문제)</button></div>${by[s.k].slice(0,30).map((id,i)=>{const q=Q[id];return `<div class="rv">${qBlock(q,-1,true,i)}<div class="expl">${q.e||''}</div></div>`;}).join('')}</section>`).join(''):`<section class="panel"><p>아직 틀린 문제가 없어요. <a href="#tests">모의고사</a>를 먼저 풀어 보세요.</p></section>`}</main>`;}
+
+/* ---------- router ---------- */
+function route(){clearInterval(S.tick);const h=(location.hash||'#home').slice(1);const p=h.split('-');let html;
+ if(S.view==='exam'&&p[0]==='exam'&&S.ex&&S.ex.k===p[1]&&String(S.ex.n)===p[2]){html=vExam();}
+ else if(p[0]==='exam'&&D.trial&&SUB[p[1]]&&+p[2]>1){S.view='lock';html=vLock();}
+ else if(p[0]==='exam'&&SUB[p[1]]&&+p[2]>=1&&+p[2]<=D.tests[p[1]].length){startExam(p[1],+p[2]);html=vExam();}
+ else{S.view=p[0];document.body.classList.remove('in-exam');
+  if(p[0]==='res'&&S.res&&S.ex)html=vResult();
+  else if(p[0]==='book')html=vBook();
+  else if(p[0]==='ch'&&SUB[p[1]])html=vChapter(p[1],p.slice(2).join('-'));
+  else if(p[0]==='tests'&&SUB[p[1]])html=vTestList(p[1]);
+  else if(p[0]==='tests')html=vTests();
+  else if(p[0]==='wrong')html=vWrong();
+  else html=vHome();}
+ $('#app').innerHTML=html;window.scrollTo(0,0);
+ if(S.view==='exam'&&S.ex.timed){tick();S.tick=setInterval(()=>{S.ex.left--;tick();if(S.ex.left<=0){clearInterval(S.tick);alert('시간이 끝났어요. 자동으로 제출합니다.');grade();go('#res');}},1000);}}
+function go(h){if(location.hash===h)route();else location.hash=h;}
+function rerender(){const y=window.scrollY;const h=(location.hash||'#home').slice(1);if(S.view==='exam'){$('#app').innerHTML=vExam();if(S.ex.timed)tick();}else{route();window.scrollTo(0,y);}}
+window.addEventListener('hashchange',()=>{if(S.view==='exam'&&!location.hash.startsWith('#exam')&&!location.hash.startsWith('#res')){if(!confirm('시험을 그만둘까요? 답한 내용은 저장되지 않아요.')){history.back();return;}S.view='';document.body.classList.remove('in-exam');}route();});
+
+document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
+ if(t.dataset.au!=null){speak(t.dataset.au);return;}
+ if(S.view==='exam'){const E=S.ex;
+  if(t.dataset.o!=null){E.ans[E.cur]=+t.dataset.o;$('#app').innerHTML=vExam();if(E.timed)tick();return;}
+  if(t.id==='prev'&&E.cur>0){E.cur--;rerender();return;}
+  if(t.id==='nextQ'&&E.cur<E.qs.length-1){E.cur++;rerender();window.scrollTo(0,0);return;}
+  if(t.id==='flag'){E.flag[E.cur]=!E.flag[E.cur];rerender();return;}
+  if(t.dataset.g!=null){E.cur=+t.dataset.g;rerender();window.scrollTo(0,0);return;}
+  if(t.id==='submit'){const un=E.ans.filter(a=>a<0).length;if(!confirm(un?`안 푼 문제가 ${un}개 있어요. 그래도 제출할까요?`:'제출하고 채점할까요?'))return;clearInterval(S.tick);grade();S.view='result';history.replaceState(null,'','#res');route();return;}
+  if(t.id==='quit'){if(confirm('시험을 그만둘까요? 답한 내용은 저장되지 않아요.')){S.view='';clearInterval(S.tick);document.body.classList.remove('in-exam');location.hash='#tests-'+E.k;}return;}
+  return;}
+ if(t.dataset.mo!=null){const box=t.closest('[data-mq]'),c=D.book[location.hash.split('-')[1]].find(x=>x.id===location.hash.split('-').slice(2).join('-'));const q=c.quiz[+box.dataset.mq];
+  box.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('right');else if(i===+t.dataset.mo)b.classList.add('wrong');});box.querySelector('.expl').hidden=false;
+  box.querySelector('.expl').insertAdjacentHTML('afterbegin',`<b>${+t.dataset.mo===q.a?'✓ 정답':'✗ 오답'}</b> · 정답 ${'ABCDE'[q.a]}<br>`);return;}
+ if(t.id==='doneBtn'){const key=t.dataset.k+'-'+t.dataset.t;if(DB.done[key])delete DB.done[key];else DB.done[key]=Date.now();save();rerender();return;}
+ if(t.dataset.fs){DB.set.fs=+t.dataset.fs;save();applySet();rerender();return;}
+ if(t.dataset.ko!=null){DB.set.ko=+t.dataset.ko;save();rerender();return;}
+ if(t.dataset.tm!=null){DB.set.tmr=+t.dataset.tm;save();rerender();return;}
+ if(t.dataset.wr){const k=t.dataset.wr;const ids=wrongIds().filter(id=>Q[id].s===k).slice(0,SUB[k].n);startExam(k,0,ids);history.pushState(null,'','#exam-'+k+'-w');$('#app').innerHTML=vExam();window.scrollTo(0,0);return;}
+ if(t.id==='resetAll'){if(confirm('모든 기록(점수, 완료 표시, 오답노트)을 지울까요? 되돌릴 수 없어요.')){DB={att:{},done:{},set:DB.set};save();rerender();}return;}
+ if(t.id==='copyRes'){const L=[D.title+' 학습 기록 ('+new Date().toISOString().slice(0,10)+')'];D.subjects.forEach(s=>{const l=latest(s.k);L.push(`- ${s.ko}: ${l?`최근 ${l.n}회 ${scoreTxt(l.c,l.N,s.k).replace(/<[^>]+>/g,'')} (${isPass(l.c,l.N,s.k)?'합격선 통과':'미달'}), ${Object.keys(DB.att[s.k]||{}).length}/${D.tests[s.k].length}회 완료`:'아직 안 풂'}`);});
+  const nx=nextStep();L.push('다음 할 일: '+nx.title);const txt=L.join('\n');
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>alert('복사했어요. 카톡이나 문자에 붙여넣으세요.'),()=>prompt('아래 글을 복사하세요',txt));return;}
+});
+document.addEventListener('keydown',e=>{if(S.view!=='exam'||e.target.closest('input,textarea'))return;const E=S.ex;const q=Q[E.qs[E.cur]];
+ const m='abcde'.indexOf(e.key.toLowerCase());if(m>=0&&m<q.o.length){E.ans[E.cur]=m;rerender();}
+ else if(e.key==='ArrowRight'&&E.cur<E.qs.length-1){E.cur++;rerender();}else if(e.key==='ArrowLeft'&&E.cur>0){E.cur--;rerender();}});
+route();
+})();
+</script>
+</body>
+</html>
