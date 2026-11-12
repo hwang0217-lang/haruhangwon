@@ -29,6 +29,21 @@ def block(text):
         flush(); out.append(f'<p>{inline(l)}</p>')
     flush(); return ''.join(out)
 
+def title_html(x):
+    d = x['desc']; name = re.sub(r'\(.*?\)', '', x['name']).strip()
+    OVR = {'drive': ('운전면허 학과시험', '한국어·영어 모의고사'), 'ca-citizen': ('캐나다 시민권 시험', '한국어 해설 모의고사'),
+           'kor-teach': ('한국어교육능력검정', '필기 모의고사 10회'), 'kiip': ('사회통합프로그램 종합평가', '모의고사 10회')}
+    i = d.find('모의고사')
+    if x['id'] in OVR:
+        a, b = OVR[x['id']]
+    elif 0 < i <= 13:
+        a, b = d[:i].strip(), d[i:].strip()
+    elif d.startswith(name):
+        a, b = name, d[len(name):].strip()
+    else:
+        a, b = d, ''
+    return f'<span class="t1">{E(a)}</span>' + (f'<span class="t2">{E(b)}</span>' if b else '')
+
 def fig(p, cap):
     n, _, w, h = p
     return f'<figure><img src="/exam/img/{n}" width="{w}" height="{h}" loading="lazy" alt="{E(cap)}"><figcaption>{E(cap)}</figcaption></figure>'
@@ -100,7 +115,7 @@ def page(x):
 <main class="in">
 <p class="crumb"><a href="/exams">합격플랜</a> › {E(x["name"])}</p>
 <div class="top"><div class="cover">{fig(x["pics"][0], t)}</div>
-<div class="buybox"><h1>{E(x["desc"])}</h1><p class="lead">{E(x["one"])}</p>
+<div class="buybox"><h1>{title_html(x)}</h1><p class="lead">{E(x["one"])}</p>
 <div class="price"><span>{x["krw"]:,}원</span><small>해외 결제 ${x["usd"]}</small></div>
 <div class="acts">{buy}<a class="btn" href="/trial/{x["id"]}.html" download="{x["name"].replace(" ","")}_무료체험판.html">무료 체험판 받기</a></div>
 <p class="small">체험판: 모의고사 1회 + 교재 첫 단원 · <a href="#how">어떻게 작동하나요?</a></p></div></div>
