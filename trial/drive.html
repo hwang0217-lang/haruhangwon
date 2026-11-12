@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>운전면허 학과시험 합격플랜 (한국어·English) (무료 체험판)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+ --bg:#F2F4F3;--surface:#FFFFFF;--sunk:#F7F8F7;--ink:#172026;--muted:#5A666C;--line:#D8DEDB;--accent:#1D5C4D;--accent-ink:#FFFFFF;--pencil:#E3B126;--pencil-ink:#3B2E05;--hl:#FFE27A;
+ --good:#1E7B4E;--mid:#B57A12;--bad:#C2402F;--good-bg:#E3F2EA;--bad-bg:#FBE9E6;--mid-bg:#FBF1DC;--gichul:#6B4FA0;--gichul-bg:#EFEAF8;
+ --f-display:'Space Grotesk','Noto Sans KR',system-ui,sans-serif;--f-body:'Inter','Noto Sans KR',system-ui,sans-serif;--f-mono:'IBM Plex Mono',ui-monospace,monospace;
+ --r:10px;--fs:16px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#101416;--surface:#192024;--sunk:#141A1D;--ink:#E5EBE8;--muted:#9AA7A4;--line:#2B3539;--accent:#5CC0A2;--accent-ink:#0C1A16;--pencil:#E8BE48;--pencil-ink:#2A2003;--hl:rgba(232,190,72,.38);--good:#5CC795;--mid:#E2AE4A;--bad:#F07A68;--good-bg:#173027;--bad-bg:#3A1E1A;--mid-bg:#352A14;--gichul:#B9A2E8;--gichul-bg:#2A2340;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#101416;--surface:#192024;--sunk:#141A1D;--ink:#E5EBE8;--muted:#9AA7A4;--line:#2B3539;--accent:#5CC0A2;--accent-ink:#0C1A16;--pencil:#E8BE48;--pencil-ink:#2A2003;--hl:rgba(232,190,72,.38);--good:#5CC795;--mid:#E2AE4A;--bad:#F07A68;--good-bg:#173027;--bad-bg:#3A1E1A;--mid-bg:#352A14;--gichul:#B9A2E8;--gichul-bg:#2A2340;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{font-size:var(--fs)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+.wrap{max-width:1000px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em;line-height:1.25}
+h1{font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.12}
+h2{font-size:1.2rem}h3{font-size:1.05rem}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--pencil);outline-offset:2px}
+.muted{color:var(--muted)}.small{font-size:.85rem}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+/* top nav */
+.top{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;gap:6px;min-height:52px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:700;margin-right:auto;text-decoration:none;color:var(--ink);font-size:1rem;padding:6px 0}
+.nav a{display:inline-block;padding:7px 12px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:600;font-size:.92rem}
+.nav a.on{background:var(--ink);color:var(--surface)}
+body.in-exam .top .nav{display:none}
+.hero{background:var(--surface);border-bottom:1px solid var(--line);padding-block:28px 24px}
+.hero .lead{max-width:64ch;color:var(--muted);margin:10px 0 0}
+main.wrap{padding-block:22px 72px;display:flex;flex-direction:column;gap:18px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.panel>h2{margin-bottom:10px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.card{display:block;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;border-top:5px solid var(--sc,var(--accent))}
+.card:hover{border-color:var(--sc,var(--accent))}
+.card h3{margin-bottom:4px}
+.btn,.primary,.ghost{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:10px 18px;font-weight:600;text-decoration:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:.95rem}
+.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.sm{padding:6px 12px;font-size:.85rem}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.next{display:flex;gap:16px;align-items:center;flex-wrap:wrap;border:2px solid var(--accent);background:var(--surface);border-radius:var(--r);padding:18px 20px}
+.next .what{flex:1 1 260px}.next .what b{font-size:1.15rem;display:block;font-family:var(--f-display)}
+.stat{display:flex;gap:22px;flex-wrap:wrap}.stat div{min-width:90px}.stat b{display:block;font-size:1.6rem;font-family:var(--f-display)}
+.bar{display:grid;grid-template-columns:minmax(120px,1.4fr) 2fr auto;gap:10px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line)}
+.bar:last-child{border-bottom:0}
+.track{height:10px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.fill{height:100%;background:var(--good)}.fill.mid{background:var(--mid)}.fill.bad{background:var(--bad)}
+.num{font-family:var(--f-mono);font-size:.85rem;color:var(--muted);white-space:nowrap}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--sunk);border:1px solid var(--line);color:var(--muted);vertical-align:middle}
+.tag.good{background:var(--good-bg);color:var(--good);border-color:transparent}.tag.bad{background:var(--bad-bg);color:var(--bad);border-color:transparent}.tag.mid{background:var(--mid-bg);color:var(--mid);border-color:transparent}
+.lv{display:inline-block;font-size:.66rem;font-weight:700;padding:1px 6px;border-radius:4px;vertical-align:middle;margin-left:6px;border:1px solid var(--line);color:var(--muted)}.lv0{color:var(--good);border-color:var(--good)}.lv1{color:var(--mid);border-color:var(--mid)}.lv2{color:var(--bad);border-color:var(--bad)}
+.gichul{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.02em;padding:1px 6px;border-radius:4px;background:var(--gichul-bg);color:var(--gichul);vertical-align:middle;margin-left:6px}
+/* tests list */
+.tests{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.tcard{display:flex;flex-direction:column;gap:2px;text-align:left;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;background:var(--surface)}
+.tcard .tn{font-weight:700;font-family:var(--f-display);font-size:1.05rem}
+.tcard.pass{border-color:var(--good);background:var(--good-bg)}.tcard.fail{border-color:var(--bad);background:var(--bad-bg)}
+/* exam */
+.exhead{position:sticky;top:0;z-index:15;background:var(--surface);border-bottom:1px solid var(--line)}
+.exhead .wrap{display:flex;align-items:center;gap:12px;min-height:54px;flex-wrap:wrap;padding-block:6px}
+.exhead .t{font-weight:700;margin-right:auto}
+.timer{font-family:var(--f-mono);font-weight:600;padding:4px 10px;border-radius:6px;background:var(--sunk);border:1px solid var(--line)}
+.timer.low{background:var(--bad-bg);color:var(--bad)}
+.prog{height:4px;background:var(--line)}.prog i{display:block;height:100%;background:var(--accent)}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.qmeta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px;font-size:.85rem;color:var(--muted)}
+.qmeta .qn{font-family:var(--f-mono);font-weight:600;color:var(--ink)}
+.passage{background:var(--sunk);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:14px 16px;margin-bottom:14px;white-space:pre-line}
+.au{margin:0 0 14px}.fig{margin:6px 0 14px;text-align:center}.fig svg:not([width]){width:100%;max-width:640px;height:auto}.fig svg{max-width:100%}
+.fig figcaption{font-size:.8rem;color:var(--muted)}
+.qtext{font-size:1.12rem;font-weight:600;margin:0 0 4px}
+.qko{color:var(--muted);margin:0 0 14px;font-size:.95rem}
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:12px 14px}
+.opt:hover{border-color:var(--accent)}
+.opt .bub{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--muted);display:grid;place-items:center;font-family:var(--f-mono);font-size:.8rem;font-weight:700}
+.opt.sel{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface))}
+.opt.sel .bub{background:var(--pencil);border-color:var(--pencil);color:var(--pencil-ink)}
+.opt.right{border-color:var(--good);background:var(--good-bg)}.opt.right .bub{background:var(--good);border-color:var(--good);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}.opt.wrong .bub{background:var(--bad);border-color:var(--bad);color:#fff}
+.opt small{display:block;color:var(--muted);font-size:.85rem}
+.exnav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:16px}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:6px}
+.qgrid button{height:38px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-family:var(--f-mono);font-size:.85rem}
+.qgrid button.done{background:var(--sunk);font-weight:700}
+.qgrid button.cur{outline:2px solid var(--accent)}
+.qgrid button.flag{border-color:var(--pencil);box-shadow:inset 0 -4px 0 var(--pencil)}
+.qgrid button.ok{background:var(--good-bg);color:var(--good);border-color:var(--good)}.qgrid button.no{background:var(--bad-bg);color:var(--bad);border-color:var(--bad)}
+.expl{margin-top:14px;padding:12px 14px;border-radius:8px;background:var(--sunk);border:1px solid var(--line);font-size:.95rem}
+.expl b{font-family:var(--f-display)}
+/* result */
+.score{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.score .big{font-family:var(--f-display);font-size:3rem;font-weight:700;line-height:1}
+.verdict{font-weight:700;padding:6px 14px;border-radius:999px}
+.verdict.pass{background:var(--good-bg);color:var(--good)}.verdict.fail{background:var(--bad-bg);color:var(--bad)}
+.tips{padding-left:20px;margin:0}.tips li{margin:8px 0}
+.rv{border-top:1px solid var(--line);padding:16px 0}
+.rv:first-child{border-top:0}
+/* book */
+.chlist{list-style:none;padding:0;margin:0}
+.chlist li a{display:flex;gap:12px;align-items:center;padding:12px 4px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit}
+.chlist .no{font-family:var(--f-mono);color:var(--muted);width:2.4em;flex:none}
+.chlist .nm{flex:1}.chlist .nm small{display:block;color:var(--muted)}
+.chk{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:.8rem}
+.chk.on{background:var(--good);border-color:var(--good);color:#fff}
+.goal{background:var(--mid-bg);border-radius:8px;padding:12px 14px;margin-bottom:12px}
+.goal b{display:block;font-size:.8rem;color:var(--mid);margin-bottom:2px}
+.terms{width:100%;border-collapse:collapse;font-size:.95rem}
+.terms td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.terms td:first-child{font-weight:600;width:42%}
+.sec h3{margin:18px 0 6px}
+.sec p{margin:6px 0}
+.sec ul,.sec ol{margin:6px 0;padding-left:22px}
+.sec table{border-collapse:collapse;width:100%;margin:8px 0;font-size:.93rem}
+.sec th,.sec td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+.sec th{background:var(--sunk)}
+.en{font-weight:600}
+.ko{color:var(--muted)}
+.callout{border-left:4px solid var(--accent);background:var(--sunk);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0}
+.terms td:first-child b,.terms td:first-child>span,.sec li b,.sec p b,mark.hl{background:linear-gradient(transparent 52%,var(--hl) 52%);color:inherit;padding:0 2px;border-radius:2px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.trap{border-left:4px solid var(--bad);background:var(--bad-bg);padding:10px 14px;border-radius:0 8px 8px 0;margin:8px 0}
+.mini{border:1px solid var(--line);border-radius:10px;padding:14px;margin:10px 0}
+.crumb{font-size:.88rem;margin-bottom:10px}.crumb a{text-decoration:none}
+.chnav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.switch{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{border:0;background:var(--surface);padding:6px 12px;font-size:.88rem}
+.seg button.on{background:var(--ink);color:var(--surface)}
+.foot{font-size:.8rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:620px){.fig{overflow-x:auto}.fig svg:not([width]){min-width:520px}.bar{grid-template-columns:1fr auto}.bar .track{grid-column:1/-1;grid-row:2}.qcard{padding:16px}.score .big{font-size:2.4rem}}
+@media print{.top,.exhead,.actions,.exnav{display:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="#home" id="brand"></a><nav class="nav" id="nav"><a href="#home" data-v="home">대시보드</a><a href="#book" data-v="book">교재</a><a href="#tests" data-v="tests">모의고사</a><a href="#wrong" data-v="wrong">오답노트</a></nav></div></header>
+<div id="trialbar" hidden style="background:var(--pencil);color:var(--pencil-ink);text-align:center;font-weight:700;padding:8px 12px;font-size:.92rem">무료 체험판 · 과목별 모의고사 1회와 교재 첫 단원을 풀어 볼 수 있어요</div>
+<div id="app"></div>
+<script>
+const D={"id":"drive-v1","title":"운전면허 학과시험 합격플랜 (한국어·English)","short":"운전면허 학과 합격플랜","eyebrow":"운전면허 학과시험 · 40문항 40분 · Korean & English","lead":"한국에서 운전면허를 따려는 외국인을 위해 모든 문항을 <b>한국어 + 영어<\/b>로 실었어요. 실제처럼 40문항 40분 모의고사 10회를 풀고, 2종 60점·1종 70점 기준으로 채점해요. <span class=\"small muted\">All questions in Korean with English translation.<\/span>","about":"<p>운전면허 학과시험은 40문항, 40분이에요. <b>2종 보통 60점, 1종 보통 70점<\/b> 이상이면 합격이에요.<\/p><p class=\"small muted\">도로교통공단 문제은행 원문은 싣지 않았어요. 모든 문항은 도로교통법령(2026년 11월 기준)에 맞춰 새로 만든 것이에요. 실제 시험의 사진형·동영상형 문항은 이 파일에 없어요.<\/p>","foot":"이 자료는 도로교통공단·경찰청과 무관한 개인 제작 학습 자료입니다. 구매자 1인 학습용이며 무단 복제·재배포를 금합니다. Not affiliated with the Korea Road Traffic Authority.","subjects":[{"k":"dr","ko":"운전면허 학과","en":"Driver's Written Test","color":"#2F5DA8","min":40,"n":40,"topics":{"LAW":["면허와 법규 기본","Licenses & Basic Rules","합격 점수(2종 60·1종 70)와 음주 기준(0.03%·0.08%)부터 외우세요.",10],"SIGN":["신호와 안전표지","Signals & Signs","점멸 신호 두 가지와 표지 모양·색(주의 노랑 삼각, 규제 빨강 원, 지시 파랑)을 외우세요.",8],"DRIVE":["안전운전과 통행방법","Safe Driving & Rules","속도표와 주정차 금지 거리(5m·10m)를 외우세요.",12],"EMERG":["고속도로·특수 상황·사고","Expressways, Emergencies & Accidents","삼각대 거리(낮 100m·밤 200m)와 감속 기준(20%·50%)을 외우세요.",6],"CAR":["자동차 관리와 친환경 운전","Car Care & Eco-driving","3급(급출발·급가속·급제동) 금지와 P 주차를 기억하세요.",4]},"real":"40문항 40분"}],"pass":{"mode":"pct","cut":60,"note":"2종 60점 / 1종 70점"},"book":{"dr":[{"id":"INTRO","ko":"시험 안내와 공부 순서","en":"About the Test","goal":"학과시험 구성과 합격 기준을 안다. Know the test format and passing score.","terms":[],"secs":[["시험 구성 (Test format)","<table><tr><td>문항 수 / Questions<\/td><td>40<\/td><\/tr><tr><td>시간 / Time<\/td><td>40분 / 40 min<\/td><\/tr><tr><td>합격 / Pass<\/td><td>2종 60점 · 1종 70점 (Class 2: 60, Class 1: 70)<\/td><\/tr><\/table><p>운전면허시험장에서 컴퓨터로 봐요. 영어·중국어·베트남어 등 외국어로도 볼 수 있어요. 학과시험 전에 교통안전교육(1시간)을 받아야 해요.<\/p><p class=\"small muted\">You take it on a computer at a driver's license test center. Several languages are available. A 1-hour traffic safety class is required before the test.<\/p>"],["공부 순서 (How to study)","<ol><li>1회 진단 / Take test 1<\/li><li>그림 표 외우기 / Memorize the charts<\/li><li>틀린 문항 다시 보기 / Review mistakes<\/li><li>9~10회 시간 재기 / Time yourself<\/li><\/ol><p class=\"small muted\">도로교통법은 바뀔 수 있어요. 시험 전 도로교통공단 안내를 확인하세요.<\/p>"]],"traps":[],"quiz":[]},{"id":"LAW","ko":"면허와 법규 기본","en":"Licenses & Basic Rules","goal":"합격 점수(2종 60·1종 70)와 음주 기준(0.03%·0.08%)부터 외우세요.","terms":[],"secs":[["이 단원 핵심 문답 (Key Q&A)","<table><tr><th>질문<\/th><th>정답<\/th><\/tr><tr><td>운전면허 학과시험에서 2종 보통면허의 합격 점수는?<br><small class=\"muted\">What is the passing score of the written test for a Class 2 ordinary license?<\/small><\/td><td><mark class=\"hl\">60점 이상<\/mark><br><small>60 or more<\/small><\/td><\/tr><tr><td>운전면허 학과시험에서 1종 보통면허의 합격 점수는?<br><small class=\"muted\">What is the passing score for a Class 1 ordinary license?<\/small><\/td><td><mark class=\"hl\">70점 이상<\/mark><br><small>70 or more<\/small><\/td><\/tr><tr><td>2종 보통면허로 운전할 수 있는 승합자동차는?<br><small class=\"muted\">Which van can be driven with a Class 2 ordinary license?<\/small><\/td><td><mark class=\"hl\">승차정원 10명 이하<\/mark><br><small>10 seats or fewer<\/small><\/td><\/tr><tr><td>1종 보통면허로 운전할 수 있는 승합자동차는?<br><small class=\"muted\">Which van can be driven with a Class 1 ordinary license?<\/small><\/td><td><mark class=\"hl\">승차정원 15명 이하<\/mark><br><small>15 seats or fewer<\/small><\/td><\/tr><tr><td>2종 보통면허로 운전할 수 있는 화물자동차는?<br><small class=\"muted\">Which truck can be driven with a Class 2 ordinary license?<\/small><\/td><td><mark class=\"hl\">적재중량 4톤 이하<\/mark><br><small>Load 4 tons or less<\/small><\/td><\/tr><tr><td>1종 보통면허로 운전할 수 있는 화물자동차는?<br><small class=\"muted\">Which truck can be driven with a Class 1 ordinary license?<\/small><\/td><td><mark class=\"hl\">적재중량 12톤 미만<\/mark><br><small>Load under 12 tons<\/small><\/td><\/tr><tr><td>처음 운전면허를 받은 날부터 몇 년이 지나지 않은 사람을 초보운전자라 하는가?<br><small class=\"muted\">A beginner driver is someone within how many years of first getting a license?<\/small><\/td><td><mark class=\"hl\">2년<\/mark><br><small>2 years<\/small><\/td><\/tr><tr><td>연습운전면허의 유효기간은?<br><small class=\"muted\">How long is a learner's license valid?<\/small><\/td><td><mark class=\"hl\">받은 날부터 1년<\/mark><br><small>1 year from issue<\/small><\/td><\/tr><tr><td>운전면허 정지 처분이 시작되는 벌점 기준은?<br><small class=\"muted\">From how many penalty points does license suspension start?<\/small><\/td><td><mark class=\"hl\">40점 이상<\/mark><br><small>40 or more<\/small><\/td><\/tr><tr><td>1년 동안 누산 벌점이 몇 점 이상이면 면허가 취소되는가?<br><small class=\"muted\">How many accumulated points in 1 year lead to cancellation?<\/small><\/td><td><mark class=\"hl\">121점 이상<\/mark><br><small>121 or more<\/small><\/td><\/tr><tr><td>음주운전으로 처벌되는 혈중알코올농도 기준은?<br><small class=\"muted\">From what blood alcohol level is it drunk driving?<\/small><\/td><td><mark class=\"hl\">0.03% 이상<\/mark><br><small>0.03% or more<\/small><\/td><\/tr><tr><td>혈중알코올농도가 몇 % 이상이면 운전면허가 취소되는가?<br><small class=\"muted\">From what blood alcohol level is the license canceled?<\/small><\/td><td><mark class=\"hl\">0.08% 이상<\/mark><br><small>0.08% or more<\/small><\/td><\/tr><tr><td>경찰공무원의 음주 측정 요구를 거부하면 어떻게 되는가?<br><small class=\"muted\">What happens if you refuse a police breathalyzer test?<\/small><\/td><td><mark class=\"hl\">면허가 취소되고 처벌받는다<\/mark><br><small>License canceled and punished<\/small><\/td><\/tr><tr><td>운전면허 적성검사(갱신) 기간은 일반적으로 몇 년마다인가? (65세 미만)<br><small class=\"muted\">How often must a license be renewed (under 65)?<\/small><\/td><td><mark class=\"hl\">10년<\/mark><br><small>Every 10 years<\/small><\/td><\/tr><tr><td>75세 이상 운전자의 면허 갱신 주기는?<br><small class=\"muted\">How often do drivers aged 75+ renew?<\/small><\/td><td><mark class=\"hl\">3년<\/mark><br><small>Every 3 years<\/small><\/td><\/tr><tr><td>운전 중 휴대전화 사용에 대한 설명으로 맞는 것은?<br><small class=\"muted\">Which is correct about using a mobile phone while driving?<\/small><\/td><td><mark class=\"hl\">정지 중이 아니면 손에 들고 쓰면 안 된다<\/mark><br><small>Do not hold and use it unless stopped<\/small><\/td><\/tr><tr><td>좌석 안전띠를 매야 하는 사람은?<br><small class=\"muted\">Who must wear a seat belt?<\/small><\/td><td><mark class=\"hl\">운전자와 모든 좌석 동승자<\/mark><br><small>Driver and all passengers<\/small><\/td><\/tr><tr><td>6세 미만 어린이를 태울 때 필요한 것은?<br><small class=\"muted\">What is needed when carrying a child under 6?<\/small><\/td><td><mark class=\"hl\">유아보호용 장구(카시트)<\/mark><br><small>Child car seat<\/small><\/td><\/tr><tr><td>운전면허 없이 운전하면 어떻게 되는가?<br><small class=\"muted\">What happens if you drive without a license?<\/small><\/td><td><mark class=\"hl\">형사처벌을 받는다<\/mark><br><small>Criminal punishment<\/small><\/td><\/tr><tr><td>외국에서 받은 운전면허로 한국에서 운전하려면 일반적으로 필요한 것은?<br><small class=\"muted\">To drive in Korea with a foreign license, what is usually needed?<\/small><\/td><td><mark class=\"hl\">국제운전면허증 또는 한국 면허로 교환<\/mark><br><small>International permit or exchange for a Korean license<\/small><\/td><\/tr><tr><td>도로교통법상 \"차\"에 해당하지 않는 것은?<br><small class=\"muted\">Which is NOT a \"vehicle\" under the Road Traffic Act?<\/small><\/td><td><mark class=\"hl\">유모차<\/mark><br><small>Baby stroller<\/small><\/td><\/tr><tr><td>자전거도 도로교통법상 무엇에 해당하는가?<br><small class=\"muted\">Under the Road Traffic Act, a bicycle is a…<\/small><\/td><td><mark class=\"hl\">차<\/mark><br><small>Vehicle<\/small><\/td><\/tr><tr><td>운전면허 학과시험 문항 수와 시간은?<br><small class=\"muted\">How many questions and minutes in the written test?<\/small><\/td><td><mark class=\"hl\">40문항 40분<\/mark><br><small>40 questions, 40 min<\/small><\/td><\/tr><tr><td>학과시험에 합격한 뒤 기능시험은 언제까지 봐야 하는가?<br><small class=\"muted\">After passing the written test, by when must you take the skill test?<\/small><\/td><td><mark class=\"hl\">1년 이내<\/mark><br><small>Within 1 year<\/small><\/td><\/tr><tr><td>교통사고로 사람을 다치게 하고 도주하면?<br><small class=\"muted\">If you injure someone and flee (hit-and-run)?<\/small><\/td><td><mark class=\"hl\">면허 취소와 무거운 처벌<\/mark><br><small>License canceled, heavy punishment<\/small><\/td><\/tr><tr><td>운전면허증을 다른 사람에게 빌려주면?<br><small class=\"muted\">If you lend your license to someone?<\/small><\/td><td><mark class=\"hl\">처벌받고 면허가 취소될 수 있다<\/mark><br><small>Punishment and possible cancellation<\/small><\/td><\/tr><tr><td>운전면허 학과시험 전에 받아야 하는 교육은?<br><small class=\"muted\">What training is required before the written test?<\/small><\/td><td><mark class=\"hl\">교통안전교육 1시간<\/mark><br><small>1-hour traffic safety class<\/small><\/td><\/tr><tr><td>운전 중 영상 표시 장치(TV·동영상)를 보는 것은?<br><small class=\"muted\">Watching videos on a screen while driving is…<\/small><\/td><td><mark class=\"hl\">금지된다(내비게이션 등 예외)<\/mark><br><small>Prohibited (except navigation, etc.)<\/small><\/td><\/tr><tr><td>난폭운전에 해당하는 것은?<br><small class=\"muted\">Which counts as reckless (aggressive) driving?<\/small><\/td><td><mark class=\"hl\">급제동·진로 방해 등을 반복해 위협하는 것<\/mark><br><small>Repeated sudden braking or blocking to threaten others<\/small><\/td><\/tr><tr><td>보복운전으로 사람을 다치게 하면?<br><small class=\"muted\">Injuring someone through road rage?<\/small><\/td><td><mark class=\"hl\">형법으로 처벌되고 면허가 취소될 수 있다<\/mark><br><small>Criminal punishment and possible cancellation<\/small><\/td><\/tr><tr><td>자동차를 운전할 때 꼭 가지고 다녀야 하는 것은?<br><small class=\"muted\">What must you carry when driving?<\/small><\/td><td><mark class=\"hl\">운전면허증<\/mark><br><small>Driver's license<\/small><\/td><\/tr><tr><td>술에 취한 상태에서 자전거를 타면?<br><small class=\"muted\">Riding a bicycle while drunk?<\/small><\/td><td><mark class=\"hl\">처벌 대상이다<\/mark><br><small>It is punishable<\/small><\/td><\/tr><tr><td>개인형 이동장치(전동킥보드)를 타려면 필요한 면허는?<br><small class=\"muted\">What license is needed to ride an e-scooter?<\/small><\/td><td><mark class=\"hl\">원동기장치자전거 면허 이상<\/mark><br><small>Motorized bicycle license or higher<\/small><\/td><\/tr><tr><td>전동킥보드 탑승 인원은?<br><small class=\"muted\">How many people may ride an e-scooter?<\/small><\/td><td><mark class=\"hl\">1명<\/mark><br><small>1 person<\/small><\/td><\/tr><tr><td>원동기장치자전거 면허를 딸 수 있는 나이는?<br><small class=\"muted\">Minimum age for a motorized bicycle license?<\/small><\/td><td><mark class=\"hl\">만 16세<\/mark><br><small>16<\/small><\/td><\/tr><tr><td>1종·2종 보통면허를 딸 수 있는 나이는?<br><small class=\"muted\">Minimum age for an ordinary (Class 1/2) license?<\/small><\/td><td><mark class=\"hl\">만 18세<\/mark><br><small>18<\/small><\/td><\/tr><tr><td>1종 대형면허를 딸 수 있는 조건은?<br><small class=\"muted\">Requirement for a Class 1 large license?<\/small><\/td><td><mark class=\"hl\">만 19세 이상, 운전 경력 1년 이상<\/mark><br><small>Age 19+, 1+ year of driving experience<\/small><\/td><\/tr><\/table>"]],"traps":[],"nquiz":4,"quiz":[{"q":"1종 대형면허를 딸 수 있는 조건은?","qk":"Requirement for a Class 1 large license?","o":["만 19세 이상, 운전 경력 1년 이상","만 30세 이상","만 16세 이상","경력 필요 없음"],"ok":["Age 19+, 1+ year of driving experience","Age 30+","Age 16+","No experience needed"],"a":0,"e":"대형·특수: 19세 + 경력 1년."},{"q":"연습운전면허의 유효기간은?","qk":"How long is a learner's license valid?","o":["받은 날부터 1년","받은 날부터 6개월","받은 날부터 2년","받은 날부터 3개월"],"ok":["1 year from issue","6 months from issue","2 years from issue","3 months from issue"],"a":0,"e":"연습면허 1년."},{"q":"6세 미만 어린이를 태울 때 필요한 것은?","qk":"What is needed when carrying a child under 6?","o":["필요 없음","유아보호용 장구(카시트)","보호자 동의서","뒷좌석 창문 잠금만"],"ok":["Nothing","Child car seat","Parent consent form","Only rear window lock"],"a":1,"e":"6세 미만은 카시트 착용 의무."},{"q":"1년 동안 누산 벌점이 몇 점 이상이면 면허가 취소되는가?","qk":"How many accumulated points in 1 year lead to cancellation?","o":["121점 이상","81점 이상","271점 이상","201점 이상"],"ok":["121 or more","81 or more","271 or more","201 or more"],"a":0,"e":"1년 121점, 2년 201점, 3년 271점."}]},{"id":"SIGN","ko":"신호와 안전표지","en":"Signals & Signs","goal":"","terms":[],"secs":[],"traps":[],"quiz":[],"locked":1},{"id":"DRIVE","ko":"안전운전과 통행방법","en":"Safe Driving & Rules","goal":"","terms":[],"secs":[],"traps":[],"quiz":[],"locked":1},{"id":"EMERG","ko":"고속도로·특수 상황·사고","en":"Expressways, Emergencies & Accidents","goal":"","terms":[],"secs":[],"traps":[],"quiz":[],"locked":1},{"id":"CAR","ko":"자동차 관리와 친환경 운전","en":"Car Care & Eco-driving","goal":"","terms":[],"secs":[],"traps":[],"quiz":[],"locked":1}]},"figs":{"speed":"<svg viewBox=\"0 0 610 150\" width=\"610\" role=\"img\" aria-label=\"최고속도 (km/h)\" font-family=\"sans-serif\" fill=\"currentColor\"><g transform=\"translate(10,10)\"><rect width=\"190\" height=\"60\" rx=\"10\" fill=\"#2F5DA8\" opacity=\".12\" stroke=\"#2F5DA8\"/><text x=\"95.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">일반도로 편도1<\/text><text x=\"95.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">60<\/text><\/g><g transform=\"translate(210,10)\"><rect width=\"190\" height=\"60\" rx=\"10\" fill=\"#2F5DA8\" opacity=\".12\" stroke=\"#2F5DA8\"/><text x=\"95.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">일반도로 편도2+<\/text><text x=\"95.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">80<\/text><\/g><g transform=\"translate(410,10)\"><rect width=\"190\" height=\"60\" rx=\"10\" fill=\"#2F5DA8\" opacity=\".12\" stroke=\"#2F5DA8\"/><text x=\"95.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">도시부<\/text><text x=\"95.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">50 (이면도로 30)<\/text><\/g><g transform=\"translate(10,80)\"><rect width=\"190\" height=\"60\" rx=\"10\" fill=\"#2F5DA8\" opacity=\".12\" stroke=\"#2F5DA8\"/><text x=\"95.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">자동차전용<\/text><text x=\"95.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">90 / 최저 30<\/text><\/g><g transform=\"translate(210,80)\"><rect width=\"190\" height=\"60\" rx=\"10\" fill=\"#2F5DA8\" opacity=\".12\" stroke=\"#2F5DA8\"/><text x=\"95.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">고속도로 편도1<\/text><text x=\"95.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">80<\/text><\/g><g transform=\"translate(410,80)\"><rect width=\"190\" height=\"60\" rx=\"10\" fill=\"#2F5DA8\" opacity=\".12\" stroke=\"#2F5DA8\"/><text x=\"95.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">고속도로 편도2+<\/text><text x=\"95.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">100 / 최저 50<\/text><\/g><\/svg><figcaption>그림: 최고속도 (km/h)<\/figcaption>","light":"<svg viewBox=\"0 0 610 80\" width=\"610\" role=\"img\" aria-label=\"헷갈리는 신호\" font-family=\"sans-serif\" fill=\"currentColor\"><g transform=\"translate(10,10)\"><rect width=\"190\" height=\"60\" rx=\"10\" fill=\"#A83F5A\" opacity=\".12\" stroke=\"#A83F5A\"/><text x=\"95.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">적색 점멸<\/text><text x=\"95.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">일시정지 후 진행<\/text><\/g><g transform=\"translate(210,10)\"><rect width=\"190\" height=\"60\" rx=\"10\" fill=\"#A83F5A\" opacity=\".12\" stroke=\"#A83F5A\"/><text x=\"95.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">황색 점멸<\/text><text x=\"95.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">주의하며 진행<\/text><\/g><g transform=\"translate(410,10)\"><rect width=\"190\" height=\"60\" rx=\"10\" fill=\"#A83F5A\" opacity=\".12\" stroke=\"#A83F5A\"/><text x=\"95.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">녹색 화살표<\/text><text x=\"95.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">그 방향 진행<\/text><\/g><\/svg><figcaption>그림: 헷갈리는 신호<\/figcaption>","signs":"<svg viewBox=\"0 0 620 80\" width=\"620\" role=\"img\" aria-label=\"안전표지 5종류\" font-family=\"sans-serif\" fill=\"currentColor\"><g transform=\"translate(10,10)\"><rect width=\"112\" height=\"60\" rx=\"10\" fill=\"#A8552F\" opacity=\".12\" stroke=\"#A8552F\"/><text x=\"56.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">주의<\/text><text x=\"56.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">노란 삼각형<\/text><\/g><g transform=\"translate(132,10)\"><rect width=\"112\" height=\"60\" rx=\"10\" fill=\"#A8552F\" opacity=\".12\" stroke=\"#A8552F\"/><text x=\"56.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">규제<\/text><text x=\"56.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">빨간 원<\/text><\/g><g transform=\"translate(254,10)\"><rect width=\"112\" height=\"60\" rx=\"10\" fill=\"#A8552F\" opacity=\".12\" stroke=\"#A8552F\"/><text x=\"56.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">지시<\/text><text x=\"56.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">파란 바탕<\/text><\/g><g transform=\"translate(376,10)\"><rect width=\"112\" height=\"60\" rx=\"10\" fill=\"#A8552F\" opacity=\".12\" stroke=\"#A8552F\"/><text x=\"56.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">보조<\/text><text x=\"56.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">뜻 보충<\/text><\/g><g transform=\"translate(498,10)\"><rect width=\"112\" height=\"60\" rx=\"10\" fill=\"#A8552F\" opacity=\".12\" stroke=\"#A8552F\"/><text x=\"56.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">노면표시<\/text><text x=\"56.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">도로 위<\/text><\/g><\/svg><figcaption>그림: 안전표지 5종류<\/figcaption>","park":"<svg viewBox=\"0 0 640 80\" width=\"640\" role=\"img\" aria-label=\"주정차 금지 거리\" font-family=\"sans-serif\" fill=\"currentColor\"><g transform=\"translate(10,10)\"><rect width=\"200\" height=\"60\" rx=\"10\" fill=\"#2F8A5D\" opacity=\".12\" stroke=\"#2F8A5D\"/><text x=\"100.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">5m<\/text><text x=\"100.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">교차로 모퉁이·소방시설<\/text><\/g><g transform=\"translate(220,10)\"><rect width=\"200\" height=\"60\" rx=\"10\" fill=\"#2F8A5D\" opacity=\".12\" stroke=\"#2F8A5D\"/><text x=\"100.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">10m<\/text><text x=\"100.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">횡단보도·버스정류장·건널목<\/text><\/g><g transform=\"translate(430,10)\"><rect width=\"200\" height=\"60\" rx=\"10\" fill=\"#2F8A5D\" opacity=\".12\" stroke=\"#2F8A5D\"/><text x=\"100.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">주차 금지<\/text><text x=\"100.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">터널 안·다리 위<\/text><\/g><\/svg><figcaption>그림: 주정차 금지 거리<\/figcaption>","slow":"<svg viewBox=\"0 0 610 80\" width=\"610\" role=\"img\" aria-label=\"악천후 감속\" font-family=\"sans-serif\" fill=\"currentColor\"><g transform=\"translate(10,10)\"><rect width=\"290\" height=\"60\" rx=\"10\" fill=\"#1F7A6C\" opacity=\".12\" stroke=\"#1F7A6C\"/><text x=\"145.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">20% 감속<\/text><text x=\"145.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">젖은 노면·눈 20mm 미만<\/text><\/g><g transform=\"translate(310,10)\"><rect width=\"290\" height=\"60\" rx=\"10\" fill=\"#1F7A6C\" opacity=\".12\" stroke=\"#1F7A6C\"/><text x=\"145.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">50% 감속<\/text><text x=\"145.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">가시거리 100m 이내·결빙·눈 20mm 이상<\/text><\/g><\/svg><figcaption>그림: 악천후 감속<\/figcaption>","tri":"<svg viewBox=\"0 0 610 80\" width=\"610\" role=\"img\" aria-label=\"고장 시 안전 조치\" font-family=\"sans-serif\" fill=\"currentColor\"><g transform=\"translate(10,10)\"><rect width=\"290\" height=\"60\" rx=\"10\" fill=\"#7A4FA8\" opacity=\".12\" stroke=\"#7A4FA8\"/><text x=\"145.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">낮<\/text><text x=\"145.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">삼각대 100m 뒤<\/text><\/g><g transform=\"translate(310,10)\"><rect width=\"290\" height=\"60\" rx=\"10\" fill=\"#7A4FA8\" opacity=\".12\" stroke=\"#7A4FA8\"/><text x=\"145.0\" y=\"26\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">밤<\/text><text x=\"145.0\" y=\"46\" text-anchor=\"middle\" font-size=\"11\">삼각대 200m 뒤 + 불꽃신호<\/text><\/g><\/svg><figcaption>그림: 고장 시 안전 조치<\/figcaption>"},"realtime":"40문항 40분","score":{"type":"pct","max":100,"cut":60,"note":"100점 만점(문항당 2.5점 또는 2점·3점). 2종 보통 60점, 1종 보통·대형·특수 70점 이상 합격"},"allow_repeat":true,"bank":{"dv002":{"id":"dv002","s":"dr","t":"LAW","q":"운전면허 학과시험에서 1종 보통면허의 합격 점수는?","qk":"What is the passing score for a Class 1 ordinary license?","o":["80점 이상","70점 이상","60점 이상","90점 이상"],"ok":["80 or more","70 or more","60 or more","90 or more"],"a":1,"e":"1종은 70점 이상.","d":1},"dv003":{"id":"dv003","s":"dr","t":"LAW","q":"2종 보통면허로 운전할 수 있는 승합자동차는?","qk":"Which van can be driven with a Class 2 ordinary license?","o":["승차정원 25명 이하","승차정원 36명 이상","승차정원 15명 이하","승차정원 10명 이하"],"ok":["25 seats or fewer","36 seats or more","15 seats or fewer","10 seats or fewer"],"a":3,"e":"2종 보통: 승용, 10인 이하 승합, 4톤 이하 화물.","d":2},"dv006":{"id":"dv006","s":"dr","t":"LAW","q":"1종 보통면허로 운전할 수 있는 화물자동차는?","qk":"Which truck can be driven with a Class 1 ordinary license?","o":["적재중량 20톤 이상","적재중량 12톤 미만","적재중량 4톤 이하","특수 트레일러"],"ok":["Load 20 tons or more","Load under 12 tons","Load 4 tons or less","Special trailers"],"a":1,"e":"1종 보통은 12톤 미만.","d":1},"dv007":{"id":"dv007","s":"dr","t":"LAW","q":"처음 운전면허를 받은 날부터 몇 년이 지나지 않은 사람을 초보운전자라 하는가?","qk":"A beginner driver is someone within how many years of first getting a license?","o":["5년","1년","3년","2년"],"ok":["5 years","1 year","3 years","2 years"],"a":3,"e":"초보운전자 = 처음 면허 받은 날부터 2년 이내.","d":2},"dv017":{"id":"dv017","s":"dr","t":"LAW","q":"좌석 안전띠를 매야 하는 사람은?","qk":"Who must wear a seat belt?","o":["고속도로에서만 운전자","운전자만","앞좌석만","운전자와 모든 좌석 동승자"],"ok":["Driver only on expressways","Driver only","Front seats only","Driver and all passengers"],"a":3,"e":"모든 도로, 모든 좌석.","d":0},"dv022":{"id":"dv022","s":"dr","t":"LAW","q":"자전거도 도로교통법상 무엇에 해당하는가?","qk":"Under the Road Traffic Act, a bicycle is a…","o":["보행자","차","긴급자동차","건설기계"],"ok":["Pedestrian","Vehicle","Emergency vehicle","Construction machine"],"a":1,"e":"자전거는 차예요. 차도로 다녀요.","d":0},"dv024":{"id":"dv024","s":"dr","t":"LAW","q":"학과시험에 합격한 뒤 기능시험은 언제까지 봐야 하는가?","qk":"After passing the written test, by when must you take the skill test?","o":["3년 이내","1개월 이내","기한 없음","1년 이내"],"ok":["Within 3 years","Within 1 month","No limit","Within 1 year"],"a":3,"e":"학과 합격 유효 1년.","d":2},"dv031":{"id":"dv031","s":"dr","t":"SIGN","q":"교차로에서 경찰관의 수신호와 신호등이 다를 때 따라야 하는 것은?","qk":"When a police officer's signal differs from the traffic light, follow…","o":["앞차","경찰관의 수신호","신호등","내비게이션"],"ok":["The car ahead","The police officer","The traffic light","The navigation"],"a":1,"e":"경찰관 지시가 우선이에요.","d":1},"dv035":{"id":"dv035","s":"dr","t":"SIGN","q":"규제표지의 일반적인 특징은?","qk":"What do regulatory signs usually look like?","o":["파란 사각형","초록 화살표","노란 삼각형","빨간 테두리의 원형"],"ok":["Blue square","Green arrow","Yellow triangle","Round with a red border"],"a":3,"e":"규제 = 빨간 원(금지·제한).","d":1},"dv037":{"id":"dv037","s":"dr","t":"SIGN","q":"황색 점선 중앙선의 뜻은?","qk":"What does a dashed yellow center line mean?","o":["안전하면 앞지르기를 위해 넘을 수 있다","정차 금지","자전거 전용","어떤 경우에도 넘을 수 없다"],"ok":["You may cross to pass when safe","No stopping","Bicycles only","Never cross"],"a":0,"e":"점선은 조건부 허용.","d":0},"dv042":{"id":"dv042","s":"dr","t":"SIGN","q":"보조표지의 역할은?","qk":"What do supplementary signs do?","o":["광고를 한다","신호등을 대신한다","주차를 허가한다","주된 표지의 뜻을 보충한다"],"ok":["Advertise","Replace traffic lights","Grant parking","Add details to the main sign"],"a":3,"e":"시간·거리·차종 등을 덧붙여요.","d":0},"dv045":{"id":"dv045","s":"dr","t":"SIGN","q":"우회전 신호등이 있는 교차로에서 우회전 신호가 적색이면?","qk":"If there is a right-turn signal and it is red?","o":["일시정지 후 우회전한다","우회전하지 않고 정지한다","서행하며 우회전한다","경음기를 울리고 우회전한다"],"ok":["Stop then turn","Stop and do not turn","Turn slowly","Honk and turn"],"a":1,"e":"우회전 신호등이 있으면 그 신호를 따라요.","d":2},"dv052":{"id":"dv052","s":"dr","t":"DRIVE","q":"편도 1차로 고속도로의 최고속도는?","qk":"Max speed on a one-lane-each-way expressway?","o":["시속 80km","시속 90km","시속 60km","시속 100km"],"ok":["80 km/h","90 km/h","60 km/h","100 km/h"],"a":0,"e":"편도 1차로 고속도로 80.","d":1},"dv054":{"id":"dv054","s":"dr","t":"DRIVE","q":"자동차전용도로의 최저속도는?","qk":"Minimum speed on motor-vehicle-only roads?","o":["시속 20km","시속 30km","시속 40km","시속 50km"],"ok":["20 km/h","30 km/h","40 km/h","50 km/h"],"a":1,"e":"최저 30.","d":1},"dv056":{"id":"dv056","s":"dr","t":"DRIVE","q":"폭우·폭설·안개로 가시거리가 100m 이내일 때 감속 기준은?","qk":"Visibility under 100 m due to heavy rain, snow, fog. How much to slow down?","o":["20/100을 줄인다","30/100을 줄인다","최고속도의 50/100을 줄인다","줄이지 않는다"],"ok":["Reduce by 20%","Reduce by 30%","Reduce max speed by 50%","No reduction"],"a":2,"e":"가시거리 100m 이내·노면 결빙·눈 20mm 이상: 50% 감속.","d":1},"dv057":{"id":"dv057","s":"dr","t":"DRIVE","q":"눈이 20mm 이상 쌓였을 때 감속 기준은?","qk":"Snow is 20 mm or deeper. How much to slow down?","o":["최고속도의 50/100","최고속도의 20/100","최고속도의 10/100","감속 필요 없음"],"ok":["By 50%","By 20%","By 10%","No need"],"a":0,"e":"20mm 이상 50%.","d":2},"dv060":{"id":"dv060","s":"dr","t":"DRIVE","q":"앞차가 다른 차를 앞지르고 있을 때 뒤차는?","qk":"The car ahead is overtaking another car. You should…","o":["함께 앞지른다","오른쪽으로 앞지른다","앞지르기를 시작하면 안 된다","경음기를 울린다"],"ok":["Overtake together","Overtake on the right","Not start overtaking","Honk"],"a":2,"e":"앞차 앞지르기 중에는 금지.","d":0},"dv062":{"id":"dv062","s":"dr","t":"DRIVE","q":"교차로에서 우회전하는 방법은?","qk":"How do you turn right at an intersection?","o":["1차로에서 우회전","중앙선을 넘어 우회전","미리 도로 오른쪽 가장자리를 따라 서행하며 우회전","속도를 높여 우회전"],"ok":["Turn from lane 1","Cross the center line","Move to the right edge early and turn slowly","Speed up and turn"],"a":2,"e":"우회전은 오른쪽 가장자리에서.","d":0},"dv064":{"id":"dv064","s":"dr","t":"DRIVE","q":"회전교차로에서 통행 방법으로 맞는 것은?","qk":"Which is correct at a roundabout?","o":["정차해서 기다린다","시계 방향으로 돈다","회전 중인 차가 진입 차에 양보한다","반시계 방향으로 돌고, 진입 차가 회전 중인 차에 양보한다"],"ok":["Stop inside and wait","Go clockwise","Circulating cars yield to entering cars","Go counterclockwise; entering cars yield to circulating cars"],"a":3,"e":"회전 중인 차 우선.","d":1},"dv066":{"id":"dv066","s":"dr","t":"DRIVE","q":"어린이 통학버스가 정차해 점멸등을 켜고 있으면 같은 차로와 옆 차로의 차는?","qk":"A school bus is stopped with flashing lights. Cars in the same and next lanes…","o":["경음기를 울리며 지나간다","앞지른다","빠르게 지나간다","일시정지해 안전을 확인한 후 서행"],"ok":["Honk and pass","Overtake it","Pass quickly","Stop, check, then pass slowly"],"a":3,"e":"통학버스 앞지르기 금지.","d":1},"dv070":{"id":"dv070","s":"dr","t":"DRIVE","q":"정지거리는 무엇을 더한 것인가?","qk":"Stopping distance is the sum of…","o":["차간거리 + 공주거리","공주거리 + 제동거리","주행거리 + 제동거리","제동거리 + 안전거리"],"ok":["Gap + reaction distance","Reaction distance + braking distance","Travel + braking distance","Braking + safe distance"],"a":1,"e":"공주거리 = 위험을 보고 브레이크 밟기까지.","d":1},"dv082":{"id":"dv082","s":"dr","t":"EMERG","q":"고속도로에서 차가 고장 나면 낮에는 비상삼각대를 어디에 두는가?","qk":"Car breaks down on an expressway in daytime. Where to place the warning triangle?","o":["갓길 바깥","차 바로 뒤","차 앞쪽 50m","차 뒤쪽 100m 이상"],"ok":["Outside the shoulder","Right behind the car","50 m ahead","100 m or more behind"],"a":3,"e":"낮 100m, 밤 200m + 불꽃신호.","d":1},"dv092":{"id":"dv092","s":"dr","t":"EMERG","q":"터널에 들어갈 때 맞는 행동은?","qk":"When entering a tunnel, you should…","o":["전조등을 켜고 속도를 줄인다","선글라스를 쓴다","차로를 바꾼다","전조등을 끈다"],"ok":["Turn on headlights and slow down","Wear sunglasses","Change lanes","Turn off headlights"],"a":0,"e":"터널 안 차로 변경 금지(실선).","d":0},"dv094":{"id":"dv094","s":"dr","t":"EMERG","q":"안개가 짙을 때 맞는 행동은?","qk":"In thick fog, you should…","o":["비상등만 켜고 빨리 간다","전조등·안개등을 켜고 속도를 줄인다","앞차에 바짝 붙는다","상향등을 켠다"],"ok":["Hazards only and go fast","Use headlights/fog lights and slow down","Tailgate","Use high beams"],"a":1,"e":"상향등은 빛이 퍼져 더 안 보여요.","d":1},"dv100":{"id":"dv100","s":"dr","t":"EMERG","q":"교통사고로 물건만 망가졌을 때(사람은 안 다침) 해야 할 일은?","qk":"Accident with property damage only. What to do?","o":["도로 가운데에서 계속 기다린다","그냥 떠난다","안전한 곳으로 차를 옮기고 피해자에게 연락처를 준다","상대 차를 밀어낸다"],"ok":["Wait in the middle of the road","Just leave","Move to safety and give contact info to the victim","Push the other car"],"a":2,"e":"인적 사항 제공 의무.","d":1},"dv102":{"id":"dv102","s":"dr","t":"CAR","q":"친환경 경제운전 방법으로 맞는 것은?","qk":"Which is eco-friendly driving?","o":["급출발·급가속·급제동을 피한다","짐을 많이 싣고 다닌다","공회전을 오래 한다","타이어 공기압을 낮춘다"],"ok":["Avoid sudden starts, acceleration, braking","Carry lots of load","Idle for a long time","Lower tire pressure"],"a":0,"e":"3급 금지 = 연비 향상.","d":2},"dv110":{"id":"dv110","s":"dr","t":"CAR","q":"비탈길에 주차할 때 안전한 방법은?","qk":"How to park safely on a slope?","o":["중립으로 둔다","바퀴를 똑바로 둔다","주차 브레이크를 걸고 바퀴를 길가 쪽으로 돌린다","시동을 켜 둔다"],"ok":["Leave in neutral","Keep wheels straight","Set the parking brake and turn wheels toward the curb","Leave the engine on"],"a":2,"e":"미끄럼 방지.","d":1},"dv115":{"id":"dv115","s":"dr","t":"CAR","q":"차에서 내릴 때 문을 여는 안전한 방법은?","qk":"Safe way to open the door when getting out?","o":["빨리 활짝 연다","도로 쪽으로만 내린다","확인하지 않아도 된다","뒤에서 오는 차·자전거를 확인하고 연다"],"ok":["Open wide quickly","Always exit to the road side","No need to check","Check for cars and bikes behind before opening"],"a":3,"e":"더치 리치: 먼 쪽 손으로 열기.","d":1},"dv119":{"id":"dv119","s":"dr","t":"LAW","q":"난폭운전에 해당하는 것은?","qk":"Which counts as reckless (aggressive) driving?","o":["급제동·진로 방해 등을 반복해 위협하는 것","제한속도로 주행","방향지시등 사용","안전거리 유지"],"ok":["Repeated sudden braking or blocking to threaten others","Driving at the limit","Using turn signals","Keeping distance"],"a":0,"e":"2가지 이상 위반을 연달아 하거나 반복.","d":0},"dv123":{"id":"dv123","s":"dr","t":"LAW","q":"개인형 이동장치(전동킥보드)를 타려면 필요한 면허는?","qk":"What license is needed to ride an e-scooter?","o":["1종 대형면허만","원동기장치자전거 면허 이상","자전거 면허","필요 없다"],"ok":["Class 1 large only","Motorized bicycle license or higher","Bicycle license","No license needed"],"a":1,"e":"만 16세 이상, 원동기 면허 이상.","d":0},"dv124":{"id":"dv124","s":"dr","t":"LAW","q":"전동킥보드 탑승 인원은?","qk":"How many people may ride an e-scooter?","o":["제한 없음","3명","2명","1명"],"ok":["No limit","3 people","2 people","1 person"],"a":3,"e":"1인 탑승, 안전모 착용.","d":1},"dv130":{"id":"dv130","s":"dr","t":"SIGN","q":"\"유턴 금지\" 표지가 있으면?","qk":"With a \"No U-turn\" sign?","o":["서행하면 유턴 가능","유턴할 수 없다","신호가 없으면 유턴 가능","밤에만 금지"],"ok":["U-turn if slow","You may not make a U-turn","U-turn if no signal","Banned only at night"],"a":1,"e":"규제표지.","d":1},"dv135":{"id":"dv135","s":"dr","t":"SIGN","q":"녹색 등화에서 좌회전할 때(비보호 좌회전 표지가 있는 곳)?","qk":"Unprotected left turn on green (sign present)?","o":["반대편 차에 방해되지 않게 주의하며 좌회전","좌회전 금지","적색일 때만 좌회전","반대편 차보다 먼저 좌회전"],"ok":["Turn left carefully without blocking oncoming cars","No left turn","Turn only on red","Turn before oncoming cars"],"a":0,"e":"비보호 좌회전은 녹색일 때 조심해서.","d":1},"dv136":{"id":"dv136","s":"dr","t":"SIGN","q":"\"양보\" 규제표지가 있으면?","qk":"With a \"Yield\" sign?","o":["속도를 높인다","먼저 진입한다","다른 차에 진로를 양보한다","경음기를 울린다"],"ok":["Speed up","Enter first","Give way to other traffic","Honk"],"a":2,"e":"역삼각형 표지.","d":0},"dv142":{"id":"dv142","s":"dr","t":"DRIVE","q":"뒤차가 앞지르려 할 때 앞차는?","qk":"When a car behind is overtaking you, you should…","o":["속도를 높이지 않고 진로를 양보","급정지한다","속도를 높인다","가운데로 막는다"],"ok":["Not speed up and let it pass","Brake suddenly","Speed up","Block the way"],"a":0,"e":"앞지르기 방해 금지.","d":0},"dv145":{"id":"dv145","s":"dr","t":"DRIVE","q":"횡단보도가 없는 곳에서 보행자가 건너고 있으면?","qk":"A pedestrian crosses where there is no crosswalk. You…","o":["경음기로 쫓는다","그대로 지나간다","속도를 높인다","안전거리를 두고 일시정지하거나 서행"],"ok":["Honk them away","Keep going","Speed up","Stop or slow down with distance"],"a":3,"e":"보행자 보호.","d":0},"dv149":{"id":"dv149","s":"dr","t":"DRIVE","q":"편도 3차로 일반도로에서 대형 화물차가 다니는 차로는 원칙적으로?","qk":"On a 3-lane general road, large trucks generally use…","o":["오른쪽 차로","버스 전용차로","아무 차로","1차로"],"ok":["The right lane","Bus lane","Any lane","Lane 1"],"a":0,"e":"차로별 통행 기준.","d":2},"dv156":{"id":"dv156","s":"dr","t":"EMERG","q":"물에 잠긴 도로를 만나면?","qk":"Facing a flooded road?","o":["빠르게 통과","시동을 끄고 밀고 간다","들어가지 말고 돌아간다","천천히 들어간다"],"ok":["Drive through fast","Turn off and push","Do not enter; turn back","Enter slowly"],"a":2,"e":"침수 위험.","d":2},"dv158":{"id":"dv158","s":"dr","t":"EMERG","q":"교통사고 현장에서 2차 사고를 막는 방법은?","qk":"How to prevent a secondary accident at a crash scene?","o":["차 옆에 서서 통화","도로 위에서 사진 촬영","차 안에서 대기","비상등을 켜고 삼각대를 설치한 뒤 안전한 곳으로 대피"],"ok":["Stand by the car and call","Take photos on the road","Wait in the car","Hazards on, set triangle, move to safety"],"a":3,"e":"트렁크 열기·비상등·삼각대.","d":1},"dv160":{"id":"dv160","s":"dr","t":"CAR","q":"엔진오일은 무엇을 하는가?","qk":"What does engine oil do?","o":["창문을 닦는다","브레이크를 작동시킨다","타이어 공기를 채운다","엔진 부품의 마찰을 줄이고 식혀 준다"],"ok":["Cleans windows","Operates the brakes","Fills tires","Reduces friction and cools engine parts"],"a":3,"e":"윤활 작용.","d":1}},"tests":{"dr":[["dv002","dv003","dv006","dv007","dv017","dv022","dv024","dv119","dv123","dv124","dv031","dv035","dv037","dv042","dv045","dv130","dv135","dv136","dv052","dv054","dv056","dv057","dv060","dv062","dv064","dv066","dv070","dv142","dv145","dv149","dv082","dv092","dv094","dv100","dv156","dv158","dv102","dv110","dv115","dv160"],[],[],[],[],[],[],[],[],[]],"_":[["dv002","dv003","dv006","dv007","dv017","dv022","dv024","dv119","dv123","dv124","dv031","dv035","dv037","dv042","dv045","dv130","dv135","dv136","dv052","dv054","dv056","dv057","dv060","dv062","dv064","dv066","dv070","dv142","dv145","dv149","dv082","dv092","dv094","dv100","dv156","dv158","dv102","dv110","dv115","dv160"],[],[],[],[],[],[],[],[],[]]},"trial":1,"ntests":10};
+(function(){
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const SK='hg_'+D.id;
+let DB;try{DB=JSON.parse(localStorage.getItem(SK))||{}}catch(e){DB={}}
+DB.att=DB.att||{};DB.done=DB.done||{};DB.set=Object.assign({ko:1,fs:D.fs||16,tmr:1},DB.set||{});
+function save(){try{localStorage.setItem(SK,JSON.stringify(DB))}catch(e){}}
+const SUB={};D.subjects.forEach(s=>SUB[s.k]=s);
+const Q=D.bank;
+const S={view:'home'};
+function applySet(){document.documentElement.style.setProperty('--fs',DB.set.fs+'px');}
+applySet();
+try{speechSynthesis.getVoices();speechSynthesis.addEventListener('voiceschanged',()=>{try{vNote()}catch(e){}});}catch(e){}
+$('#brand').textContent=D.short||D.title;if(D.trial)$('#trialbar').hidden=false;
+document.title=D.title;
+
+/* ---------- scoring ---------- */
+/* 실제 시험 점수 척도: D.score = {type, cut, fail, lo, hi, pts, note}, 과목별 덮어쓰기 SUB[k].sc */
+function SC(k){return Object.assign({type:'pct',max:100,cut:D.pass.cut||60},D.score||{},(SUB[k]||{}).sc||{});}
+function interp(p,pts){for(let i=1;i<pts.length;i++){if(p<=pts[i][0]){const a=pts[i-1],b=pts[i];return a[1]+(b[1]-a[1])*(p-a[0])/(b[0]-a[0]);}}return pts[pts.length-1][1];}
+function sval(c,N,k){const s=SC(k),p=N?c/N:0;
+ if(s.type==='scale')return Math.round(interp(p,s.pts));
+ if(s.type==='ap')return p>=s.pts[3]?5:p>=s.pts[2]?4:p>=s.pts[1]?3:p>=s.pts[0]?2:1;
+ if(s.type==='pf')return Math.round(p*100);
+ return Math.round(p*s.max);}
+function need(sub,N){const p=D.pass;if(p.mode==='count')return Math.ceil(p.need*N/p.of-1e-9);let c=0;while(c<N&&sval(c,N,sub)<SC(sub).cut)c++;return c;}
+function scoreTxt(c,N,k){if(D.pass.mode==='count')return `${c}/${N}`;const s=SC(k),v=sval(c,N,k);
+ if(s.type==='scale')return `${v}점<small class="muted" style="font-size:.5em"> (${s.lo}~${s.hi}점 척도)</small>`;
+ if(s.type==='ap')return `${v}점<small class="muted" style="font-size:.5em"> (1~5점)</small>`;
+ if(s.type==='pf')return `정답률 ${v}%`;
+ return `${v}점<small class="muted" style="font-size:.5em"> / ${s.max}점</small>`;}
+function cutTxt(sub,N){if(D.pass.mode==='count')return `${need(sub,N)}개 이상 맞히면 합격`;const s=SC(sub);
+ return s.note||`${s.cut}점 이상 합격`;}
+const isPass=(c,N,sub)=>D.pass.mode==='count'?c>=need(sub,N):sval(c,N,sub)>=SC(sub).cut;
+const isFail=(c,N,sub)=>D.pass.mode!=='count'&&SC(sub).fail!=null&&sval(c,N,sub)<SC(sub).fail;
+const cls=p=>p<0.6?'bad':p<0.8?'mid':'good';
+function attList(k){return Object.entries(DB.att[k]||{}).map(([n,a])=>Object.assign({n:+n},a)).sort((a,b)=>a.ts-b.ts);}
+function latest(k){const l=attList(k);return l[l.length-1]||null;}
+function topicStats(k){const tp={};attList(k).forEach(a=>{for(const t in a.tp){tp[t]=tp[t]||[0,0];tp[t][0]+=a.tp[t][0];tp[t][1]+=a.tp[t][1];}});return tp;}
+function chDone(k,t){return DB.done[k+'-'+t]||0;}
+function bar(label,p,num){return `<div class="bar"><div>${label}</div><div class="track"><div class="fill ${cls(p)}" style="width:${Math.round(p*100)}%"></div></div><div class="num">${num}</div></div>`;}
+const chHref=(k,t)=>`#ch-${k}-${t}`;
+const hasCh=(k,t)=>(D.book[k]||[]).some(c=>c.id===t);
+const tLabel=(k,t)=>{const x=SUB[k].topics[t];const nm=x[0];return hasCh(k,t)?`<a href="${chHref(k,t)}">${esc(nm)}</a>`:esc(nm);};
+const NT=k=>D.tests[k].length;
+
+
+/* ---------- recommendation ---------- */
+function nextStep(){
+ const cands=[];
+ D.subjects.forEach((s,i)=>{const l=latest(s.k),tests=D.tests[s.k];
+  if(!l){cands.push({pr:0,i,k:s.k,title:`${s.ko} 1회 진단 모의고사`,why:'먼저 실력을 확인해요. 결과에 따라 공부할 단원을 골라 드려요.',href:`#exam-${s.k}-1`,btn:'진단 시작'});return;}
+  const weak=Object.entries(l.tp).filter(([t,v])=>v[1]&&v[0]/v[1]<0.6&&hasCh(s.k,t)&&chDone(s.k,t)<l.ts).sort((a,b)=>a[1][0]/a[1][1]-b[1][0]/b[1][1]);
+  if(weak.length){const t=weak[0][0];cands.push({pr:1,i,k:s.k,sc:l.c/l.N,title:`교재 「${SUB[s.k].topics[t][0]}」 단원 공부`,why:`최근 ${l.n}회에서 이 영역 정답률이 ${Math.round(weak[0][1][0]/weak[0][1][1]*100)}%였어요. 단원을 읽고 '다 읽었어요'를 눌러 주세요.`,href:chHref(s.k,t),btn:'공부하러 가기'});return;}
+  const undone=tests.map((_,j)=>j+1).find(n=>!(DB.att[s.k]||{})[n]);
+  if(undone){cands.push({pr:undone>=tests.length-1?3:2,i,k:s.k,sc:l.c/l.N,title:`${s.ko} ${undone}회 ${undone>=tests.length-1?'실전':'연습'} 모의고사`,why:undone>=tests.length-1?'실전처럼 시간 제한을 켜고 풀어 보세요.':'약한 부분이 나아졌는지 확인해요.',href:`#exam-${s.k}-${undone}`,btn:'풀기'});return;}
+  cands.push({pr:4,i,k:s.k,sc:l.c/l.N,title:`${s.ko} 오답 다시 풀기`,why:'10회를 다 풀었어요. 틀린 문제만 모아 다시 풀어 보세요.',href:'#wrong',btn:'오답노트'});
+ });
+ cands.sort((a,b)=>a.pr-b.pr||(a.sc||0)-(b.sc||0)||a.i-b.i);return cands[0];
+}
+
+/* ---------- views ---------- */
+function setNav(v){document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===v));}
+function vLock(what){return hero('Full Version','정식판에서 열려요',`무료 체험판은 과목별 <b>모의고사 1회</b>와 <b>교재 첫 단원</b>만 볼 수 있어요. 정식판에는 과목별 모의고사 ${D.ntests||10}회와 교재 전체가 들어 있어요.`)+`<main class="wrap"><div class="actions"><a class="primary" href="#home">대시보드로</a><a class="btn" href="#tests">모의고사 1회 풀기</a></div></main>`;}
+function hero(eb,h,lead){return `<section class="hero"><div class="wrap"><p class="eyebrow">${eb}</p><h1>${h}</h1>${lead?`<p class="lead">${lead}</p>`:''}</div></section>`;}
+function totals(){let ch=0,chd=0,t=0,td=0;D.subjects.forEach(s=>{(D.book[s.k]||[]).forEach(c=>{ch++;if(chDone(s.k,c.id))chd++;});t+=D.tests[s.k].length;td+=Object.keys(DB.att[s.k]||{}).length;});return{ch,chd,t,td};}
+
+function vHome(){setNav('home');const T=totals(),nx=nextStep();
+ let weakAll=[];D.subjects.forEach(s=>{const tp=topicStats(s.k);for(const t in tp)if(tp[t][1])weakAll.push({k:s.k,t,p:tp[t][0]/tp[t][1],v:tp[t]});});
+ weakAll.sort((a,b)=>a.p-b.p);
+ const subjCards=D.subjects.map(s=>{const l=latest(s.k),best=attList(s.k).reduce((m,a)=>Math.max(m,a.c/a.N),0);
+  return `<a class="card" style="--sc:${s.color}" href="#tests-${s.k}"><h3>${esc(s.ko)}</h3><p class="small muted" style="margin:0 0 8px">${esc(s.en)} · ${D.tests[s.k].length}회 × ${s.n}문항</p>${l?`<div>최근 ${l.n}회 <b>${scoreTxt(l.c,l.N,s.k)}</b> <span class="tag ${isPass(l.c,l.N,s.k)?'good':'bad'}">${isPass(l.c,l.N,s.k)?'합격선 통과':'합격선 미달'}</span></div><div class="small muted">최고 ${Math.round(best*100)}% · ${Object.keys(DB.att[s.k]||{}).length}/${D.tests[s.k].length}회 완료</div>`:`<div class="muted small">아직 푼 시험이 없어요</div>`}</a>`;}).join('');
+ return hero(D.eyebrow,esc(D.title),D.lead)+`<main class="wrap">
+ <div class="next"><div class="what"><p class="eyebrow" style="margin:0">지금 할 일</p><b>${esc(nx.title)}</b><span class="muted">${nx.why}</span></div><a class="primary" href="${nx.href}">${nx.btn} →</a></div>
+ <section class="panel"><h2>진도</h2><div class="stat"><div><b>${T.td}/${T.t}</b><span class="muted small">모의고사</span></div><div><b>${T.chd}/${T.ch}</b><span class="muted small">교재 단원</span></div><div><b>${wrongIds().length}</b><span class="muted small">오답노트 문제</span></div></div></section>
+ ${D.subjects.some(s=>(D.book[s.k]||[]).length)?`<section class="panel"><h2>혼공 교재로 공부하기</h2><p class="muted small" style="margin-top:0">단원마다 그림, 꼭 알아야 할 내용, 헷갈리는 내용 바로잡기, 확인 문제가 있어요. 위 메뉴의 <b>교재</b>에서도 볼 수 있어요.</p><div class="grid">${D.subjects.filter(s=>(D.book[s.k]||[]).length).map(s=>{const chs=D.book[s.k],d=chs.filter(c=>chDone(s.k,c.id)).length,nc=chs.find(c=>!chDone(s.k,c.id))||chs[0];return `<a class="card" style="--sc:${s.color}" href="${chHref(s.k,nc.id)}"><h3>${esc(s.ko)} 교재</h3><p class="small muted" style="margin:0 0 8px">${chs.length}단원 · ${d}단원 읽음</p><div><b>${d?'이어서 읽기':'1단원부터 읽기'} →</b> <span class="muted">${esc(nc.ko)}</span></div></a>`;}).join('')}</div></section>`:''}
+ <section class="panel"><h2>모의고사</h2><div class="grid">${subjCards}</div></section>
+ ${weakAll.length?`<section class="panel"><h2>약한 영역</h2><p class="muted small" style="margin-top:0">푼 시험을 모두 합쳐 정답률이 낮은 순서예요. 이름을 누르면 교재 단원으로 가요.</p>${weakAll.slice(0,8).map(w=>bar(tLabel(w.k,w.t)+(D.subjects.length>1?` <small class="muted">${esc(SUB[w.k].ko)}</small>`:''),w.p,`${w.v[0]}/${w.v[1]}`)).join('')}</section>`:''}
+ ${D.about?`<section class="panel"><h2>이 시험은요</h2><div class="sec">${D.about}</div></section>`:''}
+ <section class="panel"><h2>설정</h2>
+  <div class="switch"><span>글자 크기</span><span class="seg" id="fsSeg">${[[16,'보통'],[18,'크게'],[21,'아주 크게']].map(([v,l])=>`<button data-fs="${v}" class="${DB.set.fs==v?'on':''}">${l}</button>`).join('')}</span></div>
+  <div class="switch"><span>문제 한글 해석</span><span class="seg" id="koSeg"><button data-ko="1" class="${DB.set.ko?'on':''}">보이기</button><button data-ko="0" class="${DB.set.ko?'':'on'}">숨기기</button></span></div>
+  <div class="switch"><span>시간 제한</span><span class="seg" id="tmSeg"><button data-tm="1" class="${DB.set.tmr?'on':''}">켜기</button><button data-tm="0" class="${DB.set.tmr?'':'on'}">끄기</button></span><span class="muted small">기본으로 켜져 있어요. 시간은 실제 시험 속도에 맞췄어요</span></div>
+  <div class="actions"><button class="btn sm" id="copyRes">결과 복사하기</button><button class="btn sm" id="resetAll">기록 모두 지우기</button></div>
+ </section>
+ <p class="foot">${D.foot||''}</p></main>`;}
+
+function vBook(){setNav('book');
+ return hero('Self-Study Book','혼공 교재','영어 원어와 한글 설명을 함께 실었어요. 단원은 모의고사 영역과 똑같이 나뉘어 있어서, 모의고사에서 약한 영역을 누르면 바로 여기로 와요.')+`<main class="wrap">${D.subjects.map(s=>{const chs=D.book[s.k]||[];if(!chs.length)return '';const tp=topicStats(s.k);
+ return `<section class="panel" style="border-top:5px solid ${s.color}"><h2>${esc(s.ko)} <small class="muted">${esc(s.en)}</small></h2><ul class="chlist">${chs.map((c,i)=>{const v=tp[c.id];return `<li><a href="${chHref(s.k,c.id)}"><span class="no">${String(i+1).padStart(2,'0')}</span><span class="nm">${esc(c.ko)}<small>${esc(c.en)}</small></span>${v&&v[1]?`<span class="tag ${cls(v[0]/v[1])}">${Math.round(v[0]/v[1]*100)}%</span>`:''}<span class="chk ${chDone(s.k,c.id)?'on':''}">${chDone(s.k,c.id)?'✓':''}</span></a></li>`;}).join('')}</ul></section>`;}).join('')}</main>`;}
+
+function figHtml(f){if(!f)return '';const svg=D.figs&&D.figs[f]?D.figs[f]:f;return `<figure class="fig">${svg}</figure>`;}
+const NUMRE=/(?<![\w.\-])\d[\d,.]*\s?(?:년|세|일|개월|주|시간|분|초|점|%|퍼센트|명|개국|개|회|배|성급|급|층|km|kg|cm|mg|mL|m|°C|℃|달러|만원|원|(?:years?|days?|months?|hours?|minutes?|percent|questions?)\b)/g;
+function hl(h){return String(h).replace(/==((?:[^=<>]|=(?!=))+?)==/g,'<mark class="hl">$1</mark>');}
+function hlNum(h){return String(h).split(/(<svg[\s\S]*?<\/svg>|<td class="x">[\s\S]*?<\/td>|<mark[\s\S]*?<\/mark>)/).map((part,i)=>i%2?part:part.replace(/>([^<]+)</g,(m,t)=>'>'+t.replace(NUMRE,'<mark class="hl">$&</mark>')+'<')).join('');}
+function rich(h){return hlNum('<i></i>'+hl(String(h)).replace(/\{\{fig:([\w-]+)\}\}/g,(m,n)=>figHtml(n)));}
+
+function vChapter(k,t){setNav('book');const chs=D.book[k],i=chs.findIndex(c=>c.id===t),c=chs[i],s=SUB[k];if(!c)return vBook();if(c.locked)return vLock();
+ const tp=topicStats(k)[t];
+ const quiz=(c.quiz||[]).map((q,qi)=>`<div class="mini" data-mq="${qi}">${q.au?auHtml(q.au,false):''}${q.p?`<div class="passage">${q.p}</div>`:''}<p class="qtext" style="font-size:1rem">${qi+1}. ${q.q}${q.src?`<span class="gichul" title="${esc(q.src)}">기출</span>`:''}</p>${q.qk&&DB.set.ko?`<p class="qko">${q.qk}</p>`:''}${figHtml(q.fig)}<div class="opts">${q.o.map((o,oi)=>`<button class="opt" data-mo="${oi}"><span class="bub">${'ABCDE'[oi]}</span><span>${o}${q.ok&&DB.set.ko?`<small>${q.ok[oi]}</small>`:''}</span></button>`).join('')}</div><div class="expl" hidden>${q.e||''}</div></div>`).join('');
+ return `<section class="hero" style="border-top:6px solid ${s.color}"><div class="wrap"><nav class="crumb"><a href="#book">교재</a> › ${esc(s.ko)} › ${i+1}단원</nav><h1>${esc(c.ko)}</h1><p class="lead" style="margin-top:4px">${esc(c.en)}</p></div></section>
+ <main class="wrap">
+ <section class="panel">${c.goal?`<div class="goal"><b>이 단원의 목표</b>${hl(c.goal)}</div>`:''}
+ ${tp&&tp[1]?`<p class="small">모의고사 이 영역 정답률 <span class="tag ${cls(tp[0]/tp[1])}">${Math.round(tp[0]/tp[1]*100)}% (${tp[0]}/${tp[1]})</span></p>`:`<p class="small muted">아직 이 영역의 모의고사 기록이 없어요.</p>`}
+ ${c.terms&&c.terms.length?`<h2 style="margin-top:14px">핵심 용어</h2><table class="terms">${c.terms.map(x=>`<tr><td><span>${x[0]}</span></td><td>${x[1]}</td></tr>`).join('')}</table>`:''}</section>
+ <section class="panel sec">${c.secs.map(x=>`<h3>${x[0]}</h3>${rich(x[1])}`).join('')}</section>
+ ${c.traps&&c.traps.length?`<section class="panel"><h2>자주 틀리는 함정</h2>${c.traps.map(x=>`<div class="trap">${hl(x).replace(/ → (.*)$/,' → <mark class="hl">$1</mark>')}</div>`).join('')}</section>`:''}
+ ${quiz?`<section class="panel" id="mq"><h2>확인 문제</h2><p class="muted small" style="margin-top:0">고르면 바로 정답과 해설이 나와요.</p>${quiz}</section>`:''}
+ <section class="panel"><div class="actions" style="margin-top:0"><button class="${chDone(k,t)?'btn':'primary'}" id="doneBtn" data-k="${k}" data-t="${t}">${chDone(k,t)?'✓ 다 읽었어요 (취소하려면 누르기)':'다 읽었어요'}</button><a class="btn" href="#tests-${k}">${esc(s.ko)} 모의고사 →</a></div></section>
+ <nav class="chnav">${i>0?`<a class="btn" href="${chHref(k,chs[i-1].id)}">← ${esc(chs[i-1].ko)}</a>`:'<span></span>'}${i<chs.length-1?`<a class="btn" href="${chHref(k,chs[i+1].id)}">${esc(chs[i+1].ko)} →</a>`:`<a class="btn" href="#book">교재 목록</a>`}</nav>
+ </main>`;}
+
+function vTests(){setNav('tests');
+ if(D.subjects.length===1)return vTestList(D.subjects[0].k);
+ return hero('Practice Tests','모의고사','과목을 고르세요. 1회는 진단, 마지막 2회는 실전용이에요.'+(D.realtime?' 실제 시험 '+D.realtime+' 기준으로, 모의고사 시간도 문항 수에 맞춰 똑같은 속도로 맞췄어요.':''))+`<main class="wrap"><div class="grid">${D.subjects.map(s=>`<a class="card" style="--sc:${s.color}" href="#tests-${s.k}"><h3>${esc(s.ko)}</h3><p class="small muted" style="margin:0">${esc(s.en)} · ${s.n}문항 · ${tmTxt(s)}</p><p class="small" style="margin:6px 0 0">${Object.keys(DB.att[s.k]||{}).length}/${D.tests[s.k].length}회 완료</p></a>`).join('')}</div></main>`;}
+function vTestList(k){setNav('tests');const s=SUB[k],tests=D.tests[k],at=DB.att[k]||{},tp=topicStats(k);
+ return hero(esc(s.en)+' · '+tests.length+' Tests',esc(s.ko)+' 모의고사',`${s.n}문항 · ${tmTxt(s)} · ${cutTxt(k,s.n)}. 1회는 진단, 2–${tests.length-2}회는 연습, ${tests.length-1}–${tests.length}회는 실전용이에요.`)+`<main class="wrap">
+ ${D.subjects.length>1?`<a href="#tests" class="small">← 과목 목록</a>`:''}
+ <div class="tests">${tests.map((_,j)=>{const n=j+1,a=at[n];if(D.trial&&n>1)return `<a class="tcard" href="#exam-${k}-${n}" style="opacity:.45"><span class="tn">${n}회</span><span class="small">🔒 정식판</span></a>`;return `<a class="tcard ${a?(isPass(a.c,a.N,k)?'pass':'fail'):''}" href="#exam-${k}-${n}"><span class="tn">${n}회 <small class="muted">${n===1?'진단':n>=tests.length-1?'실전':'연습'}</small></span><span class="small">${a?`${scoreTxt(a.c,a.N,k)} · ${a.date}`:'안 풂'}</span></a>`;}).join('')}</div>
+ <section class="panel"><h2>영역별 누적 정답률</h2><p class="muted small" style="margin-top:0">영역 이름을 누르면 교재 단원으로 가요.</p>${Object.keys(s.topics).map(t=>{const v=tp[t];return v&&v[1]?bar(tLabel(k,t)+` <small class="muted">${esc(s.topics[t][1])}</small>`,v[0]/v[1],`${v[0]}/${v[1]}`):bar(tLabel(k,t)+` <small class="muted">${esc(s.topics[t][1])}</small>`,0,'기록 없음');}).join('')}</section></main>`;}
+
+/* ---------- exam ---------- */
+function tmTxt(s){return s.notime?'시간 제한 없음':`제한 ${s.min}분`;}
+function tmNote(s){return s.notime?'실제 시험이 시간 제한 없는 면접이라 타이머를 쓰지 않아요.':s.real?`실제 시험(${s.real})과 같은 속도로 ${s.n}문항 ${s.min}분이에요. 시간이 끝나면 자동으로 제출돼요.`:'';}
+function startExam(k,n,ids){const s=SUB[k];const qs=ids||D.tests[k][n-1];
+ const timed=!ids&&!s.notime&&(DB.set.tmr||n>=D.tests[k].length-1);
+ S.ex={k,n,qs,ans:new Array(qs.length).fill(-1),flag:new Array(qs.length).fill(false),cur:0,left:Math.round(s.min*60*qs.length/s.n),timed,wrong:!!ids};
+ S.view='exam';}
+const LV=['쉬움','보통','어려움'];function lvHtml(q){return q.d==null?'':`<span class="lv lv${q.d}">${LV[q.d]}</span>`;}
+function qBlock(q,sel,reveal,idx){const ko=DB.set.ko;
+ return `<div class="qmeta"><span class="qn">Q${idx+1}</span><span>${esc(SUB[q.s].topics[q.t][0])}</span>${lvHtml(q)}${q.src?`<span class="gichul" title="${esc(q.src)}">기출</span>`:''}</div>
+ ${q.p?`<div class="passage">${q.p}</div>`:''}${q.au?auHtml(q.au,reveal):''}${figHtml(q.fig)}
+ <p class="qtext">${q.q}</p>${q.qk&&ko?`<p class="qko">${q.qk}</p>`:''}
+ <div class="opts">${q.o.map((o,oi)=>{let c='';if(reveal){if(oi===q.a)c='right';else if(oi===sel)c='wrong';}else if(oi===sel)c='sel';
+  return `<button class="opt ${c}" data-o="${oi}" ${reveal?'disabled':''}><span class="bub">${'ABCDE'[oi]}</span><span>${o}${q.ok&&ko&&q.ok[oi]?`<small>${q.ok[oi]}</small>`:''}</span></button>`;}).join('')}</div>`;}
+function auHtml(au,reveal){return `<div class="au"><button class="primary" data-au="${esc(au)}">▶ 듣기</button> <span class="muted small">2번까지 들을 수 있어요</span><p class="small muted vnote" style="margin:6px 0 0"></p>${reveal?`<div class="passage" style="margin-top:10px">${esc(au)}</div>`:`<details class="small muted" style="margin-top:6px"><summary>소리가 안 나오면 대본 보기</summary><div class="passage">${esc(au)}</div></details>`}</div>`;}
+const MALE=/injoon|hyunsu|bongjin|gookmin|\bmale\b|남성/i,FEMALE=/sunhi|heami|jimin|seohyeon|yujin|yuna|female|여성|google/i;
+function koVoices(){try{return speechSynthesis.getVoices().filter(v=>/^ko/i.test(v.lang));}catch(e){return[];}}
+function pickVoice(g){const vs=koVoices().slice().sort((a,b)=>(/natural|online|neural/i.test(b.name)?1:0)-(/natural|online|neural/i.test(a.name)?1:0));if(!vs.length)return null;
+ if(g==='m')return vs.find(v=>MALE.test(v.name))||null;
+ return vs.find(v=>FEMALE.test(v.name)&&!MALE.test(v.name))||vs.find(v=>!MALE.test(v.name))||vs[0];}
+function vNote(){const has=!!pickVoice('m');document.querySelectorAll('.vnote').forEach(e=>e.textContent=has?'':'이 브라우저에는 한국어 남자 음성이 없어서 남자 대사도 여자 목소리로 나와요. Microsoft Edge로 이 파일을 열면 남자 목소리가 나와요.');}
+function speak(txt){const ss=window.speechSynthesis;if(!ss){alert('이 브라우저는 음성 재생을 지원하지 않아요. 대본을 보세요.');return;}ss.cancel();
+ const vs=koVoices(),fv=pickVoice('f'),mv=pickVoice('m');
+ txt.split('\n').forEach(line=>{const m=line.match(/^\s*(남자|여자|남|여)\s*[:：]\s*/);const t=m?line.slice(m[0].length):line;if(!t.trim())return;
+  const male=m&&m[1][0]==='남';const u=new SpeechSynthesisUtterance(t);u.lang='ko-KR';u.rate=0.92;u.pitch=1;u.volume=1;
+  const v=male?(mv||fv):fv;if(v)u.voice=v;
+  if(male&&!mv)u.rate=0.85;
+  ss.speak(u);});
+ vNote();
+ if(!vs.length)setTimeout(()=>{if(!ss.speaking)alert('한국어 음성이 없어 소리가 안 날 수 있어요. 대본 보기를 눌러 주세요.');},1200);}
+function vExam(){setNav('tests');const E=S.ex,s=SUB[E.k],qid=E.qs[E.cur],q=Q[qid],answered=E.ans.filter(a=>a>=0).length;
+ document.body.classList.add('in-exam');
+ return `<div class="exhead"><div class="wrap"><span class="t">${esc(s.ko)} ${E.wrong?'오답 다시 풀기':E.n+'회'}</span>${E.timed?`<span class="timer" id="timer"></span>`:''}<span class="num">${answered}/${E.qs.length} 답함</span><button class="btn sm" id="quit">나가기</button><button class="primary" id="submit">제출</button></div><div class="prog"><i style="width:${answered/E.qs.length*100}%"></i></div></div>
+ <main class="wrap">${E.timed&&E.cur===0&&s.real?`<p class="muted small" style="margin:0 0 8px">⏱ ${tmNote(s)}</p>`:''}<div class="qcard">${qBlock(q,E.ans[E.cur],false,E.cur)}
+ <div class="exnav"><button class="btn" id="prev" ${E.cur?'':'disabled'}>← 이전</button><button class="btn" id="flag">${E.flag[E.cur]?'★ 표시 해제':'☆ 나중에 다시 보기'}</button><button class="${E.cur<E.qs.length-1?'primary':'btn'}" id="nextQ" ${E.cur<E.qs.length-1?'':'disabled'}>다음 →</button></div></div>
+ <section class="panel"><h2>문항 이동</h2><div class="qgrid">${E.qs.map((_,i)=>`<button data-g="${i}" class="${E.ans[i]>=0?'done':''} ${i===E.cur?'cur':''} ${E.flag[i]?'flag':''}">${i+1}</button>`).join('')}</div></section></main>`;}
+function tick(){const el=$('#timer');if(!el||!S.ex)return;const L=S.ex.left;el.textContent=`${Math.floor(L/60)}:${String(L%60).padStart(2,'0')}`;el.classList.toggle('low',L<120);}
+function grade(){const E=S.ex,s=SUB[E.k];let c=0;const tp={};const wrong=[];
+ E.qs.forEach((id,i)=>{const q=Q[id];tp[q.t]=tp[q.t]||[0,0];tp[q.t][1]++;if(E.ans[i]===q.a){c++;tp[q.t][0]++;}else wrong.push(id);});
+ const r={c,N:E.qs.length,tp,ans:E.ans.slice(),date:new Date().toISOString().slice(0,10),ts:Date.now(),wrong};
+ if(!E.wrong){DB.att[E.k]=DB.att[E.k]||{};DB.att[E.k][E.n]=r;}
+ DB.w=DB.w||{};E.qs.forEach((id,i)=>{if(E.ans[i]===Q[id].a){if(DB.w[id])DB.w[id].fix=1;}else DB.w[id]={k:E.k,ts:Date.now(),fix:0};});
+ save();S.res=r;S.view='result';}
+function vResult(){setNav('tests');const E=S.ex,R=S.res,s=SUB[E.k],pass=isPass(R.c,R.N,E.k);document.body.classList.remove('in-exam');
+ const rows=Object.entries(R.tp).map(([t,v])=>({t,v,p:v[0]/v[1]})).sort((a,b)=>a.p-b.p);
+ const weak=rows.filter(r=>r.p<0.6);
+ return hero(esc(s.en)+(E.wrong?' · Review':' · Test '+E.n),`${esc(s.ko)} ${E.wrong?'오답 다시 풀기':E.n+'회'} 결과`,'')+`<main class="wrap">
+ <section class="panel"><div class="score"><span class="big">${scoreTxt(R.c,R.N,E.k)}</span><span class="verdict ${pass?'pass':'fail'}">${pass?'합격선 통과':isFail(R.c,R.N,E.k)?`과락 (${SC(E.k).fail}점 미만)`:'합격선 미달'}</span><span class="muted">${R.c}문제 맞힘 / ${R.N}문제 · ${cutTxt(E.k,R.N)}</span></div>
+ <div class="actions">${weak.length&&hasCh(E.k,weak[0].t)?`<a class="primary" href="${chHref(E.k,weak[0].t)}">약한 단원부터 공부하기 →</a>`:''}<a class="${weak.length?'btn':'primary'}" href="#home">대시보드에서 다음 할 일 보기</a>${!E.wrong&&E.n<D.tests[E.k].length?`<a class="btn" href="#exam-${E.k}-${E.n+1}">${E.n+1}회 풀기 →</a>`:''}<a class="btn" href="#tests-${E.k}">회차 목록</a></div></section>
+ ${(()=>{const L=[[0,0],[0,0],[0,0]];E.qs.forEach((id,i)=>{const q=Q[id];if(q.d==null)return;L[q.d][1]++;if(R.ans[i]===q.a)L[q.d][0]++;});return L.some(x=>x[1])?`<section class="panel"><h2>난이도별 점수</h2>${L.map((v,d)=>v[1]?bar(LV[d],v[0]/v[1],`${v[0]}/${v[1]}`):'').join('')}</section>`:'';})()}
+ <section class="panel"><h2>영역별 점수</h2>${rows.map(r=>bar(tLabel(E.k,r.t),r.p,`${r.v[0]}/${r.v[1]}`)).join('')}</section>
+ ${weak.length?`<section class="panel"><h2>약점 분석</h2><ul class="tips">${weak.map(r=>`<li><b>${esc(s.topics[r.t][0])}</b> ${r.v[0]}/${r.v[1]}<br>${s.topics[r.t][2]||''}${hasCh(E.k,r.t)?`<br><a href="${chHref(E.k,r.t)}">교재 「${esc(s.topics[r.t][0])}」 단원 공부하기 →</a>`:''}</li>`).join('')}</ul></section>`:''}
+ <section class="panel"><h2>문제 다시 보기</h2><p class="muted small" style="margin-top:0">틀린 문제는 오답노트에 자동으로 모여요.</p>${E.qs.map((id,i)=>{const q=Q[id];return `<div class="rv">${qBlock(q,R.ans[i],true,i)}<div class="expl"><b>${R.ans[i]===q.a?'✓ 정답':'✗ 오답'}</b> · 정답 ${'ABCDE'[q.a]}<br>${q.e||''}</div></div>`;}).join('')}</section></main>`;}
+
+function wrongIds(){return Object.entries(DB.w||{}).filter(([id,v])=>!v.fix&&Q[id]).sort((a,b)=>b[1].ts-a[1].ts).map(x=>x[0]);}
+function vWrong(){setNav('wrong');const ids=wrongIds();
+ const by={};ids.forEach(id=>{const k=Q[id].s;(by[k]=by[k]||[]).push(id);});
+ return hero('Wrong-Answer Notes','오답노트','모의고사에서 틀린 문제가 자동으로 모여요. 다시 풀어서 맞히면 목록에서 빠져요.')+`<main class="wrap">${ids.length?D.subjects.filter(s=>by[s.k]).map(s=>`<section class="panel"><h2>${esc(s.ko)} <span class="tag bad">${by[s.k].length}문제</span></h2><div class="actions" style="margin-top:0"><button class="primary" data-wr="${s.k}">오답만 다시 풀기 (${Math.min(by[s.k].length,s.n)}문제)</button></div>${by[s.k].slice(0,30).map((id,i)=>{const q=Q[id];return `<div class="rv">${qBlock(q,-1,true,i)}<div class="expl">${q.e||''}</div></div>`;}).join('')}</section>`).join(''):`<section class="panel"><p>아직 틀린 문제가 없어요. <a href="#tests">모의고사</a>를 먼저 풀어 보세요.</p></section>`}</main>`;}
+
+/* ---------- router ---------- */
+function route(){clearInterval(S.tick);const h=(location.hash||'#home').slice(1);const p=h.split('-');let html;
+ if(S.view==='exam'&&p[0]==='exam'&&S.ex&&S.ex.k===p[1]&&String(S.ex.n)===p[2]){html=vExam();}
+ else if(p[0]==='exam'&&D.trial&&SUB[p[1]]&&+p[2]>1){S.view='lock';html=vLock();}
+ else if(p[0]==='exam'&&SUB[p[1]]&&+p[2]>=1&&+p[2]<=D.tests[p[1]].length){startExam(p[1],+p[2]);html=vExam();}
+ else{S.view=p[0];document.body.classList.remove('in-exam');
+  if(p[0]==='res'&&S.res&&S.ex)html=vResult();
+  else if(p[0]==='book')html=vBook();
+  else if(p[0]==='ch'&&SUB[p[1]])html=vChapter(p[1],p.slice(2).join('-'));
+  else if(p[0]==='tests'&&SUB[p[1]])html=vTestList(p[1]);
+  else if(p[0]==='tests')html=vTests();
+  else if(p[0]==='wrong')html=vWrong();
+  else html=vHome();}
+ $('#app').innerHTML=html;window.scrollTo(0,0);
+ if(S.view==='exam'&&S.ex.timed){tick();S.tick=setInterval(()=>{S.ex.left--;tick();if(S.ex.left<=0){clearInterval(S.tick);alert('시간이 끝났어요. 자동으로 제출합니다.');grade();go('#res');}},1000);}}
+function go(h){if(location.hash===h)route();else location.hash=h;}
+function rerender(){const y=window.scrollY;const h=(location.hash||'#home').slice(1);if(S.view==='exam'){$('#app').innerHTML=vExam();if(S.ex.timed)tick();}else{route();window.scrollTo(0,y);}}
+window.addEventListener('hashchange',()=>{if(S.view==='exam'&&!location.hash.startsWith('#exam')&&!location.hash.startsWith('#res')){if(!confirm('시험을 그만둘까요? 답한 내용은 저장되지 않아요.')){history.back();return;}S.view='';document.body.classList.remove('in-exam');}route();});
+
+document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
+ if(t.dataset.au!=null){speak(t.dataset.au);return;}
+ if(S.view==='exam'){const E=S.ex;
+  if(t.dataset.o!=null){E.ans[E.cur]=+t.dataset.o;$('#app').innerHTML=vExam();if(E.timed)tick();return;}
+  if(t.id==='prev'&&E.cur>0){E.cur--;rerender();return;}
+  if(t.id==='nextQ'&&E.cur<E.qs.length-1){E.cur++;rerender();window.scrollTo(0,0);return;}
+  if(t.id==='flag'){E.flag[E.cur]=!E.flag[E.cur];rerender();return;}
+  if(t.dataset.g!=null){E.cur=+t.dataset.g;rerender();window.scrollTo(0,0);return;}
+  if(t.id==='submit'){const un=E.ans.filter(a=>a<0).length;if(!confirm(un?`안 푼 문제가 ${un}개 있어요. 그래도 제출할까요?`:'제출하고 채점할까요?'))return;clearInterval(S.tick);grade();S.view='result';history.replaceState(null,'','#res');route();return;}
+  if(t.id==='quit'){if(confirm('시험을 그만둘까요? 답한 내용은 저장되지 않아요.')){S.view='';clearInterval(S.tick);document.body.classList.remove('in-exam');location.hash='#tests-'+E.k;}return;}
+  return;}
+ if(t.dataset.mo!=null){const box=t.closest('[data-mq]'),c=D.book[location.hash.split('-')[1]].find(x=>x.id===location.hash.split('-').slice(2).join('-'));const q=c.quiz[+box.dataset.mq];
+  box.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('right');else if(i===+t.dataset.mo)b.classList.add('wrong');});box.querySelector('.expl').hidden=false;
+  box.querySelector('.expl').insertAdjacentHTML('afterbegin',`<b>${+t.dataset.mo===q.a?'✓ 정답':'✗ 오답'}</b> · 정답 ${'ABCDE'[q.a]}<br>`);return;}
+ if(t.id==='doneBtn'){const key=t.dataset.k+'-'+t.dataset.t;if(DB.done[key])delete DB.done[key];else DB.done[key]=Date.now();save();rerender();return;}
+ if(t.dataset.fs){DB.set.fs=+t.dataset.fs;save();applySet();rerender();return;}
+ if(t.dataset.ko!=null){DB.set.ko=+t.dataset.ko;save();rerender();return;}
+ if(t.dataset.tm!=null){DB.set.tmr=+t.dataset.tm;save();rerender();return;}
+ if(t.dataset.wr){const k=t.dataset.wr;const ids=wrongIds().filter(id=>Q[id].s===k).slice(0,SUB[k].n);startExam(k,0,ids);history.pushState(null,'','#exam-'+k+'-w');$('#app').innerHTML=vExam();window.scrollTo(0,0);return;}
+ if(t.id==='resetAll'){if(confirm('모든 기록(점수, 완료 표시, 오답노트)을 지울까요? 되돌릴 수 없어요.')){DB={att:{},done:{},set:DB.set};save();rerender();}return;}
+ if(t.id==='copyRes'){const L=[D.title+' 학습 기록 ('+new Date().toISOString().slice(0,10)+')'];D.subjects.forEach(s=>{const l=latest(s.k);L.push(`- ${s.ko}: ${l?`최근 ${l.n}회 ${scoreTxt(l.c,l.N,s.k).replace(/<[^>]+>/g,'')} (${isPass(l.c,l.N,s.k)?'합격선 통과':'미달'}), ${Object.keys(DB.att[s.k]||{}).length}/${D.tests[s.k].length}회 완료`:'아직 안 풂'}`);});
+  const nx=nextStep();L.push('다음 할 일: '+nx.title);const txt=L.join('\n');
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>alert('복사했어요. 카톡이나 문자에 붙여넣으세요.'),()=>prompt('아래 글을 복사하세요',txt));return;}
+});
+document.addEventListener('keydown',e=>{if(S.view!=='exam'||e.target.closest('input,textarea'))return;const E=S.ex;const q=Q[E.qs[E.cur]];
+ const m='abcde'.indexOf(e.key.toLowerCase());if(m>=0&&m<q.o.length){E.ans[E.cur]=m;rerender();}
+ else if(e.key==='ArrowRight'&&E.cur<E.qs.length-1){E.cur++;rerender();}else if(e.key==='ArrowLeft'&&E.cur>0){E.cur--;rerender();}});
+route();
+})();
+</script>
+</body>
+</html>
