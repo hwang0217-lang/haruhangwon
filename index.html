@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="하루 저녁이면 다 읽는 부업·재테크 실전서. 40~100쪽, 결제하면 EPUB·PDF를 바로 받아요.">
+<meta name="description" content="학원 안 가도 되는 시험 합격플랜 20종(교재+모의고사 10회)과, 하루 저녁이면 다 읽는 부업·재테크 실전 전자책.">
 <meta property="og:title" content="하루한권">
-<meta property="og:description" content="하루 저녁이면 다 읽는 부업·재테크 실전서. 40~100쪽, 결제하면 EPUB·PDF를 바로 받아요.">
+<meta property="og:description" content="학원 안 가도 되는 시험 합격플랜 20종(교재+모의고사 10회)과, 하루 저녁이면 다 읽는 부업·재테크 실전 전자책.">
 <meta property="og:url" content="https://haruhangwon.kr/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="하루한권">
@@ -16,7 +16,7 @@
 <link rel="canonical" href="https://haruhangwon.kr/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%23141C2B%27/%3E%3Crect x=%278%27 y=%277%27 width=%2716%27 height=%2718%27 rx=%272%27 fill=%27%23F2B84B%27/%3E%3C/svg%3E">
 <style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>하루한권 · 하루 저녁이면 다 읽는 부업·재테크 실전서</title>
+<title>하루한권 · 시험 합격플랜과 실전 전자책</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Black+Han+Sans&display=swap">
 <style>
 /* Layout: evening reading desk — sticky header with search, value-prop hero with a fan of real covers, shelves, then proof. Lamp yellow = "담기" only. */
@@ -235,21 +235,44 @@ footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
 .toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);border-radius:999px;padding:10px 18px;font-size:14px;z-index:90}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .demo{background:var(--soft);font-size:13px;color:var(--muted);text-align:center;padding:6px 16px}
+
+/* two product lines: exam plans lead, e-books follow */
+.doors{padding-block:40px 8px}
+.doors .lede{color:var(--muted);font-weight:600;margin-bottom:14px}
+.doors .grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px}
+@media (max-width:860px){.doors .grid{grid-template-columns:1fr}}
+.door{border-radius:22px;padding:30px 28px;display:flex;flex-direction:column;gap:10px;text-decoration:none;border:1px solid var(--line);background:var(--card)}
+.door.exam{background:#141C2B;color:#EEF0F4;border-color:#141C2B}
+.door .tag{font-size:13px;font-weight:700;color:var(--accent)}.door.exam .tag{color:var(--lamp)}
+.door h2{font-size:clamp(30px,4.4vw,48px);line-height:1.15;margin:0}
+.door.book h2{font-size:clamp(24px,3vw,32px)}
+.door p{margin:0;color:var(--muted)}.door.exam p{color:#C9D0DA;font-size:clamp(16px,1.8vw,19px)}
+.door ul{list-style:none;padding:0;margin:6px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.door li{font-size:13px;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--soft)}.door.exam li{background:rgba(255,255,255,.08)}
+.door .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:14px}
+.door .btn.ghostd{border-color:rgba(255,255,255,.3);color:#EEF0F4;background:transparent}
+.xshelf{padding-block:36px 8px}
+.xrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.xc{text-decoration:none;display:grid;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 10px 14px}
+.xc img{width:100%;height:auto;border-radius:9px;display:block}
+.xc b{font-size:15px;line-height:1.4}.xc span{font-weight:700;font-variant-numeric:tabular-nums}
+.xc small{color:var(--muted);font-size:12px}
+.bookhead{padding-top:40px;border-top:1px solid var(--line);margin-top:28px}
 </style>
 
 </head>
 <body>
 <header class="top" id="top">
   <div class="in">
-    <a class="logo" href="/">하루<b>한권</b><small>실전 전자책</small></a>
+    <a class="logo" href="/">하루<b>한권</b><small>합격플랜 · 전자책</small></a>
     <div class="search" role="search">
       <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg>
       <label for="q" class="sr">책 검색</label>
       <input id="q" type="search" placeholder="제목이나 주제로 찾기 (예: 블로그, 세금, ETF)" autocomplete="off">
     </div>
     <nav class="nav">
-      <a class="all" href="#all">전체 책</a>
       <a class="all" href="/exams">합격플랜</a>
+      <a class="all" href="#books">전자책</a>
       <button class="sbtn" id="sbtn" type="button" aria-label="검색 열기" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg></button>
       <button class="cartb" id="cartb" type="button"><span class="t">장바구니</span><span class="c" id="cc">0</span></button>
     </nav>
@@ -257,7 +280,35 @@ footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
 </header>
 
 <main id="home">
-  <div class="hero">
+  <section class="doors" aria-label="하루한권 상품">
+    <div class="in">
+      <p class="lede">혼자 공부하고, 혼자 해내는 사람을 위한 하루한권</p>
+      <div class="grid">
+        <a class="door exam" href="/exams">
+          <span class="tag">시험 합격플랜 · 20종</span>
+          <h2>학원 안 가도 됩니다.</h2>
+          <p>교재부터 모의고사 10회까지 다 들어 있어요. 풀면 바로 채점하고, 약한 단원을 알려 줘요.</p>
+          <ul><li>쉬운 교재</li><li>모의고사 10회</li><li>실제 시험 시간</li><li>실제 합격선 채점</li><li>무료 체험판</li></ul>
+          <span class="acts"><span class="btn lamp">합격플랜 보기</span><span class="btn ghostd">시험 20종 · <b id="xmin">19,000원</b>부터</span></span>
+        </a>
+        <a class="door book" href="#books">
+          <span class="tag">실전 전자책 · <span id="nbooks2">51</span>권</span>
+          <h2>하루 저녁이면 다 읽는 부업·재테크 실전서</h2>
+          <p>40~100쪽이라 끝까지 읽혀요. 결제하면 EPUB·PDF를 바로 받아요.</p>
+          <span class="acts"><span class="btn ink">전자책 둘러보기</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="xshelf" aria-labelledby="xh">
+    <div class="in">
+      <div class="shead"><div><h2 id="xh">많이 찾는 시험</h2><p>사기 전에 모의고사 1회를 무료로 풀어 볼 수 있어요.</p></div><a class="tlink" href="/exams">20종 전체 보기</a></div>
+      <div class="xrow" id="xrow"></div>
+    </div>
+  </section>
+
+  <div class="hero bookhead" id="books">
     <div class="in">
       <div>
         <div class="eyebrow">부업 · 재테크 · 커리어 실전 전자책 <span id="nbooks">51</span>권</div>
@@ -476,5 +527,14 @@ $("#q").addEventListener("focus",()=>{if(window.scrollY<$("#all").offsetTop-200&
 renderChips();renderGrid();syncCart();
 </script>
 
+
+<script>
+(function(){const pick=["care","ged-high","survey2","ged-us","sonhae","nclex"];
+fetch("/exam/data.json").then(r=>r.json()).then(D=>{const by=Object.fromEntries(D.map(x=>[x.id,x]));
+ const m=Math.min(...D.map(x=>x.krw));const xm=document.getElementById("xmin");if(xm)xm.textContent=m.toLocaleString("ko-KR")+"원";
+ document.getElementById("xrow").innerHTML=pick.filter(i=>by[i]).map(i=>{const x=by[i];return `<a class="xc" href="/exam/${x.id}"><img src="/exam/img/${x.id}-0.webp" alt="" width="1304" height="976" loading="lazy"><b>${x.name}</b><small>교재 ${x.units}단원 · 모의고사 ${x.mocks}</small><span>${x.krw.toLocaleString("ko-KR")}원</span></a>`}).join("");
+}).catch(()=>{const s=document.querySelector(".xshelf");if(s)s.hidden=true});
+try{document.getElementById("nbooks2").textContent=BOOKS.length}catch(e){}})();
+</script>
 </body>
 </html>
