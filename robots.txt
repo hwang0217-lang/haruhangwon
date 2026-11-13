@@ -4,4 +4,4 @@ Disallow: /factory
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://haruhangwon.kr/sitemap.xml
+Sitemap: https://www.haruhangwon.kr/sitemap.xml
