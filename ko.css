@@ -1,0 +1,15 @@
+/* 한국어 줄바꿈·모바일 공통 보정. 모든 페이지 </head> 바로 앞에서 불러옴(페이지 스타일보다 뒤) */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+/* 단어(어절) 가운데서 끊지 않기. 너무 긴 단어만 마지막 수단으로 끊음 */
+body{word-break:keep-all;overflow-wrap:break-word}
+/* 문단 마지막 줄에 한 단어만 남지 않게, 제목·짧은 글은 줄 길이를 고르게 */
+body{text-wrap:pretty}
+h1,h2,h3,h4,h5,h6,summary{text-wrap:balance}
+/* 버튼·굵은 글씨는 nowrap 설정을 지키도록 줄바꿈 방식(style)만 바꿈 */
+button,.btn,b,strong{text-wrap-style:balance}
+/* 이 묶음은 한 줄로 (구절 단위 줄바꿈용) */
+.nw{white-space:nowrap}
+/* 손가락으로 누르기 쉬운 크기 */
+footer a{display:inline-block;padding-block:8px}
+summary{padding-block:8px}
+input[type=checkbox],input[type=radio]{width:20px;height:20px;flex:none}

@@ -202,6 +202,7 @@ footer b{color:var(--ink)}
   .tabs{margin-bottom:-24px}
   .main{gap:48px}
   .bar{display:grid;transform:translateY(calc(100% + 24px));transition:transform .35s cubic-bezier(.16,1,.3,1);grid-template-columns:auto minmax(0,1fr) auto auto;gap:10px;align-items:center;position:fixed;left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:8;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:10px;box-shadow:0 16px 36px -14px rgba(10,16,30,.5)}
+  footer .wrap{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
   .bar .pb{min-width:0;display:grid;line-height:1.25}
   .bar .pb b{font-size:18px;font-variant-numeric:tabular-nums;white-space:nowrap}
   .bar .pb b span{color:var(--sale);font-size:14px;margin-right:4px}
@@ -213,6 +214,7 @@ footer b{color:var(--ink)}
 @media (max-width:420px){.bar .thumb{display:none}.facts{gap:4px 10px}.ch{grid-template-columns:48px minmax(0,1fr)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
+<link rel="stylesheet" href="/ko.css">
 </head>
 <body>
 <header><div class="wrap">
