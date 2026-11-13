@@ -1,4 +1,4 @@
-import { json, priceOrder, toss, itemsOf, ORDER_RE, catalog, publicBook } from "../../lib/pay.js";
+import { json, priceOrder, toss, itemsOf, ORDER_RE, catalog, publicBook, signTicket } from "../../lib/pay.js";
 // 결제 승인: 토스가 successUrl로 돌려보낸 뒤 화면이 호출.
 // 1) 장바구니 금액을 서버에서 다시 계산해 결제 금액과 같을 때만 승인
 // 2) 승인된 결제에 적힌 책 목록(metadata)이 장바구니와 다르면 바로 취소
@@ -25,5 +25,6 @@ export async function POST(request) {
     return json(400, { message: "주문 정보가 맞지 않아 결제를 자동으로 취소했어요." });
   }
   const { byId } = catalog();
-  return json(200, { orderId, amount, approvedAt: p.approvedAt, receipt: p.receipt?.url || "", books: items.map(id => publicBook(byId.get(id))) });
+  const ticket = signTicket({ o: orderId, k: paymentKey, i: items, a: amount, d: p.approvedAt });
+  return json(200, { orderId, amount, approvedAt: p.approvedAt, ticket, receipt: p.receipt?.url || "", books: items.map(id => publicBook(byId.get(id))) });
 }

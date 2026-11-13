@@ -1,8 +1,9 @@
-import { json, paidOrder, readPaid, catalog, testMode } from "../../lib/pay.js";
+import { json, paidOrder, ticketOrder, readPaid, catalog, testMode } from "../../lib/pay.js";
 // 책 파일 내려받기: 토스에 결제 완료를 확인한 주문의 책만 풀어서 보냄
 export async function GET(request) {
   const u = new URL(request.url), orderId = u.searchParams.get("order"), id = u.searchParams.get("id"), ext = u.searchParams.get("f");
-  const o = await paidOrder(orderId);
+  const t = u.searchParams.get("t");
+  const o = t ? await ticketOrder(t) : await paidOrder(orderId);
   if (o.error) return json(o.status, { message: o.error });
   const b = catalog().byId.get(id);
   if (!b || !o.items.includes(id)) return json(403, { message: "이 주문에 없는 상품이에요." });

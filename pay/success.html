@@ -23,17 +23,18 @@
   const body={paymentKey:q.get("paymentKey"),orderId:q.get("orderId"),amount:Number(q.get("amount")),items:q.get("items")||"",bump:q.get("bump")||""};
   let o;
   try{
+    const t=q.get("t")||(ORDERS.all().find(x=>x.orderId===body.orderId)||{}).ticket;
     const r=body.paymentKey?await fetch("/api/pay/confirm",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)})
-      :await fetch("/api/pay/order?order="+encodeURIComponent(body.orderId||""),{cache:"no-store"});
+      :await fetch("/api/pay/order?"+(t?"t="+encodeURIComponent(t):"order="+encodeURIComponent(body.orderId||"")),{cache:"no-store"});
     o=await r.json(); if(!r.ok)throw new Error(o.message||"결제 승인에 실패했어요.");
   }catch(e){
     out.innerHTML=`<h1>결제를 마치지 못했어요</h1><p class="sub err">${esc(e.message)}</p><p class="note">카드 승인 문자가 왔다면 주문번호 <b>${esc(body.orderId||"")}</b>와 함께 고객센터로 알려 주세요. 승인이 안 된 결제는 자동으로 취소됩니다.</p><p><a class="btn primary" href="/store">스토어로 돌아가기</a></p>`;return}
   ORDERS.add(o);
   try{const bought=new Set(o.books.map(b=>b.id));const c=JSON.parse(localStorage.getItem("hr-cart")||"[]").filter(id=>!bought.has(id));localStorage.setItem("hr-cart",JSON.stringify(c));localStorage.removeItem("hr-bump");localStorage.removeItem("hr-pending")}catch(e){}
-  history.replaceState(null,"","/pay/success?orderId="+encodeURIComponent(o.orderId));
+  history.replaceState(null,"","/pay/success?"+(o.ticket?"t="+encodeURIComponent(o.ticket):"orderId="+encodeURIComponent(o.orderId)));
   out.innerHTML=`<h1>결제가 완료됐어요</h1><p class="sub">아래 버튼으로 바로 내려받으세요. 전자책은 폰이면 PDF, 리더기면 EPUB이 편해요. 합격플랜은 zip을 풀고 HTML 파일을 여세요.</p>
   <section class="card">${booksHtml(o)}</section>
-  <section class="card">${orderMeta(o)}<p class="note">주문번호를 적어 두세요. <a href="/orders">구매내역</a>에서 주문번호로 언제든 다시 받을 수 있어요. 결제 확인 메일에도 주문번호가 있어요.${o.receipt?` · <a href="${esc(o.receipt)}" target="_blank" rel="noopener">영수증 보기</a>`:""}</p></section>`;
+  <section class="card">${orderMeta(o)}<p class="note">이 기기의 <a href="/orders">구매내역</a>에 저장돼서 언제든 다시 받을 수 있어요. 다른 기기에서 받으려면 지금 이 화면 주소를 즐겨찾기하거나 나에게 보내 두세요.${o.receipt?` · <a href="${esc(o.receipt)}" target="_blank" rel="noopener">영수증 보기</a>`:""}</p></section>`;
 })();
 </script>
 </body>
