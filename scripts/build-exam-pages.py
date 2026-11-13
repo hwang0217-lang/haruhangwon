@@ -148,8 +148,8 @@ def page(x):
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{E(t)} · 하루한권</title><meta name="description" content="{E(x["one"])}">
 <meta property="og:title" content="{E(t)}"><meta property="og:description" content="{E(x["one"])}">
-<meta property="og:image" content="https://haruhangwon.kr/exam/img/{x["pics"][0][0]}"><meta property="og:url" content="https://haruhangwon.kr/exam/{x["id"]}">
-<link rel="canonical" href="https://haruhangwon.kr/exam/{x["id"]}">
+<meta property="og:image" content="https://www.haruhangwon.kr/exam/img/{x["pics"][0][0]}"><meta property="og:url" content="https://www.haruhangwon.kr/exam/{x["id"]}">
+<link rel="canonical" href="https://www.haruhangwon.kr/exam/{x["id"]}">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
 <style>{CSS}</style><link rel="stylesheet" href="/ko.css"><script src="/a.js" defer></script></head><body>
 <header><div class="in"><a class="logo" href="/">하루<b>한권</b></a><nav><a href="/">전자책</a><a href="/exams">합격플랜</a></nav></div></header>

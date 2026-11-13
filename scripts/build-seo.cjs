@@ -1,7 +1,7 @@
 // 검색·공유용 파일 만들기: 책마다 /b/<id> 페이지, 공유 미리보기 이미지(og/), sitemap.xml, robots.txt
 // 사용법: node scripts/build-seo.cjs   (books.js나 book.html을 고친 뒤 다시 실행)
 const fs = require("fs"), path = require("path"), vm = require("vm");
-const R = path.join(__dirname, ".."), SITE = "https://haruhangwon.kr";
+const R = path.join(__dirname, ".."), SITE = "https://www.haruhangwon.kr";
 const ctx = {}; vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(R, "books.js"), "utf8") + ";this.BOOKS=BOOKS;this.coverSVG=coverSVG;this.won=won;", ctx);
 const { BOOKS, coverSVG, won } = ctx;
@@ -36,7 +36,8 @@ for (const [f, u] of [["index.html", "/"], ["store.html", "/store"]]) {
 }
 
 // 3) sitemap.xml, robots.txt
-const urls = ["/", "/store", ...BOOKS.map(b => `/b/${b.id}`), "/terms", "/privacy"];
+const EXAMS = JSON.parse(fs.readFileSync(path.join(R, "exam/data.json"), "utf8"));
+const urls = ["/", "/store", "/exams", ...EXAMS.map(x => `/exam/${x.id}`), ...BOOKS.map(b => `/b/${b.id}`), "/terms", "/privacy"];
 fs.writeFileSync(path.join(R, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${SITE}${u}</loc><lastmod>${today}</lastmod></url>`).join("\n")}\n</urlset>\n`);
 fs.writeFileSync(path.join(R, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: /factory\nDisallow: /admin\nDisallow: /api/\n\nSitemap: ${SITE}/sitemap.xml\n`);
 

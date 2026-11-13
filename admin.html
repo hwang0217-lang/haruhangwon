@@ -681,7 +681,7 @@ function initTools(){
   const opts=[["/","홈"],["/store","스토어"],["/exams","합격플랜 목록"]];
   try{(window.BOOKS||[]).forEach(b=>{opts.push(["/b/"+b.id,"책 · "+b.title]);allTitles[b.id]=b.title})}catch(e){}
   $("#bPage").innerHTML=opts.map(([v,l])=>`<option value="${v}">${esc(l)}</option>`).join("");
-  const upd=()=>{const u=new URL("https://haruhangwon.kr"+$("#bPage").value);u.searchParams.set("utm_source",$("#bSrc").value);
+  const upd=()=>{const u=new URL("https://www.haruhangwon.kr"+$("#bPage").value);u.searchParams.set("utm_source",$("#bSrc").value);
     const c=$("#bCmp").value.trim().replace(/\s+/g,"_");if(c)u.searchParams.set("utm_campaign",c);$("#bOut").textContent=u.toString()};
   ["#bPage","#bSrc","#bCmp"].forEach(s=>$(s).addEventListener("input",upd));upd();
   $("#bCopy").onclick=async()=>{try{await navigator.clipboard.writeText($("#bOut").textContent);toast("링크를 복사했어요")}catch(e){toast("길게 눌러 복사해 주세요")}};
