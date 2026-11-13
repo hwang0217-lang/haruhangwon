@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;600&family=Do+Hyeon&display=swap">
 <link rel="stylesheet" href="/pay/pay.css">
 <link rel="stylesheet" href="/ko.css">
+<script src="/a.js" defer></script>
 </head>
 <body>
 <header><div class="wrap"><a class="logo" href="/">하루<span>한권</span></a><a href="/store">스토어</a></div></header>
@@ -21,7 +22,7 @@
 <script>
 (async()=>{
   const q=new URLSearchParams(location.search), out=$("#out");
-  const body={paymentKey:q.get("paymentKey"),orderId:q.get("orderId"),amount:Number(q.get("amount")),items:q.get("items")||"",bump:q.get("bump")||""};
+  const body={paymentKey:q.get("paymentKey"),orderId:q.get("orderId"),amount:Number(q.get("amount")),items:q.get("items")||"",bump:q.get("bump")||"",vid:(()=>{try{return localStorage.getItem("hr-vid")||""}catch(e){return ""}})()};
   let o;
   try{
     const t=q.get("t")||(ORDERS.all().find(x=>x.orderId===body.orderId)||{}).ticket;

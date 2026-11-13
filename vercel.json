@@ -16,9 +16,25 @@
     },
     "api/pay/order.js": {
       "includeFiles": "{books.js,exam/data.json}"
+    },
+    "api/admin.js": {
+      "includeFiles": "{books.js,exam/data.json}"
     }
   },
   "headers": [
+    {
+      "source": "/admin(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
     {
       "source": "/factory(.*)",
       "headers": [
@@ -52,6 +68,15 @@
         {
           "key": "X-Robots-Tag",
           "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/a.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
         }
       ]
     }

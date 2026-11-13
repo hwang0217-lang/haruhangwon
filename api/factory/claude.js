@@ -1,13 +1,13 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { checkPassword, json } from "../../lib/factory-auth.js";
+import { guardPassword, json } from "../../lib/factory-auth.js";
 
 const client = new Anthropic(); // ANTHROPIC_API_KEY 환경변수를 읽음
 const MODEL = process.env.CLAUDE_MODEL || "claude-opus-5-5";
 
 // 페이지가 보낸 프롬프트를 Claude에 보내고, 글자를 받는 대로 그대로 흘려보냄(스트리밍).
 export async function POST(request) {
-  const auth = checkPassword(request);
-  if (!auth.ok) return json(auth.status, { code: auth.status === 401 ? "bad_password" : "server_config", message: auth.message });
+  const auth = await guardPassword(request);
+  if (!auth.ok) return json(auth.status, { code: auth.status === 401 ? "bad_password" : auth.status === 429 ? "too_many" : "server_config", message: auth.message });
   if (!process.env.ANTHROPIC_API_KEY) return json(500, { code: "server_config", message: "서버에 ANTHROPIC_API_KEY가 설정되지 않았어요." });
 
   let body;

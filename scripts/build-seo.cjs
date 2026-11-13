@@ -38,7 +38,7 @@ for (const [f, u] of [["index.html", "/"], ["store.html", "/store"]]) {
 // 3) sitemap.xml, robots.txt
 const urls = ["/", "/store", ...BOOKS.map(b => `/b/${b.id}`), "/terms", "/privacy"];
 fs.writeFileSync(path.join(R, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${SITE}${u}</loc><lastmod>${today}</lastmod></url>`).join("\n")}\n</urlset>\n`);
-fs.writeFileSync(path.join(R, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: /factory\nDisallow: /api/\n\nSitemap: ${SITE}/sitemap.xml\n`);
+fs.writeFileSync(path.join(R, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: /factory\nDisallow: /admin\nDisallow: /api/\n\nSitemap: ${SITE}/sitemap.xml\n`);
 
 // 4) 공유 미리보기 이미지 1200x630 (Playwright 필요)
 (async () => {

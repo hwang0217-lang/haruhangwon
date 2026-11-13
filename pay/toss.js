@@ -21,6 +21,7 @@ const HRPAY=(()=>{
   // 서버가 금액을 다시 계산한 뒤 결제창 열기. expect = 화면에 보인 금액
   async function pay({items,bump="",email,name="",expect}){
     const c=await config();if(!c.ready)throw new Error("결제 연결을 준비하고 있어요.");
+    try{window.hrTrack&&hrTrack("checkout")}catch(e){}
     const r=await fetch("/api/pay/quote",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({items,bump})});
     const q=await r.json();if(!r.ok)throw new Error(q.message||"금액을 확인하지 못했어요.");
     if(expect!=null&&q.amount!==expect){const e=new Error("금액이 바뀌었어요. 다시 확인하고 눌러 주세요.");e.changed=true;throw e}
