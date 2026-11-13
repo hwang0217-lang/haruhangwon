@@ -1,5 +1,5 @@
 // 유료 책 파일(PDF·EPUB)을 잠가서 paid/ 에 넣기. 저장소가 공개라서 원본은 절대 올리지 않습니다.
-// 사용법: FILE_KEY=<Vercel에 넣은 값> node scripts/encrypt-books.cjs <원본 폴더(books/out)>
+// 사용법: FILE_KEY=<Vercel에 넣은 값> node scripts/encrypt-books.cjs <원본 폴더(books/out)> [합격플랜 zip 폴더(x-<id>.zip)]
 // 파일 형식: iv(12바이트) + tag(16바이트) + 암호문 (AES-256-GCM)
 const fs = require("fs"), path = require("path"), crypto = require("crypto"), vm = require("vm");
 const R = path.join(__dirname, "..");
@@ -17,6 +17,12 @@ for (const b of ctx.BOOKS) for (const ext of ["pdf", "epub"]) {
   const enc = Buffer.concat([c.update(fs.readFileSync(f)), c.final()]);
   fs.writeFileSync(path.join(R, "paid", `${b.id}.${ext}.enc`), Buffer.concat([iv, c.getAuthTag(), enc]));
   n++;
+}
+const enc1 = (f, out) => { const iv = crypto.randomBytes(12), c = crypto.createCipheriv("aes-256-gcm", key, iv);
+  const e = Buffer.concat([c.update(fs.readFileSync(f)), c.final()]); fs.writeFileSync(path.join(R, "paid", out), Buffer.concat([iv, c.getAuthTag(), e])); n++; };
+if (process.argv[3]) for (const x of JSON.parse(fs.readFileSync(path.join(R, "exam/data.json"), "utf8"))) {
+  const f = path.join(process.argv[3], `x-${x.id}.zip`);
+  if (fs.existsSync(f)) enc1(f, `x-${x.id}.zip.enc`); else miss.push(`x-${x.id}.zip`);
 }
 console.log(`잠근 파일 ${n}개` + (miss.length ? ` · 없는 파일: ${miss.join(", ")}` : ""));
 if (miss.length) process.exit(2);

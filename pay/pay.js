@@ -2,8 +2,10 @@
 const $=s=>document.querySelector(s);
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fileUrl=(o,id,f)=>`/api/pay/file?order=${encodeURIComponent(o)}&id=${encodeURIComponent(id)}&f=${f}`;
+const FILE_LABEL={pdf:"PDF 받기",epub:"EPUB 받기",zip:"파일(zip) 받기"};
+function coverOf(x){if(x.exam)return `<img src="/exam/img/${encodeURIComponent(x.exam)}-0.webp" alt="" width="44" height="33">`;const b=typeof BOOKS!=="undefined"?BOOKS.find(y=>y.id===x.id):null;return b?coverSVG(b):""}
 function booksHtml(order){
-  return `<div>${order.books.map(x=>{const b=typeof BOOKS!=="undefined"?BOOKS.find(y=>y.id===x.id):null;return `<div class="row"><span class="cv">${b?coverSVG(b):""}</span><span><b>${esc(x.title)}</b><span class="dl"><a class="btn primary" href="${fileUrl(order.orderId,x.id,"pdf")}">PDF 받기</a><a class="btn" href="${fileUrl(order.orderId,x.id,"epub")}">EPUB 받기</a></span></span></div>`}).join("")}</div>`;
+  return `<div>${order.books.map(x=>`<div class="row"><span class="cv">${coverOf(x)}</span><span><b>${esc(x.title)}</b><span class="dl">${(x.files||["pdf","epub"]).map((f,i)=>`<a class="btn${i?"":" primary"}" href="${fileUrl(order.orderId,x.id,f)}">${FILE_LABEL[f]||f}</a>`).join("")}</span></span></div>`).join("")}</div>`;
 }
 function orderMeta(o){
   const t=o.approvedAt?new Date(o.approvedAt).toLocaleString("ko-KR"):"";

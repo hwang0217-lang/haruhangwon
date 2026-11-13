@@ -31,7 +31,7 @@
   ORDERS.add(o);
   try{const bought=new Set(o.books.map(b=>b.id));const c=JSON.parse(localStorage.getItem("hr-cart")||"[]").filter(id=>!bought.has(id));localStorage.setItem("hr-cart",JSON.stringify(c));localStorage.removeItem("hr-bump");localStorage.removeItem("hr-pending")}catch(e){}
   history.replaceState(null,"","/pay/success?orderId="+encodeURIComponent(o.orderId));
-  out.innerHTML=`<h1>결제가 완료됐어요</h1><p class="sub">아래 버튼으로 바로 내려받으세요. 폰은 PDF, 전자책 리더기는 EPUB이 편해요.</p>
+  out.innerHTML=`<h1>결제가 완료됐어요</h1><p class="sub">아래 버튼으로 바로 내려받으세요. 전자책은 폰이면 PDF, 리더기면 EPUB이 편해요. 합격플랜은 zip을 풀고 HTML 파일을 여세요.</p>
   <section class="card">${booksHtml(o)}</section>
   <section class="card">${orderMeta(o)}<p class="note">주문번호를 적어 두세요. <a href="/orders">구매내역</a>에서 주문번호로 언제든 다시 받을 수 있어요. 결제 확인 메일에도 주문번호가 있어요.${o.receipt?` · <a href="${esc(o.receipt)}" target="_blank" rel="noopener">영수증 보기</a>`:""}</p></section>`;
 })();

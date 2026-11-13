@@ -69,7 +69,7 @@ def how(x):
     return f'''<section class="how" id="how"><h2>이렇게 작동해요</h2>
 <p class="lead">설치도, 회원가입도, 인터넷도 필요 없어요. 파일 하나를 브라우저로 열면 그 안에 교재, 모의고사, 채점, 기록이 다 들어 있어요.</p>
 <ol class="steps">
-<li><h3>1. 받고 열기</h3><p>결제하면 내려받기 링크가 화면과 이메일로 와요. zip 파일의 압축을 풀고 안에 있는 HTML 파일을 더블클릭하면 크롬이나 엣지에서 바로 열려요(<a href="#open">기기별 여는 방법</a>). 한 번 받은 뒤에는 인터넷이 끊겨도 그대로 쓸 수 있어요.</p></li>
+<li><h3>1. 받고 열기</h3><p>결제하면 결제 완료 화면에서 바로 내려받아요. zip 파일의 압축을 풀고 안에 있는 HTML 파일을 더블클릭하면 크롬이나 엣지에서 바로 열려요(<a href="#open">기기별 여는 방법</a>). 한 번 받은 뒤에는 인터넷이 끊겨도 그대로 쓸 수 있어요.</p></li>
 <li><h3>2. 첫 화면에서 "지금 할 일" 따라가기</h3><p>첫 화면이 지금 해야 할 공부 하나를 골라 줘요. 순서는 <b>진단 → 약점 공부 → 연습 → 실전</b>이에요.</p>
 <ul><li>과목마다 1회를 먼저 풀어 지금 실력을 확인해요(진단).</li><li>점수가 60%보다 낮은 영역의 교재 단원을 공부해요.</li><li>2~8회로 연습하고, 9~10회는 시간 제한을 켜고 실전처럼 풀어요.</li><li>과목별로 몇 회까지 풀었는지, 최근 점수가 몇 점인지 한눈에 보여요.</li></ul>{fig(dash, '첫 화면: 지금 할 일과 과목별 진행')}</li>
 <li><h3>3. 교재로 공부하기</h3><p>단원마다 <b>핵심 용어 → 개념 → 예시 → 자주 하는 실수 → 확인 문제</b> 순서예요. 꼭 외울 문장과 숫자에는 형광펜이 칠해져 있어서, 시간이 없을 때는 형광펜만 훑어도 돼요. 다 읽으면 "다 읽었어요"를 눌러 표시해요.</p>{fig(book, '교재: 핵심 문장 형광펜')}</li>
@@ -141,7 +141,7 @@ def value(x):
 
 def page(x):
     secs = ''.join(f'<section><h2>{E(h)}</h2>{block(t)}</section>' for h, t in x['secs'])
-    buy = f'<a class="btn buy" href="{E(x["buy"])}" rel="noopener">구매하기</a>' if x.get('buy') else '<a class="btn buy" aria-disabled="true">결제 준비 중</a>'
+    buy = f'<a class="btn buy" href="{E(x["buy"])}">구매하기</a>' if x.get('buy') else '<a class="btn buy" aria-disabled="true">결제 준비 중</a>'
     ref = f'<section><h2>환불</h2><p>{E(x["refund"])}</p></section>' if x.get('refund') else ''
     t = f'{x["name"]} 합격플랜'
     return f'''<!doctype html>
