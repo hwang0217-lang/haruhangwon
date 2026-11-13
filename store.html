@@ -167,10 +167,9 @@ footer b{color:var(--ink)}
 </style>
 </head>
 <body>
-<div class="demo"><div class="wrap">시안 · 결제는 아직 실제로 되지 않아요 (토스페이먼츠 연결 전)</div></div>
 <header><div class="wrap">
   <a class="logo" href="/" style="text-decoration:none">하루<span>한권</span></a>
-  <nav><button class="btn" id="cartBtn" type="button">장바구니<span class="badge" id="cartCount">0</span></button></nav>
+  <nav><a class="btn" href="/orders" style="text-decoration:none">구매내역</a><button class="btn" id="cartBtn" type="button">장바구니<span class="badge" id="cartCount">0</span></button></nav>
 </div></header>
 
 <main class="wrap">
@@ -200,7 +199,7 @@ footer b{color:var(--ink)}
 <script>
 
 BOOKS.forEach(b=>{b.p=b.price;b.w=b.was;b.t=b.title;b.a="하루한권 편집부"});
-let cat="전체", cart=[], payMethod="카드", bump=null;
+let cat="전체", cart=[], bump=null;
 try{cart=JSON.parse(localStorage.getItem("hr-cart")||"[]").filter(id=>BOOKS.some(b=>b.id===id));bump=localStorage.getItem("hr-bump")}catch(e){cart=[]}
 const addSet=k=>{const g=GOAL_OF(k);if(!g)return;g.ids.forEach(id=>{if(!cart.includes(id))cart.push(id)});save();openCart()};
 const save=()=>{if(bump&&!cart.includes(bump))bump=null;try{localStorage.setItem("hr-cart",JSON.stringify(cart));bump?localStorage.setItem("hr-bump",bump):localStorage.removeItem("hr-bump")}catch(e){} document.getElementById("cartCount").textContent=cart.length;document.querySelectorAll(".add").forEach(x=>{const on=cart.includes(x.dataset.add);x.setAttribute("aria-pressed",on);x.textContent=on?"담았어요 ✓":"장바구니 담기"})};
@@ -264,7 +263,7 @@ function openDetail(id){
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" type="button" id="buyNow">바로 구매</button><button class="btn" type="button" id="addCart">${inCart?"장바구니에 있음":"장바구니 담기"}</button><button class="wish big" type="button" id="wishD" aria-pressed="${WISH.has(id)}">${HEART}<span>찜</span></button></div>
   <div class="toc"><b>이런 내용을 담았어요</b><ol>${b.toc.map(t=>`<li>${t[0]}</li>`).join("")}</ol></div>
   ${ON_SITE?`<a class="btn" href="/b/${b.id}">상세페이지 전체 보기</a>`:""}
-  <p class="note">결제 후 이메일로 내려받기 링크가 발송되며, 구매내역에서 언제든 다시 받을 수 있습니다.</p>`);
+  <p class="note">결제가 끝나면 바로 내려받을 수 있고, 구매내역에서 주문번호로 언제든 다시 받을 수 있습니다.</p>`);
   wishD.onclick=()=>{wishD.setAttribute("aria-pressed",WISH.toggle(id));renderChips();renderGrid()};
   addCart.onclick=()=>{if(!cart.includes(id)){cart.push(id);save()}addCart.textContent="장바구니에 있음"};
   buyNow.onclick=()=>{if(!cart.includes(id)){cart.push(id);save()}openCart()};
@@ -281,22 +280,58 @@ function openCart(){
   ${d.lines.length?`<div style="display:grid;gap:4px"><div class="deal" style="color:var(--muted)"><span>상품 금액</span><span>${won(d.sum)}</span></div>${d.lines.map(l=>`<div class="deal"><span>${l.t}</span><span>−${won(l.off)}</span></div>`).join("")}</div>`:""}
   <div class="total"><span>결제 금액</span><span>${won(sum)}</span></div>
   <form id="f" style="display:grid;gap:12px">
-    <label for="nm">이름<input id="nm" type="text" required value="홍길동"></label>
-    <label for="em">이메일 (파일 받을 주소)<input id="em" type="email" required value="reader@example.com"></label>
-    <div class="pay" role="group" aria-label="결제 수단">${["카드","카카오페이","네이버페이","토스페이","계좌이체","휴대폰"].map(m=>`<button type="button" aria-pressed="${m===payMethod}" data-m="${m}">${m}</button>`).join("")}</div>
+    <label for="nm">이름 (선택)<input id="nm" type="text" autocomplete="name" maxlength="40"></label>
+    <label for="em">이메일 (결제 확인 메일 받을 주소)<input id="em" type="email" required autocomplete="email" maxlength="100"></label>
+    <div id="pm"></div><div id="agr"></div>
     <label class="check" for="agree"><input id="agree" type="checkbox" required> <span>디지털 상품은 내려받은 뒤 청약철회가 제한되는 것에 동의합니다.</span></label>
-    <ul class="paynote"><li>${TICK}결제 즉시 다운로드</li><li>${TICK}이메일로도 링크 발송</li><li>${TICK}내려받기 전 7일 환불</li></ul>
-    <button class="btn primary" type="submit" style="padding:14px;border-radius:999px;font-size:16px">${won(sum)} 결제하기</button>
-    <p class="note">시안이라 실제 결제는 일어나지 않습니다.</p>
+    <ul class="paynote"><li>${TICK}결제 즉시 다운로드</li><li>${TICK}카드·카카오페이·네이버페이·토스페이</li><li>${TICK}내려받기 전 7일 환불</li></ul>
+    <button class="btn primary" type="submit" id="payBtn" style="padding:14px;border-radius:999px;font-size:16px">${won(sum)} 결제하기</button>
+    <p class="note" id="payMsg" role="status">결제는 토스페이먼츠로 안전하게 처리됩니다.</p>
   </form>`);
   sheet.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{cart=cart.filter(i=>i!==b.dataset.rm);save();openCart()});
   const bk=document.getElementById("bumpck");if(bk)bk.onchange=()=>{if(bk.checked){cart.push(cand.id);bump=cand.id;save();openCart()}};
-  sheet.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{payMethod=b.dataset.m;sheet.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
-  f.onsubmit=e=>{e.preventDefault();const email=em.value;const bought=items;cart=[];save();
-    open(`<div class="done"><div class="mark"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h2>결제가 완료됐어요</h2><p class="sub">${email} 로 내려받기 링크를 보냈습니다. (시안)</p></div>
-    <div>${bought.map(b=>`<div class="row">${cover(b,"mini")}<div class="grow"><b>${b.t}</b><div class="sub">EPUB · PDF</div></div><button type="button" class="btn" style="color:var(--accent)">내려받기</button></div>`).join("")}</div>
-    <p class="note">실제 사이트에서는 결제 확인 후 72시간 동안 유효한 개인 링크가 발급됩니다.</p>`)};
+  setupPay(sum);
 }
+
+/* 토스페이먼츠 결제: 키가 test_ck/live_ck면 결제창, test_gck/live_gck면 결제위젯 */
+let PAY=null, WIDGETS=null;
+const payMsg=t=>{const m=document.getElementById("payMsg");if(m)m.textContent=t};
+async function payConfig(){if(PAY&&PAY.ready)return PAY;try{PAY=await fetch("/api/pay/config",{cache:"no-store"}).then(r=>r.json())}catch(e){PAY={ready:false}}return PAY}
+function loadToss(){return window.TossPayments?Promise.resolve():new Promise((ok,no)=>{const s=document.createElement("script");s.src="https://js.tosspayments.com/v2/standard";s.onload=ok;s.onerror=()=>no(new Error("load"));document.head.appendChild(s)})}
+const isWidgetKey=k=>/_gck_/.test(k);
+const newOrderId=()=>{const d=new Date(),p=n=>String(n).padStart(2,"0");const r=Array.from(crypto.getRandomValues(new Uint8Array(12)),x=>"abcdefghijkmnpqrstuvwxyz23456789"[x%32]).join("");return `HR${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}-${r}`};
+async function setupPay(sum){
+  WIDGETS=null;
+  const btn=document.getElementById("payBtn");
+  if(!ON_SITE){payMsg("미리보기 화면에서는 결제가 되지 않아요.");btn.disabled=true;return}
+  const c=await payConfig();
+  if(!c.ready){payMsg("결제 연결을 준비하고 있어요. 잠시 후 다시 시도해 주세요.");btn.disabled=true;return}
+  if(c.mode==="test")payMsg("테스트 결제 모드예요. 실제로 돈이 빠져나가지 않습니다.");
+  if(!isWidgetKey(c.clientKey))return;
+  try{await loadToss();const w=TossPayments(c.clientKey).widgets({customerKey:TossPayments.ANONYMOUS});
+    await w.setAmount({currency:"KRW",value:sum});
+    await Promise.all([w.renderPaymentMethods({selector:"#pm",variantKey:"DEFAULT"}),w.renderAgreement({selector:"#agr",variantKey:"AGREEMENT"})]);
+    WIDGETS=w}catch(e){payMsg("결제 수단을 불러오지 못했어요. 새로고침해 주세요.")}
+}
+document.addEventListener("submit",async e=>{
+  if(e.target.id!=="f")return;e.preventDefault();
+  const btn=document.getElementById("payBtn");btn.disabled=true;
+  try{
+    const c=await payConfig();if(!c.ready)throw new Error("결제 연결을 준비하고 있어요.");
+    const items=cart.slice(),bk=bump&&items.includes(bump)?bump:"";
+    const q=await fetch("/api/pay/quote",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({items,bump:bk})}).then(async r=>{const j=await r.json();if(!r.ok)throw new Error(j.message);return j});
+    if(q.amount!==cartDeals(items,bk||null).total){openCart();throw new Error("금액이 바뀌었어요. 다시 확인하고 눌러 주세요.")}
+    const orderId=newOrderId(),email=em.value.trim(),name=nm.value.trim();
+    const qs=new URLSearchParams({items:items.join(","),bump:q.bump});
+    const req={orderId,orderName:q.orderName,successUrl:`${location.origin}/pay/success?${qs}`,failUrl:`${location.origin}/pay/fail`,customerEmail:email,metadata:{items:items.join(","),bump:q.bump}};
+    if(name)req.customerName=name;
+    try{localStorage.setItem("hr-pending",JSON.stringify({orderId,items,bump:q.bump}))}catch(_){}
+    await loadToss();
+    if(WIDGETS)await WIDGETS.requestPayment(req);
+    else await TossPayments(c.clientKey).payment({customerKey:TossPayments.ANONYMOUS}).requestPayment({method:"CARD",amount:{currency:"KRW",value:q.amount},card:{flowMode:"DEFAULT"},...req});
+  }catch(err){if(err&&err.code!=="USER_CANCEL"&&err.code!=="PAY_PROCESS_CANCELED")payMsg(err.message||"결제를 시작하지 못했어요.");else payMsg("결제를 취소했어요.")}
+  finally{btn.disabled=false}
+});
 cartBtn.onclick=openCart;
 {const h=decodeURIComponent(location.hash.slice(1));if(h.startsWith("goal-")&&GOAL_OF(h.slice(5)))cat=h;}
 renderChips();renderGrid();save();

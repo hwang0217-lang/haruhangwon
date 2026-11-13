@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%23141C2B%27/%3E%3Crect x=%278%27 y=%277%27 width=%2716%27 height=%2718%27 rx=%272%27 fill=%27%23F2B84B%27/%3E%3C/svg%3E">
+<style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><meta name="description" content="하루한권 구매내역. 주문번호로 산 책을 다시 내려받으세요.">
+<title>하루한권 구매내역</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;600&family=Do+Hyeon&display=swap">
+<link rel="stylesheet" href="/pay/pay.css">
+</head>
+<body>
+<header><div class="wrap"><a class="logo" href="/">하루<span>한권</span></a><a href="/store">스토어</a></div></header>
+<main><div class="wrap">
+  <h1>구매내역</h1>
+  <p class="sub">결제 완료 화면이나 결제 확인 메일에 있는 주문번호를 넣으면 다시 받을 수 있어요.</p>
+  <form class="find" id="find"><label for="oid" class="note" style="flex-basis:100%">주문번호</label><input id="oid" required placeholder="HR20261113-..." autocomplete="off" spellcheck="false"><button class="btn primary" type="submit">찾기</button></form>
+  <div id="found"></div>
+  <div id="mine"></div>
+</div></main>
+<footer><div class="wrap">하루한권 · 사업자등록번호 693-63-00898 · <a href="/terms">이용약관</a> · <a href="/privacy">개인정보처리방침</a> · <a href="/terms#refund">환불정책</a></div></footer>
+<script src="/books.js"></script>
+<script src="/pay/pay.js"></script>
+<script>
+const card=o=>`<section class="card">${orderMeta(o)}${booksHtml(o)}</section>`;
+function mine(){const a=ORDERS.all();$("#mine").innerHTML=a.length?`<h2 style="font-size:18px;margin:12px 0 8px">이 기기에서 산 책</h2><div style="display:grid;gap:12px">${a.map(card).join("")}</div>`:""}
+$("#find").onsubmit=async e=>{e.preventDefault();const id=$("#oid").value.trim(),f=$("#found");f.innerHTML='<p class="note">찾는 중…</p>';
+  try{const r=await fetch("/api/pay/order?order="+encodeURIComponent(id),{cache:"no-store"});const o=await r.json();if(!r.ok)throw new Error(o.message);ORDERS.add(o);f.innerHTML=card(o);mine()}
+  catch(err){f.innerHTML=`<p class="note err">${esc(err.message||"찾지 못했어요.")}</p>`}};
+mine();
+</script>
+</body>
+</html>

@@ -15,7 +15,7 @@ for (const b of BOOKS) {
   const url = `${SITE}/b/${b.id}`, title = `${b.title} | 하루한권`;
   const desc = `${b.sub}. ${b.pages}쪽 실전 전자책(EPUB·PDF), ${won(b.price)}. ${b.summary[0]}`.slice(0, 155);
   const ld = { "@context": "https://schema.org", "@type": "Product", name: b.title, description: b.summary.join(" "), image: `${SITE}/og/${b.id}.png`, category: b.cat, brand: { "@type": "Brand", name: "하루한권" },
-    offers: { "@type": "Offer", url, priceCurrency: "KRW", price: b.price, availability: "https://schema.org/PreOrder" } };
+    offers: { "@type": "Offer", url, priceCurrency: "KRW", price: b.price, availability: "https://schema.org/InStock" } };
   let s = tpl
     .replace(/<meta name="description"[^>]*>/, `<meta name="description" content="${esc(desc)}">`)
     .replace(/<meta property="og:title"[^>]*>/, `<meta property="og:title" content="${esc(b.title)}">`)
