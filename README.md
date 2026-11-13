@@ -16,5 +16,7 @@ Vercel에 이 폴더를 그대로 올리면 됩니다.
 ## 결제 (토스페이먼츠)
 - 흐름: `store.html` 장바구니 → 토스 결제창(키가 `_ck_`면 결제창, `_gck_`면 결제위젯) → `/pay/success`가 `api/pay/confirm` 호출(서버가 `books.js`로 금액을 다시 계산해 맞을 때만 승인) → PDF·EPUB 내려받기.
 - 다시 받기: `/orders`에서 주문번호 입력. `api/pay/file`이 매번 토스에 결제 완료(DONE)를 확인하고, 환불된 주문은 막음.
-- 책 파일: 저장소가 공개라서 `paid/*.enc`(AES-256-GCM으로 잠금)만 올림. 새 책을 추가하면 `FILE_KEY=... node scripts/encrypt-books.cjs <books/out 폴더>` 다시 실행.
+- 합격플랜 20종: `/checkout?item=x-<시험id>` 단독 결제, zip 1개. 가격은 `exam/data.json`의 krw.
+- 테스트 키(`test_`)로 승인된 주문은 실제 파일 대신 안내 txt만 내려받아짐(무료 유출 방지).
+- 책 파일: 저장소가 공개라서 `paid/*.enc`(AES-256-GCM으로 잠금)만 올림. 새 책을 추가하면 `FILE_KEY=... node scripts/encrypt-books.cjs <books/out 폴더> <x-<id>.zip 폴더>` 다시 실행.
 - Vercel 환경 변수: `TOSS_CLIENT_KEY`, `TOSS_SECRET_KEY`, `FILE_KEY`. 셋 다 있어야 결제 버튼이 켜짐.

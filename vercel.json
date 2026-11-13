@@ -6,16 +6,16 @@
       "maxDuration": 300
     },
     "api/pay/file.js": {
-      "includeFiles": "{books.js,paid/**}"
+      "includeFiles": "{books.js,exam/data.json,paid/**}"
     },
     "api/pay/quote.js": {
-      "includeFiles": "books.js"
+      "includeFiles": "{books.js,exam/data.json}"
     },
     "api/pay/confirm.js": {
-      "includeFiles": "books.js"
+      "includeFiles": "{books.js,exam/data.json}"
     },
     "api/pay/order.js": {
-      "includeFiles": "books.js"
+      "includeFiles": "{books.js,exam/data.json}"
     }
   },
   "headers": [

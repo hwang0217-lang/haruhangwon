@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%23141C2B%27/%3E%3Crect x=%278%27 y=%277%27 width=%2716%27 height=%2718%27 rx=%272%27 fill=%27%23F2B84B%27/%3E%3C/svg%3E">
+<style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><meta name="robots" content="noindex">
+<title>하루한권 결제</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;600&family=Do+Hyeon&display=swap">
+<link rel="stylesheet" href="/pay/pay.css">
+<style>
+form{display:grid;gap:12px}
+form label{display:grid;gap:6px;font-size:14px;color:var(--muted)}
+form input[type=email],form input[type=text]{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:11px 12px;font:16px var(--f-ui)}
+.check{display:flex!important;gap:8px;align-items:flex-start;color:var(--ink)!important}.check input{margin-top:4px}
+.total{display:flex;justify-content:space-between;font-weight:700;font-size:18px;font-variant-numeric:tabular-nums}
+.row .cv img{width:100%;height:auto;display:block}
+#payBtn{padding:14px;font-size:16px}#payBtn:disabled{opacity:.55}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="logo" href="/">하루<span>한권</span></a><a href="/orders">구매내역</a></div></header>
+<main><div class="wrap" id="out"><h1>결제</h1><p class="sub">상품을 불러오고 있어요.</p></div></main>
+<footer><div class="wrap">하루한권 · 대표 황대식 · 사업자등록번호 693-63-00898 · <a href="/terms">이용약관</a> · <a href="/privacy">개인정보처리방침</a> · <a href="/terms#refund">환불정책</a></div></footer>
+<script src="/books.js"></script>
+<script src="/pay/pay.js"></script>
+<script src="/pay/toss.js"></script>
+<script>
+(async()=>{
+  const id=new URLSearchParams(location.search).get("item")||"", out=$("#out");
+  let item=null;
+  if(id.startsWith("x-")){try{const d=await fetch("/exam/data.json").then(r=>r.json());const x=d.find(x=>"x-"+x.id===id);if(x)item={id,exam:x.id,title:x.name+" 합격플랜",sub:x.desc,price:x.krw,files:["zip"],back:"/exam/"+x.id}}catch(e){}}
+  else{const b=BOOKS.find(b=>b.id===id);if(b)item={id,title:b.title,sub:b.sub,price:b.price,files:["pdf","epub"],back:"/b/"+b.id}}
+  if(!item){out.innerHTML='<h1>상품을 찾지 못했어요</h1><p><a class="btn primary" href="/">처음으로</a></p>';return}
+  const won=n=>n.toLocaleString("ko-KR")+"원";
+  out.innerHTML=`<h1>결제</h1>
+  <section class="card"><div class="row"><span class="cv">${coverOf(item)}</span><span><b>${esc(item.title)}</b><span class="note">${esc(item.sub)} · ${item.files.map(f=>f.toUpperCase()).join("·")} 파일</span></span></div>
+  <div class="total"><span>결제 금액</span><span>${won(item.price)}</span></div></section>
+  <section class="card"><form id="f">
+    <label for="nm">이름 (선택)<input id="nm" type="text" autocomplete="name" maxlength="40"></label>
+    <label for="em">이메일 (결제 확인 메일 받을 주소)<input id="em" type="email" required autocomplete="email" maxlength="100"></label>
+    <div id="pm"></div><div id="agr"></div>
+    <label class="check" for="agree"><input id="agree" type="checkbox" required><span>디지털 상품은 내려받은 뒤 청약철회가 제한되는 것에 동의합니다.</span></label>
+    <button class="btn primary" type="submit" id="payBtn">${won(item.price)} 결제하기</button>
+    <p class="note" id="payMsg" role="status">결제는 토스페이먼츠로 안전하게 처리됩니다. 내려받기 전이면 7일 안에 환불돼요.</p>
+  </form></section>
+  <p><a href="${item.back}">← 상품 설명으로 돌아가기</a></p>`;
+  const msg=t=>$("#payMsg").textContent=t, btn=$("#payBtn");
+  HRPAY.setup(item.price,{pm:"#pm",agr:"#agr",btn,msg});
+  $("#f").onsubmit=async e=>{e.preventDefault();btn.disabled=true;
+    try{await HRPAY.pay({items:[item.id],email:$("#em").value.trim(),name:$("#nm").value.trim(),expect:item.price})}
+    catch(err){msg(HRPAY.cancelled(err)?"결제를 취소했어요.":(err.message||"결제를 시작하지 못했어요."))}
+    finally{btn.disabled=false}};
+})();
+</script>
+</body>
+</html>

@@ -196,6 +196,7 @@ footer b{color:var(--ink)}
 <aside class="sheet" id="sheet" hidden aria-modal="true" role="dialog"></aside>
 
 <script src="/books.js"></script>
+<script src="/pay/toss.js"></script>
 <script>
 
 BOOKS.forEach(b=>{b.p=b.price;b.w=b.was;b.t=b.title;b.a="하루한권 편집부"});
@@ -290,46 +291,15 @@ function openCart(){
   </form>`);
   sheet.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{cart=cart.filter(i=>i!==b.dataset.rm);save();openCart()});
   const bk=document.getElementById("bumpck");if(bk)bk.onchange=()=>{if(bk.checked){cart.push(cand.id);bump=cand.id;save();openCart()}};
-  setupPay(sum);
+  HRPAY.setup(sum,{pm:"#pm",agr:"#agr",btn:document.getElementById("payBtn"),msg:t=>{const m=document.getElementById("payMsg");if(m)m.textContent=t}});
 }
 
-/* 토스페이먼츠 결제: 키가 test_ck/live_ck면 결제창, test_gck/live_gck면 결제위젯 */
-let PAY=null, WIDGETS=null;
-const payMsg=t=>{const m=document.getElementById("payMsg");if(m)m.textContent=t};
-async function payConfig(){if(PAY&&PAY.ready)return PAY;try{PAY=await fetch("/api/pay/config",{cache:"no-store"}).then(r=>r.json())}catch(e){PAY={ready:false}}return PAY}
-function loadToss(){return window.TossPayments?Promise.resolve():new Promise((ok,no)=>{const s=document.createElement("script");s.src="https://js.tosspayments.com/v2/standard";s.onload=ok;s.onerror=()=>no(new Error("load"));document.head.appendChild(s)})}
-const isWidgetKey=k=>/_gck_/.test(k);
-const newOrderId=()=>{const d=new Date(),p=n=>String(n).padStart(2,"0");const r=Array.from(crypto.getRandomValues(new Uint8Array(12)),x=>"abcdefghijkmnpqrstuvwxyz23456789"[x%32]).join("");return `HR${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}-${r}`};
-async function setupPay(sum){
-  WIDGETS=null;
-  const btn=document.getElementById("payBtn");
-  if(!ON_SITE){payMsg("미리보기 화면에서는 결제가 되지 않아요.");btn.disabled=true;return}
-  const c=await payConfig();
-  if(!c.ready){payMsg("결제 연결을 준비하고 있어요. 잠시 후 다시 시도해 주세요.");btn.disabled=true;return}
-  if(c.mode==="test")payMsg("테스트 결제 모드예요. 실제로 돈이 빠져나가지 않습니다.");
-  if(!isWidgetKey(c.clientKey))return;
-  try{await loadToss();const w=TossPayments(c.clientKey).widgets({customerKey:TossPayments.ANONYMOUS});
-    await w.setAmount({currency:"KRW",value:sum});
-    await Promise.all([w.renderPaymentMethods({selector:"#pm",variantKey:"DEFAULT"}),w.renderAgreement({selector:"#agr",variantKey:"AGREEMENT"})]);
-    WIDGETS=w}catch(e){payMsg("결제 수단을 불러오지 못했어요. 새로고침해 주세요.")}
-}
 document.addEventListener("submit",async e=>{
   if(e.target.id!=="f")return;e.preventDefault();
-  const btn=document.getElementById("payBtn");btn.disabled=true;
-  try{
-    const c=await payConfig();if(!c.ready)throw new Error("결제 연결을 준비하고 있어요.");
-    const items=cart.slice(),bk=bump&&items.includes(bump)?bump:"";
-    const q=await fetch("/api/pay/quote",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({items,bump:bk})}).then(async r=>{const j=await r.json();if(!r.ok)throw new Error(j.message);return j});
-    if(q.amount!==cartDeals(items,bk||null).total){openCart();throw new Error("금액이 바뀌었어요. 다시 확인하고 눌러 주세요.")}
-    const orderId=newOrderId(),email=em.value.trim(),name=nm.value.trim();
-    const qs=new URLSearchParams({items:items.join(","),bump:q.bump});
-    const req={orderId,orderName:q.orderName,successUrl:`${location.origin}/pay/success?${qs}`,failUrl:`${location.origin}/pay/fail`,customerEmail:email,metadata:{items:items.join(","),bump:q.bump}};
-    if(name)req.customerName=name;
-    try{localStorage.setItem("hr-pending",JSON.stringify({orderId,items,bump:q.bump}))}catch(_){}
-    await loadToss();
-    if(WIDGETS)await WIDGETS.requestPayment(req);
-    else await TossPayments(c.clientKey).payment({customerKey:TossPayments.ANONYMOUS}).requestPayment({method:"CARD",amount:{currency:"KRW",value:q.amount},card:{flowMode:"DEFAULT"},...req});
-  }catch(err){if(err&&err.code!=="USER_CANCEL"&&err.code!=="PAY_PROCESS_CANCELED")payMsg(err.message||"결제를 시작하지 못했어요.");else payMsg("결제를 취소했어요.")}
+  const btn=document.getElementById("payBtn"),msg=t=>{const m=document.getElementById("payMsg");if(m)m.textContent=t};btn.disabled=true;
+  try{const items=cart.slice(),bk=bump&&items.includes(bump)?bump:"";
+    await HRPAY.pay({items,bump:bk,email:em.value.trim(),name:nm.value.trim(),expect:cartDeals(items,bk||null).total})}
+  catch(err){if(err.changed)openCart();msg(HRPAY.cancelled(err)?"결제를 취소했어요.":(err.message||"결제를 시작하지 못했어요."))}
   finally{btn.disabled=false}
 });
 cartBtn.onclick=openCart;
