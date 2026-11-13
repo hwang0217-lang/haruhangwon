@@ -1,9 +1,59 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "functions": { "api/factory/claude.js": { "maxDuration": 300 } },
+  "functions": {
+    "api/factory/claude.js": {
+      "maxDuration": 300
+    },
+    "api/pay/file.js": {
+      "includeFiles": "{books.js,paid/**}"
+    },
+    "api/pay/quote.js": {
+      "includeFiles": "books.js"
+    },
+    "api/pay/confirm.js": {
+      "includeFiles": "books.js"
+    },
+    "api/pay/order.js": {
+      "includeFiles": "books.js"
+    }
+  },
   "headers": [
-    { "source": "/factory(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
-    { "source": "/api/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
+    {
+      "source": "/factory(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/paid/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/pay/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
   ]
 }
