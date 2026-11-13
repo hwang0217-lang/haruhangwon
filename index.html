@@ -232,6 +232,8 @@ footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
 .modal .box ol{margin:0;padding-left:20px;color:var(--muted);font-size:14px}
 .bar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);border-top:1px solid var(--line);padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:flex;align-items:center;justify-content:space-between;gap:12px}
 .bar span{font-size:14px;font-variant-numeric:tabular-nums}
+/* 아래 고정 장바구니 줄이 맨 끝 내용(푸터)을 가리지 않게 */
+body:has(#bar:not([hidden])){padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
 .toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);border-radius:999px;padding:10px 18px;font-size:14px;z-index:90}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .demo{background:var(--soft);font-size:13px;color:var(--muted);text-align:center;padding:6px 16px}
@@ -260,6 +262,7 @@ footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
 .bookhead{padding-top:40px;border-top:1px solid var(--line);margin-top:28px}
 </style>
 
+<link rel="stylesheet" href="/ko.css">
 </head>
 <body>
 <header class="top" id="top">
@@ -282,14 +285,14 @@ footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
 <main id="home">
   <section class="doors" aria-label="하루한권 상품">
     <div class="in">
-      <p class="lede">혼자 공부하고, 혼자 해내는 사람을 위한 하루한권</p>
+      <p class="lede"><span class="nw">혼자 공부하고,</span> <span class="nw">혼자 해내는 사람을 위한 하루한권</span></p>
       <div class="grid">
         <a class="door exam" href="/exams">
           <span class="tag">시험 합격플랜 · 20종</span>
-          <h2>학원 안 가도 됩니다.</h2>
-          <p>교재부터 모의고사 10회까지 다 들어 있어요. 풀면 바로 채점하고, 약한 단원을 알려 줘요.</p>
+          <h2><span class="nw">학원 안 가도</span> <span class="nw">됩니다.</span></h2>
+          <p><span class="nw">교재부터 모의고사 10회까지</span> <span class="nw">다 들어 있어요.</span> <span class="nw">풀면 바로 채점하고,</span> <span class="nw">약한 단원을 알려 줘요.</span></p>
           <ul><li>쉬운 교재</li><li>모의고사 10회</li><li>실제 시험 시간</li><li>실제 합격선 채점</li><li>무료 체험판</li></ul>
-          <span class="acts"><span class="btn lamp">합격플랜 보기</span><span class="btn ghostd">시험 20종 · <b id="xmin">59,000원</b>부터</span></span>
+          <span class="acts"><span class="btn lamp">합격플랜 보기</span><span class="btn ghostd"><span class="nw">시험 20종 · <b id="xmin">59,000원</b>부터</span></span></span>
         </a>
         <a class="door book" href="#books">
           <span class="tag">실전 전자책 · <span id="nbooks2">51</span>권</span>
