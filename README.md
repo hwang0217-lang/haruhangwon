@@ -20,3 +20,10 @@ Vercel에 이 폴더를 그대로 올리면 됩니다.
 - 테스트 키(`test_`)로 승인된 주문은 실제 파일 대신 안내 txt만 내려받아짐(무료 유출 방지).
 - 책 파일: 저장소가 공개라서 `paid/*.enc`(AES-256-GCM으로 잠금)만 올림. 새 책을 추가하면 `FILE_KEY=... node scripts/encrypt-books.cjs <books/out 폴더> <x-<id>.zip 폴더>` 다시 실행.
 - Vercel 환경 변수: `TOSS_CLIENT_KEY`, `TOSS_SECRET_KEY`, `FILE_KEY`. 셋 다 있어야 결제 버튼이 켜짐.
+
+## 방문 통계 + 관리자 (/admin) — 형 전용
+- 주소: `haruhangwon.kr/admin` (비밀번호 = `APP_PASSWORD`, 15분에 6번 틀리면 잠김, 로그인 14일 유지)
+- 수집: 모든 페이지 `</head>` 앞의 `/a.js` → `api/a.js`. 쿠키 없이 브라우저에 무작위 방문자 번호(`hr-vid`)만 저장. 장바구니 담기·결제 시작·체험판도 기록. 결제는 `api/pay/confirm.js`가 서버에서 기록.
+- 저장: Upstash Redis (Vercel 저장소 `haruhangwon-analytics`, 환경 변수 `KV_REST_API_URL`, `KV_REST_API_TOKEN`). 일별 키 `a:<날짜>:*`, 400일 보관.
+- 화면: `admin.html`, API: `api/admin.js` (`?a=login|logout|me|stats|orders|refund`). 무료 요금제 함수 개수(12개) 때문에 하나로 묶음.
+- 새 페이지를 만들면 `<script src="/a.js" defer></script>`를 `</head>` 앞에 꼭 넣기.
