@@ -28,7 +28,6 @@ h2{font-size:22px;margin:0 0 12px}h3{font-size:18px;margin:0 0 8px}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 
 .value{background:#141C2B;color:#EEF0F4;border-radius:22px;padding:36px 32px;margin:0 0 36px}
-.value .eye{color:#F2B84B;font-weight:700;font-size:14px;margin:0 0 6px}
 .value h2{font-family:var(--f-book);font-size:clamp(34px,6vw,58px);line-height:1.15;margin:0;letter-spacing:-.01em}
 .value .vsub{font-size:clamp(18px,2.4vw,24px);margin:10px 0 28px;color:#D7DCE4;text-wrap:balance}
 .vgrid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px}

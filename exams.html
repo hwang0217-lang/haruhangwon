@@ -21,8 +21,8 @@ header{border-bottom:1px solid var(--line)}header .in{display:flex;justify-conte
 .logo{font-weight:700;text-decoration:none;color:inherit;font-size:19px}.logo b{color:var(--accent)}
 nav a{color:var(--muted);text-decoration:none;font-weight:600;margin-left:16px}
 .hero{padding:48px 0 24px}h1{font-family:var(--f-book);font-size:clamp(28px,4.6vw,44px);margin:0 0 12px;line-height:1.25;text-wrap:balance;word-break:keep-all}
-.lead{color:var(--muted);margin:0}.sub2{font-size:clamp(18px,2.4vw,24px);font-weight:600;margin:0 0 12px;text-wrap:balance}.pts{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:20px 0 0}
-.pts li{background:var(--soft);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:600}
+.lead{color:var(--muted);margin:0}
+
 .cur{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;margin-top:20px}
 .cur button{border:0;background:none;padding:8px 16px;font:inherit;font-weight:600;color:var(--muted);cursor:pointer}.cur button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
 h2{font-size:18px;margin:36px 0 12px}
@@ -44,9 +44,7 @@ h2{font-size:18px;margin:36px 0 12px}
 <main class="in">
 <section class="hero">
 <h1>학원 안 가도 됩니다.</h1>
-<p class="sub2">교재부터 모의고사 10회까지 다 들어 있어요.</p>
 <p class="lead">시험마다 쉬운 교재와 모의고사 10회를 파일 하나에 담았어요. 풀면 바로 채점하고 약한 단원을 알려 줘요. 인터넷 없이 브라우저로 열기만 하면 돼요.</p>
-<ul class="pts"><li>모의고사 10회</li><li>실제 시험 시간 타이머</li><li>실제 만점·합격선으로 채점</li><li>약점 단원 바로 가기</li><li>무료 체험판</li></ul>
 <div class="cur" role="group" aria-label="통화"><button type="button" data-c="krw" aria-pressed="true">원화</button><button type="button" data-c="usd" aria-pressed="false">USD (해외)</button></div>
 </section>
 <div id="list"></div>
@@ -60,7 +58,7 @@ const fmt=x=>cur==="usd"?"$"+x.usd:x.krw.toLocaleString("ko-KR")+"원";
 function render(){
   document.querySelectorAll(".cur button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.c===cur));
   const groups=["국내 자격증","검정고시","해외·이민"];
-  document.getElementById("list").innerHTML=groups.map(g=>`<h2>${g}</h2><div class="grid">${EXAMS.filter(x=>x.g===g).map(x=>`<div class="card" id="${x.id}"><a class="nm" href="/exam/${x.id}"><img src="/exam/img/${x.id}-0.webp" alt="" width="1304" height="976" loading="lazy"><b>${x.name}</b></a><span class="d">${x.desc}</span><span class="price">${fmt(x)}</span><div class="acts"><a class="btn" href="/exam/${x.id}">자세히 보기</a><a class="btn" href="/trial/${x.id}.html" download="${x.name.replace(/ /g,"")}_무료체험판.html">무료 체험판</a>${x.buy?`<a class="btn buy" href="${x.buy}">구매하기</a>`:`<a class="btn buy" aria-disabled="true">결제 준비 중</a>`}</div></div>`).join("")}</div>`).join("");
+  document.getElementById("list").innerHTML=groups.map(g=>`<h2>${g}</h2><div class="grid">${EXAMS.filter(x=>x.g===g).map(x=>`<div class="card" id="${x.id}"><a class="nm" href="/exam/${x.id}"><img src="/exam/img/${x.id}-0.webp" alt="" width="1304" height="976" loading="lazy"><b>${x.name}</b></a><span class="d">${x.desc.startsWith(x.name)?x.desc.slice(x.name.length).trim():x.desc}</span><span class="price">${fmt(x)}</span><div class="acts"><a class="btn" href="/exam/${x.id}">자세히 보기</a><a class="btn" href="/trial/${x.id}.html" download="${x.name.replace(/ /g,"")}_무료체험판.html">무료 체험판</a>${x.buy?`<a class="btn buy" href="${x.buy}">구매하기</a>`:`<a class="btn buy" aria-disabled="true">결제 준비 중</a>`}</div></div>`).join("")}</div>`).join("");
 }
 document.querySelector(".cur").onclick=e=>{const b=e.target.closest("button");if(!b)return;cur=b.dataset.c;try{localStorage.setItem("exam-cur",cur)}catch(e){}render()};
 render();

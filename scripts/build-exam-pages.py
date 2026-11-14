@@ -132,7 +132,6 @@ def value(x):
            ('채점', '바로 채점', '실제 합격선 + 약점 단원 안내')]
     tiles = ''.join(f'<li><span>{a}</span><b>{b}</b><small>{c}</small></li>' for a, b, c in inc)
     return f'''<section class="value" aria-labelledby="vh">
-<p class="eye">{E(x["name"])} 혼자 준비하기</p>
 <h2 id="vh">학원 안 가도 됩니다.</h2>
 <p class="vsub">교재부터 모의고사 10회까지 다 들어 있어요.</p>
 <div class="vgrid">{cmp}<ul class="inc">{tiles}</ul></div>
