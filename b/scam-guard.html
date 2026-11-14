@@ -70,27 +70,20 @@ header nav a{text-decoration:none}
 .buy .head b{font-family:var(--f-book);font-size:16px;line-height:1.4}
 .cover{max-width:100%;border-radius:4px 10px 10px 4px;overflow:hidden;box-shadow:inset 8px 0 0 rgba(0,0,0,.2),0 24px 40px -22px rgba(10,16,30,.55);aspect-ratio:5/8}
 .cover svg{display:block;width:100%;height:100%}
-.buy{display:grid;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 18px 40px -28px rgba(10,16,30,.45)}
+.buy{display:grid;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 8px 24px rgb(0 0 0 / .06)}
 .buy .btn.primary{border-radius:999px;padding:15px 20px;font-size:17px}
 .buy .btn.primary svg{transition:transform .2s cubic-bezier(.16,1,.3,1)}.buy .btn.primary:hover svg{transform:translateX(3px)}
 .price .once{display:grid;line-height:1.3;font-size:12px;color:var(--muted)}
-.badges{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;font-size:12px;color:var(--muted);margin:-4px 0 0;padding:0;list-style:none}
-.badges li{display:inline-flex;gap:5px;align-items:center}
-.badges svg{color:var(--ok)}
 .refund{font-size:12px;color:var(--muted);text-align:center;margin:0;padding-top:12px;border-top:1px solid var(--line)}
 .price{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;font-variant-numeric:tabular-nums}
 .price .off{color:var(--sale);font-weight:700;font-size:20px}
 .price .now{font-weight:700;font-size:30px;letter-spacing:-.5px}
 .price .was{color:var(--muted);text-decoration:line-through}
-.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;font-size:13px;color:var(--muted);margin:0}
-.facts dt{float:left;margin-right:6px}.facts dd{margin:0;color:var(--ink);font-weight:600}
-.facts div{display:flex;gap:6px}
 .setbox{display:grid;gap:4px;border:1px dashed var(--line);border-radius:10px;padding:10px 12px;font-size:13px;text-decoration:none;color:var(--ink)}
 .setbox:hover{border-color:var(--ink)}
 .setbox b{font-size:14px}.setbox s{color:var(--muted)}
 .main{min-width:0;display:grid;gap:64px}
 .intro{display:grid;gap:12px}
-.cat{font-size:14px;font-weight:600;color:var(--accent)}
 h1{font-family:var(--f-book);font-size:clamp(28px,4vw,42px);line-height:1.3;margin:0;text-wrap:balance}
 .subtitle{font-size:18px;color:var(--muted);margin:0}
 .summary{list-style:none;margin:8px 0 0;padding:20px 22px;display:grid;gap:12px;background:var(--accent-soft);border-radius:14px}
@@ -128,13 +121,10 @@ details{border-top:1px solid var(--line);padding:0}
 details:first-child{border-top:0}
 details summary{padding:16px 18px;align-items:center}
 details summary:hover{background:var(--bg)}
-summary .meta{margin-left:auto;font-size:12px;font-weight:500;color:var(--muted);white-space:nowrap}
 details p{padding:0 18px 16px}
-.faq-more{margin:14px 0 0;font-size:14px;color:var(--muted)}
 summary{cursor:pointer;font-weight:600;list-style:none;display:flex;gap:12px}
 summary::-webkit-details-marker{display:none}
 summary svg{flex:none;margin-left:auto;color:var(--muted);transition:transform .3s cubic-bezier(.16,1,.3,1)}
-summary .meta+svg{margin-left:0}
 details[open] summary svg{transform:rotate(180deg)}
 details p{margin:8px 0 0;color:var(--muted)}
 .files{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0}
@@ -211,7 +201,7 @@ footer b{color:var(--ink)}
   .bar .wish{padding:0;width:46px;height:46px;border-radius:14px}
   .bar.show{transform:none}
 }
-@media (max-width:420px){.bar .thumb{display:none}.facts{gap:4px 10px}.ch{grid-template-columns:48px minmax(0,1fr)}}
+@media (max-width:420px){.bar .thumb{display:none}.ch{grid-template-columns:48px minmax(0,1fr)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 <link rel="stylesheet" href="/ko.css">
@@ -257,20 +247,17 @@ function render(){
   <section class="top">
     <div class="cover">${coverSVG(b)}</div>
     <div class="intro">
-      <div class="cat">${b.cat}</div>
       <h1>${b.title}</h1>
       <p class="subtitle">${b.sub}</p>
-      <ul class="metaline"><li>${b.chapters}장 · ${b.pages}쪽</li><li>${readTime(b)}이면 다 읽어요</li><li>EPUB · PDF</li><li>결제 즉시 받기</li></ul>
+      <ul class="metaline"><li>${b.chapters}장 · ${b.pages}쪽</li><li>${readTime(b)}이면 다 읽어요</li><li>EPUB · PDF</li></ul>
     </div>
   </section>
   <aside class="side">
     <div class="buy" id="buybox">
       <div class="head"><div class="cover">${coverSVG(b)}</div><b>${b.title}</b></div>
       ${priceHtml(b)}
-      <dl class="facts"><div><dt>형식</dt><dd>EPUB · PDF</dd></div><div><dt>분량</dt><dd>${b.pages}쪽</dd></div><div><dt>구성</dt><dd>${b.chapters}장</dd></div><div><dt>읽는 시간</dt><dd>${readTime(b)}</dd></div></dl>
       <a class="btn primary" href="${buyHref}">${won(b.price)} 바로 받기 ${ARROW}</a>
       ${(()=>{const g=goalOfBook(b.id);if(!g)return "";const st=setOf(g);return `<a class="setbox" href="${STORE==="#"?"#"+b.id:"/store#set-"+g.k}"><b>3권 세트로 사면 ${won(st.sum-st.price)} 아껴요</b><span>${g.t} 세트 ${won(st.price)} <s>${won(st.sum)}</s> ›</span></a>`})()}
-      <ul class="badges"><li>${CHECK}결제 즉시 다운로드</li><li>${CHECK}EPUB · PDF</li><li>${CHECK}7일 환불</li></ul>
       <button class="wish" type="button" data-w aria-pressed="${WISH.has(b.id)}">${HEART}<span>찜하기</span></button>
       <div class="gethead">${LOCK}<span>결제하면 바로 열리는 파일 2개</span></div>
       <ul class="getfiles">
@@ -311,8 +298,7 @@ function render(){
     </section>
     <section id="faq">
       <h2>자주 묻는 질문</h2>
-      <div class="faqbox">${[...COMMON_FAQ.slice(0,3),...b.faq,...COMMON_FAQ.slice(3)].map((q,i)=>`<details${i===0?" open":""}><summary><span>${q[0]}</span>${q[2]?`<span class="meta">${q[2]}</span>`:""}${CHEV}</summary><p>${q[1]}</p></details>`).join("")}</div>
-      <p class="faq-more">더 궁금한 점은 아래 고객센터 이메일로 물어봐 주세요.</p>
+      <div class="faqbox">${[...COMMON_FAQ.slice(0,3),...b.faq,...COMMON_FAQ.slice(3)].map((q,i)=>`<details${i===0?" open":""}><summary><span>${q[0]}</span>${CHEV}</summary><p>${q[1]}</p></details>`).join("")}</div>
     </section>
     <section>
       <h2>파일 안내</h2>
