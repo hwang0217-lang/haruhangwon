@@ -54,8 +54,8 @@ fs.writeFileSync(path.join(R, "robots.txt"), `User-agent: *\nAllow: /\nDisallow:
     await page.evaluate(() => document.fonts.ready);
     await page.screenshot({ path: path.join(R, "og", `${b.id}.png`) });
   }
-  const picks = ["buy-agent", "partners", "shorts"].map(id => BOOKS.find(b => b.id === id));
-  await page.setContent(shell("#141C2B", "#F7F3EA", `<div><h1 style="font-size:52px;word-break:keep-all">하루 저녁에 읽고<br>다음 날 써먹는 전자책</h1><p>부업·재테크·취업 실전서 ${BOOKS.length}권<br>${won(Math.min(...BOOKS.map(b=>b.price)))}부터, 결제 즉시 EPUB·PDF</p><div class="m"><span style="background:#F2B84B;color:#141C2B">haruhangwon.kr</span></div></div><div style="display:flex;gap:-40px;margin-left:auto">${picks.map((b, i) => `<div class="c" style="width:200px;height:320px;margin-left:${i ? -60 : 0}px;transform:rotate(${(i - 1) * 5}deg)">${coverSVG(b)}</div>`).join("")}</div>`), { waitUntil: "networkidle" });
+  const picks = ["job-pass", "ai-work", "salary-up"].map(id => BOOKS.find(b => b.id === id));
+  await page.setContent(shell("#141C2B", "#F7F3EA", `<div><h1 style="font-size:52px;word-break:keep-all">하루 저녁에 읽고<br>다음 날 써먹는 전자책</h1><p>취업·커리어 실전서 ${BOOKS.length}권 · 시험 합격플랜 20종<br>${won(Math.min(...BOOKS.map(b=>b.price)))}부터, 결제 즉시 EPUB·PDF</p><div class="m"><span style="background:#F2B84B;color:#141C2B">haruhangwon.kr</span></div></div><div style="display:flex;gap:-40px;margin-left:auto">${picks.map((b, i) => `<div class="c" style="width:200px;height:320px;margin-left:${i ? -60 : 0}px;transform:rotate(${(i - 1) * 5}deg)">${coverSVG(b)}</div>`).join("")}</div>`), { waitUntil: "networkidle" });
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: path.join(R, "og", "home.png") });
   await browser.close();

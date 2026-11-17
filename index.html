@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="학원 안 가도 되는 시험 합격플랜 20종(교재+모의고사 10회)과, 하루 저녁이면 다 읽는 부업·재테크 실전 전자책.">
+<meta name="description" content="학원 안 가도 되는 시험 합격플랜 20종(교재+모의고사 10회)과, 하루 저녁이면 다 읽는 취업·커리어 실전 전자책.">
 <meta property="og:title" content="하루한권">
-<meta property="og:description" content="학원 안 가도 되는 시험 합격플랜 20종(교재+모의고사 10회)과, 하루 저녁이면 다 읽는 부업·재테크 실전 전자책.">
+<meta property="og:description" content="학원 안 가도 되는 시험 합격플랜 20종(교재+모의고사 10회)과, 하루 저녁이면 다 읽는 취업·커리어 실전 전자책.">
 <meta name="google-site-verification" content="WGBQEtEetkN_rYIN4iS-NZUdm7Um7PjvXbcJdDgCve4">
 <meta name="naver-site-verification" content="97c563dc82df859779bb50c7c19755c3e22ebc29">
 <meta property="og:url" content="https://www.haruhangwon.kr/">
@@ -294,7 +294,7 @@ body:has(#bar:not([hidden])){padding-bottom:calc(64px + env(safe-area-inset-bott
           <span class="acts"><span class="btn lamp">합격플랜 보기</span><span class="from nw">시험 20종, <b id="xmin">59,000원</b>부터</span></span>
         </a>
         <a class="door book" href="#books">
-          <h2>부업·재테크 실전 전자책 <span id="nbooks2">51</span>권</h2>
+          <h2>취업·커리어 실전 전자책 <span id="nbooks2">4</span>권</h2>
           <p>40~100쪽이라 끝까지 읽혀요. 결제하면 EPUB·PDF를 바로 받아요.</p>
           <span class="acts"><span class="btn ink">전자책 둘러보기</span></span>
         </a>
@@ -312,11 +312,11 @@ body:has(#bar:not([hidden])){padding-bottom:calc(64px + env(safe-area-inset-bott
   <div class="hero bookhead" id="books">
     <div class="in">
       <div>
-        <h1><em>하루 저녁</em>이면 다 읽는<br><span style="white-space:nowrap">부업·재테크</span> 실전서</h1>
+        <h1><em>하루 저녁</em>이면 다 읽는<br><span style="white-space:nowrap">취업·커리어</span> 실전서</h1>
         <p class="sub">40~100쪽이라 끝까지 읽혀요. 장마다 다음 날 해볼 체크리스트가 있고, 결제하면 EPUB·PDF를 바로 받아요.</p>
         <div class="acts">
-          <a class="btn ink" href="#all">51권 둘러보기</a>
-          <button class="tlink" type="button" data-preview="buy-agent" style="border:0;background:none;padding:0">첫 장 무료로 읽어보기</button>
+          <a class="btn ink" href="#all">전체 둘러보기</a>
+          <button class="tlink" type="button" data-preview="job-pass" style="border:0;background:none;padding:0">첫 장 무료로 읽어보기</button>
         </div>
         <ul class="facts">
           <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>권당 <b id="minp">9,900원</b>부터</li>
@@ -324,18 +324,18 @@ body:has(#bar:not([hidden])){padding-bottom:calc(64px + env(safe-area-inset-bott
           <li><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>내려받기 전 7일 전액 환불</li>
         </ul>
       </div>
-      <div class="fan" id="fan" aria-label="대표 책 5권"></div>
+      <div class="fan" id="fan" aria-label="대표 책 4권"></div>
     </div>
   </div>
 
-  <section style="padding-top:28px">
+  <section style="padding-top:28px" hidden>
     <div class="in">
       <div class="shead"><div><h2>분야별로 둘러보기</h2></div></div>
       <div class="shelves" id="shelves"></div>
     </div>
   </section>
 
-  <section style="padding-top:0">
+  <section style="padding-top:0" id="goalsec" hidden>
     <div class="in">
       <div class="shead"><div><h2>뭘 읽을지 모르겠다면</h2></div></div>
       <ul class="goals" id="goals"></ul>
@@ -359,33 +359,13 @@ body:has(#bar:not([hidden])){padding-bottom:calc(64px + env(safe-area-inset-bott
     </div>
   </section>
 
-  <section class="proof" id="proof">
-    <div class="in">
-      <div class="shead"><div><h2>읽은 사람들이 말해요</h2></div></div>
-      <p class="notice">안내 · 이 영역의 숫자, 후기, 글쓴이 소개는 실제가 아닌 <b>예시</b>예요. 첫 판매 뒤 구매가 확인된 실제 후기와 숫자로 바꿔요.</p>
-      <div class="stats">
-        <div class="stat"><span class="v">1,240명</span><span class="k">누적 독자</span></div>
-        <div class="stat"><span class="v">4.7 / 5</span><span class="k">평균 별점 (후기 312개)</span></div>
-        <div class="stat"><span class="v">82%</span><span class="k">"장 끝 체크리스트를 1개 이상 해봤다"</span></div>
-      </div>
-      <div class="reviews" id="reviews"></div>
-      <div class="author">
-        <svg class="av" viewBox="0 0 96 96" role="img" aria-label="글쓴이 일러스트" id="authav"></svg>
-        <div>
-          <b>정해원</b>
-          <p>회사를 다니며 4년째 해외구매대행 쇼핑몰을 운영해요. 첫 판매까지 걸린 시행착오를 줄이려고 『직장인 해외구매대행 첫 판매』를 썼어요.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section>
     <div class="in">
       <div class="shead"><div><h2>고르고, 결제하고, 바로 읽기</h2></div></div>
       <div class="steps">
-        <div class="step"><div class="n">1단계</div><b>첫 장 읽고 고르기</b><p>모든 책의 첫 장과 목차를 무료로 보고 장바구니에 담아요.</p></div>
+        <div class="step"><div class="n">1단계</div><b>첫 장 읽고 고르기</b><p>책은 첫 장과 목차를, 합격플랜은 모의고사 1회를 무료로 먼저 보고 골라요.</p></div>
         <div class="step"><div class="n">2단계</div><b>간편 결제</b><p>카드, 카카오페이, 네이버페이, 토스페이. 회원가입은 필요 없어요.</p></div>
-        <div class="step"><div class="n">3단계</div><b>바로 내려받기</b><p>결제 화면과 이메일에서 EPUB·PDF를 받아요. 링크로 언제든 다시 받아요.</p></div>
+        <div class="step"><div class="n">3단계</div><b>바로 내려받기</b><p>결제가 끝나면 그 화면에서 바로 받아요. 이 기기의 구매내역에서 언제든 다시 받아요.</p></div>
       </div>
     </div>
   </section>
@@ -397,7 +377,7 @@ body:has(#bar:not([hidden])){padding-bottom:calc(64px + env(safe-area-inset-bott
         <details open><summary>어떤 파일로 받나요?</summary><p>EPUB과 PDF 두 가지를 함께 드려요. 휴대폰·리더기는 EPUB, 컴퓨터·인쇄는 PDF가 편해요.</p></details>
         <details><summary>어떤 기기에서 읽을 수 있나요?</summary><p>아이폰·아이패드(도서 앱), 갤럭시(구글 플레이 북), 크레마·리디페이퍼·킨들, PC에서 읽을 수 있어요.</p></details>
         <details><summary>환불되나요?</summary><p>내려받기 전이라면 7일 안에 전액 환불돼요. 내려받은 뒤에는 전자상거래법에 따라 환불이 제한되지만, 파일에 문제가 있으면 교환이나 환불해 드려요.</p></details>
-        <details><summary>파일을 잃어버렸어요.</summary><p>구매할 때 적은 이메일의 링크에서 언제든 다시 받을 수 있어요.</p></details>
+        <details><summary>파일을 잃어버렸어요.</summary><p>결제한 기기의 <a href="/orders">구매내역</a>이나, 즐겨찾기해 둔 결제 완료 화면 주소에서 다시 받을 수 있어요.</p></details>
       </div>
     </div>
   </section>
@@ -421,23 +401,19 @@ const $=s=>document.querySelector(s);
 const by=id=>BOOKS.find(b=>b.id===id);
 const CHECK='<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>';
 
-/* 분야 진열대: 1권짜리 분야는 합쳐서 5칸 */
-const SOCIAL=["naver-blog","adsense","threads"];
+/* 분야 */
 const SHELVES=[
-  {k:"side",t:"부업",f:b=>b.cat==="부업"&&!SOCIAL.includes(b.id)},
-  {k:"sns",t:"SNS·블로그 수익화",f:b=>b.cat==="SNS 수익화"||SOCIAL.includes(b.id)},
-  {k:"money",t:"재테크·부동산",f:b=>b.cat==="재테크"||b.cat==="부동산"},
-  {k:"sell",t:"내 상품 팔기·창업",f:b=>["창업","온라인 판매","지식창업"].includes(b.cat)},
-  {k:"career",t:"취업·커리어·자기관리",f:b=>["취업","커리어","건강"].includes(b.cat)}
+  {k:"career",t:"취업·커리어",f:b=>["취업","커리어"].includes(b.cat)},
+  {k:"life",t:"자기관리",f:b=>["건강"].includes(b.cat)}
 ];
 $("#nbooks2").textContent=BOOKS.length;
 $("#minp").textContent=won(Math.min(...BOOKS.map(b=>b.price)));
 document.querySelector('.hero .btn.ink').textContent=`${BOOKS.length}권 둘러보기`;
 
 /* hero fan: 진짜 표지 5권, 움직이지 않음 */
-const FAN=["buy-agent","naver-blog","us-etf","job-pass","shorts"];
-const POS=[[-150,-10,-12],[-75,-25,-6],[0,-35,0],[75,-25,6],[150,-10,12]];
-$("#fan").innerHTML=FAN.map(by).filter(Boolean).map((b,i)=>{const[x,y,r]=POS[i];return `<a href="/b/${b.id}" aria-label="${b.title} 자세히" style="transform:translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) rotate(${r}deg);z-index:${i===2?5:5-Math.abs(i-2)}">${coverSVG(b)}</a>`}).join("");
+const FAN=["ai-work","salary-up","job-pass","gym-90"];
+const POS=[[-120,-14,-10],[-40,-30,-4],[40,-30,4],[120,-14,10]];
+$("#fan").innerHTML=FAN.map(by).filter(Boolean).map((b,i)=>{const[x,y,r]=POS[i];return `<a href="/b/${b.id}" aria-label="${b.title} 자세히" style="transform:translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) rotate(${r}deg);z-index:${4-Math.round(Math.abs(i-1.5))}">${coverSVG(b)}</a>`}).join("");
 
 /* shelves */
 $("#shelves").innerHTML=SHELVES.map(s=>{const bs=BOOKS.filter(s.f);return `<button class="shelf" type="button" data-shelf="${s.k}"><span class="mini" aria-hidden="true">${bs.slice(0,3).map(b=>`<span>${coverSVG(b)}</span>`).join("")}</span><b>${s.t}</b><span class="cnt">${bs.length}권</span></button>`}).join("");
@@ -447,26 +423,8 @@ $("#goals").innerHTML=GOALS.map(g=>`<li><button type="button" aria-pressed="fals
 function pickGoal(k){const g=GOALS.find(x=>x.k===k);if(!g)return;
   document.querySelectorAll("[data-goal]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.goal===k));
   $("#gres").innerHTML=g.ids.map(by).filter(Boolean).map((b,i)=>`<a href="/b/${b.id}"><span class="cv">${coverSVG(b)}</span><span><span class="st">${i+1}번째로 읽기</span><b style="display:block">${b.title}</b><small>${won(b.price)} · ${readTime(b)}</small></span></a>`).join("")+(()=>{const st=setOf(g);return `<a class="setlink" href="/store#set-${g.k}"><span><b style="display:block">3권 세트로 한 번에 받기</b><small>${won(st.price)} · 따로 사면 ${won(st.sum)}</small></span><span class="go">세트 담기 ›</span></a>`})()}
-pickGoal(GOALS[0].k);
+if(GOALS.length){$("#goalsec").hidden=false;pickGoal(GOALS[0].k)}
 
-
-/* 저자·후기 일러스트 (직접 그린 SVG, 실제 인물 아님) */
-function avatar(seed,size){
-  const skins=["#F2CDB0","#E7B894","#D9A57F","#F5D9C2"],hairs=["#2B211C","#4A3426","#1E1E24","#6B4A33"],tops=["#2D4FC4","#E8590C","#2F7D4F","#7A4FB8","#C2304A"],bgs=["#FFF4E0","#E8F1FB","#EAF6EE","#F4ECFA","#FDECEF"];
-  const p=a=>a[seed%a.length],sk=p(skins),hr=hairs[(seed*3)%hairs.length],tp=tops[(seed*2+1)%tops.length],bg=bgs[(seed+2)%bgs.length];
-  const style=seed%3;
-  const hair=style===0?`<path d="M28 44c0-14 9-22 20-22s20 8 20 22c-3-7-9-11-20-11s-17 4-20 11z" fill="${hr}"/>`
-    :style===1?`<path d="M26 50c-2-18 8-28 22-28s24 10 22 28c-1 10-4 16-6 18V44c-5-4-10-6-16-6s-11 2-16 6v24c-2-2-5-8-6-18z" fill="${hr}"/>`
-    :`<path d="M29 42c1-12 9-19 19-19 11 0 19 7 19 19-4-3-6-8-8-10-5 5-17 8-30 10z" fill="${hr}"/>`;
-  return `<rect width="96" height="96" rx="48" fill="${bg}"/><clipPath id="c${seed}"><rect width="96" height="96" rx="48"/></clipPath><g clip-path="url(#c${seed})"><path d="M16 96c2-18 15-26 32-26s30 8 32 26z" fill="${tp}"/><rect x="42" y="58" width="12" height="14" rx="5" fill="${sk}"/><ellipse cx="48" cy="46" rx="17" ry="19" fill="${sk}"/>${hair}<circle cx="41.5" cy="47" r="1.8" fill="#2B211C"/><circle cx="54.5" cy="47" r="1.8" fill="#2B211C"/><path d="M43 55c3 2.4 7 2.4 10 0" stroke="#2B211C" stroke-width="1.8" fill="none" stroke-linecap="round"/></g>`;
-}
-$("#authav").innerHTML=avatar(4);
-const REVIEWS=[
-  {n:"김○○",a:"34세 · 회사원",d:"2026.10.14 구매",id:"buy-agent",s:5,t:"마진 계산표를 그대로 따라 해서 첫 상품 3개를 올렸어요. 통관 파트가 제일 도움이 됐어요."},
-  {n:"이○○",a:"29세 · 디자이너",d:"2026.10.22 구매",id:"naver-blog",s:4,t:"하루 저녁에 다 읽었어요. 장 끝 체크리스트대로 글 7개를 예약해 뒀고, 키워드 찾는 부분은 조금 더 자세했으면 해요."},
-  {n:"박○○",a:"41세 · 자영업",d:"2026.11.02 구매",id:"side-tax",s:5,t:"5월 종합소득세 신고 전에 읽었어요. 경비 처리 목록을 보고 빠뜨린 영수증을 챙겼어요."}
-];
-$("#reviews").innerHTML=REVIEWS.map((r,i)=>{const b=by(r.id);return `<article class="rv"><div class="who"><svg viewBox="0 0 96 96" width="44" height="44" role="img" aria-hidden="true">${avatar(i+1)}</svg><span><b>${r.n}</b><small>${r.a} · ${r.d}</small></span></div><div class="stars" aria-label="별점 ${r.s}점">${"★".repeat(r.s)}<span style="opacity:.3">${"★".repeat(5-r.s)}</span></div><q>${r.t}</q><div class="bk">읽은 책: ${b?b.title:""}</div></article>`}).join("");
 
 /* feature */
 function featureHTML(b){return `<div class="l" style="--cbg:${b.cover.bg}"><a class="cv" href="/b/${b.id}" aria-label="${b.title} 자세히">${coverSVG(b)}</a></div>
@@ -474,7 +432,7 @@ function featureHTML(b){return `<div class="l" style="--cbg:${b.cover.bg}"><a cl
 <ul>${b.summary.slice(0,3).map(t=>`<li>${CHECK}<span>${t}</span></li>`).join("")}</ul>
 <div class="row"><span class="price">${won(b.price)}</span><button class="btn lamp" type="button" data-add="${b.id}">장바구니에 담기</button><button class="btn ghost" type="button" data-preview="${b.id}">첫 장 무료로 읽기</button></div>
 <div class="by"><span>글 <b>하루한권 편집부</b> · <a href="/b/${b.id}">목차와 책 소개 전체 보기</a></span></div></div>`}
-$("#feature").innerHTML=featureHTML(by("buy-agent"));
+$("#feature").innerHTML=featureHTML(by("job-pass")||BOOKS[0]);
 
 /* 전체 책: 분야 칩 + 검색 */
 let shelf="all",q="",showAll=false;
