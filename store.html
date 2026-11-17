@@ -235,7 +235,7 @@ function renderGrid(){
   renderFeature();
   if(cat==="전체"){pickbar.hidden=true;grid.className="";
     const cats=[...new Set(BOOKS.map(b=>b.cat))];
-    const sets=`<section class="shelf" id="sets"><div class="shelf-h"><h3>목표별 3권 세트 <span class="sub">따로 사는 것보다 약 20% 싸요</span></h3></div><div class="sets">${GOALS.map(g=>{const st=setOf(g);return `<div class="set"><div class="covers">${st.bs.map(b=>cover(b,"mini")).join("")}</div><b>${g.t}</b><span class="sub">${st.bs.map(b=>b.t).join(" → ")}</span><div class="price"><span class="now">${won(st.price)}</span><span class="was">${won(st.sum)}</span></div><button class="btn primary" type="button" data-set="${g.k}">세트 담기</button></div>`}).join("")}</div></section>`;
+    const sets=!GOALS.length?"":`<section class="shelf" id="sets"><div class="shelf-h"><h3>목표별 3권 세트 <span class="sub">따로 사는 것보다 약 20% 싸요</span></h3></div><div class="sets">${GOALS.map(g=>{const st=setOf(g);return `<div class="set"><div class="covers">${st.bs.map(b=>cover(b,"mini")).join("")}</div><b>${g.t}</b><span class="sub">${st.bs.map(b=>b.t).join(" → ")}</span><div class="price"><span class="now">${won(st.price)}</span><span class="was">${won(st.sum)}</span></div><button class="btn primary" type="button" data-set="${g.k}">세트 담기</button></div>`}).join("")}</div></section>`;
     grid.innerHTML=sets+cats.map(c=>{const bs=BOOKS.filter(b=>b.cat===c);return `<section class="shelf"><div class="shelf-h"><h3>${c} <span class="sub">${bs.length}권</span></h3><button type="button" data-cat="${c}">모두 보기 ›</button></div><div class="row-scroll">${bs.map(b=>card(b)).join("")}</div></section>`}).join("");
     return}
   grid.className="grid";
