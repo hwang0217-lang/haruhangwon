@@ -25,7 +25,7 @@
 <script src="/pay/pay.js"></script>
 <script>
 const card=o=>`<section class="card">${orderMeta(o)}${booksHtml(o)}</section>`;
-function mine(){const a=ORDERS.all();$("#mine").innerHTML=a.length?`<h2 style="font-size:18px;margin:12px 0 8px">이 기기에서 산 책</h2><div style="display:grid;gap:12px">${a.map(card).join("")}</div>`:""}
+function mine(){const a=ORDERS.all();$("#mine").innerHTML=a.length?`<h2 style="font-size:18px;margin:12px 0 8px">이 기기에서 산 책</h2><div style="display:grid;gap:12px">${a.map(card).join("")}</div>`:'<section class="card empty"><b>이 기기에는 구매내역이 없어요</b>다른 기기에서 샀다면 위에 주문번호를 넣어 찾아 보세요. <a href="/store">스토어 둘러보기</a></section>'}
 $("#find").onsubmit=async e=>{e.preventDefault();const id=$("#oid").value.trim(),f=$("#found");f.innerHTML='<p class="note">찾는 중…</p>';
   try{const r=await fetch("/api/pay/order?order="+encodeURIComponent(id),{cache:"no-store"});const o=await r.json();if(!r.ok)throw new Error(o.message);ORDERS.add(o);f.innerHTML=card(o);mine()}
   catch(err){f.innerHTML=`<p class="note err">${esc(err.message||"찾지 못했어요.")}</p>`}};

@@ -42,9 +42,10 @@ form input[type=email],form input[type=text]{border:1px solid var(--line);backgr
     <label for="nm">이름 (선택)<input id="nm" type="text" autocomplete="name" maxlength="40"></label>
     <label for="em">이메일 (결제 확인 메일 받을 주소)<input id="em" type="email" required autocomplete="email" maxlength="100"></label>
     <div id="pm"></div><div id="agr"></div>
+    <ul class="checks"><li>결제하면 바로 내려받아요 (${item.files.map(f=>f.toUpperCase()).join("·")})</li><li>내려받기 전이라면 결제일부터 7일 안에 전액 환불돼요</li><li>같은 주소로 언제든 다시 받을 수 있어요</li></ul>
     <label class="check" for="agree"><input id="agree" type="checkbox" required><span>디지털 상품은 내려받은 뒤 청약철회가 제한되는 것에 동의합니다.</span></label>
     <button class="btn primary" type="submit" id="payBtn">${won(item.price)} 결제하기</button>
-    <p class="note" id="payMsg" role="status">결제는 토스페이먼츠로 안전하게 처리됩니다. 내려받기 전이면 7일 안에 환불돼요.</p>
+    <p class="note" id="payMsg" role="status">결제는 토스페이먼츠로 안전하게 처리됩니다.</p>
   </form></section>
   <p><a href="${item.back}">← 상품 설명으로 돌아가기</a></p>`;
   const msg=t=>$("#payMsg").textContent=t, btn=$("#payBtn");
