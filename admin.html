@@ -56,8 +56,8 @@ a{color:var(--accent)}
 .err{color:var(--down);font-size:14px;min-height:22px;margin:10px 0 0}
 
 /* 틀 */
-.app{display:grid;grid-template-columns:240px 1fr;min-height:100dvh}
-.side{position:sticky;top:0;height:100dvh;align-self:start;background:var(--night);color:var(--night-ink);padding:20px 14px;display:flex;flex-direction:column;gap:4px}
+.app{display:grid;grid-template-columns:1fr;min-height:100dvh;padding-left:240px}
+.side{position:fixed;left:0;top:0;bottom:0;width:240px;z-index:10;overflow-y:auto;overscroll-behavior:contain;background:var(--night);color:var(--night-ink);padding:20px 14px;display:flex;flex-direction:column;gap:4px}
 .side .brand{color:#fff;padding:4px 8px 20px}
 .side .brand small{color:#9AA4B0;border-color:#2B3546}
 .nav{text-decoration:none;display:flex;align-items:center;gap:12px;height:42px;padding:0 12px;border-radius:10px;border:0;background:none;color:#B7C0CC;font-weight:500;text-align:left;width:100%}
@@ -207,7 +207,7 @@ dialog .row{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
 
 @media (max-width:1180px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.three{grid-template-columns:1fr}}
 @media (max-width:900px){
-  .app{grid-template-columns:1fr}
+  .app{grid-template-columns:1fr;padding-left:0}
   .side{display:none}
   .main{padding:0 16px calc(88px + env(safe-area-inset-bottom))}
   .top{padding:12px 0 10px;gap:10px}
