@@ -1,6 +1,9 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "regions": [
+    "icn1"
+  ],
   "functions": {
     "api/factory/claude.js": {
       "maxDuration": 300
